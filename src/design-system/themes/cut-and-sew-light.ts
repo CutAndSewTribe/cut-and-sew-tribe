@@ -1,19 +1,50 @@
 import { colors } from "../tokens/colors";
 
 export const cutAndSewLightTheme = {
-background: colors.background.primary,
-surface: colors.surface.primary,
+  background: {
+    canvas: colors.background.canvas,
+    subtle: colors.background.subtle,
+    muted: colors.background.muted,
+  },
 
-textPrimary: colors.text.primary,
-textSecondary: colors.text.secondary,
+  surface: {
+    primary: colors.surface.primary,
+    secondary: colors.surface.secondary,
+    tertiary: colors.surface.tertiary,
+    elevated: colors.surface.elevated,
+  },
 
-primary: colors.brand.primary,
-accent: colors.brand.accent,
+  text: {
+    primary: colors.text.primary,
+    secondary: colors.text.secondary,
+    tertiary: colors.text.tertiary,
+    inverse: colors.text.inverse,
+    link: colors.text.link,
+    linkHover: colors.text.linkHover,
+  },
 
-border: colors.border.default,
+  border: {
+    subtle: colors.border.subtle,
+    default: colors.border.default,
+    strong: colors.border.strong,
+  },
 
-success: colors.semantic.success,
-warning: colors.semantic.warning,
-error: colors.semantic.error,
-info: colors.semantic.info,
+  brand: {
+    primary: colors.brand.primary,
+    primaryHover: colors.brand.primaryHover,
+    primaryActive: colors.brand.primaryActive,
+
+    accent: colors.brand.accent,
+    accentHover: colors.brand.accentHover,
+    accentActive: colors.brand.accentActive,
+  },
+
+  focus: colors.focus,
+
+  semantic: colors.semantic,
+
+  course: colors.course,
 } as const;
+
+export type CutAndSewLightTheme = typeof cutAndSewLightTheme;
+
