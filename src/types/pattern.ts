@@ -2,6 +2,17 @@ export type PatternAccess =
   | "free"
   | "premium";
 
+export type PatternLevel =
+  | "beginner"
+  | "intermediate"
+  | "advanced";
+
+export type PatternCategory =
+  | "dressmaking"
+  | "bridal"
+  | "menswear"
+  | "childrenswear";
+
 export interface Pattern {
   id: string;
 
@@ -11,9 +22,15 @@ export interface Pattern {
 
   description: string;
 
+  category: PatternCategory;
+
+  level: PatternLevel;
+
   thumbnail: string;
 
   access: PatternAccess;
+
+  fileFormat: string;
 
   downloadUrl: string;
 
