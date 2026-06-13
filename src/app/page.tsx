@@ -1,4 +1,10 @@
-import Link from "next/link";
+import {
+  Badge,
+  Button,
+  Card,
+  Container,
+  Section,
+} from "@/components/ui";
 
 import { courses } from "@/content/courses";
 import { videos } from "@/content/videos";
@@ -13,21 +19,17 @@ export default function Home() {
     (course) => course.featured,
   );
 
-
   const featuredVideos = videos.filter(
     (video) => video.featured,
   );
-
 
   const featuredPatterns = patterns.filter(
     (pattern) => pattern.featured,
   );
 
-
   const featuredResources = resources.filter(
     (resource) => resource.featured,
   );
-
 
   const featuredStories = studentStories.filter(
     (story) => story.featured,
@@ -35,28 +37,26 @@ export default function Home() {
 
 
   return (
-    <div className="flex flex-col">
+    <div>
 
 
-      {/* Hero */}
+      <Section className="bg-neutral-950 text-white">
 
-      <section className="bg-neutral-950 px-6 py-24 text-white">
+        <Container>
 
-        <div className="mx-auto max-w-7xl">
-
-          <p className="mb-4 text-sm uppercase tracking-widest text-[#D4AF37]">
+          <Badge>
             Fashion Education Platform
-          </p>
+          </Badge>
 
 
-          <h1 className="max-w-3xl text-5xl font-bold leading-tight">
+          <h1 className="mt-6 max-w-3xl text-5xl font-bold">
             Build Fashion Skills.
             Create Beautiful Garments.
             Grow Your Brand.
           </h1>
 
 
-          <p className="mt-6 max-w-2xl text-lg text-neutral-300">
+          <p className="mt-6 max-w-2xl text-neutral-300">
             Learn fashion design, sewing, pattern making,
             and fashion business from beginner to professional level.
           </p>
@@ -64,160 +64,160 @@ export default function Home() {
 
           <div className="mt-10 flex gap-4">
 
-            <Link
-              href="/courses"
-              className="rounded-full bg-[#661093] px-7 py-3"
-            >
+            <Button href="/courses">
               Explore Courses
-            </Link>
+            </Button>
 
 
-            <Link
-              href="/videos"
-              className="rounded-full border border-white px-7 py-3"
-            >
+            <Button href="/videos">
               Watch Lessons
-            </Link>
+            </Button>
 
           </div>
 
-        </div>
+        </Container>
 
-      </section>
-
-
+      </Section>
 
 
-      {/* Courses */}
-
-      <section className="mx-auto w-full max-w-7xl px-6 py-20">
-
-        <h2 className="text-3xl font-bold">
-          Featured Courses
-        </h2>
 
 
-        <div className="mt-8 grid gap-6 md:grid-cols-3">
 
-          {featuredCourses.map((course) => (
+      <Section>
 
-            <div
-              key={course.id}
-              className="rounded-2xl border p-6"
-            >
+        <Container>
 
-              <h3 className="text-xl font-semibold">
-                {course.title}
+          <h2 className="text-3xl font-bold">
+            Featured Courses
+          </h2>
+
+
+          <div className="mt-8 grid gap-6 md:grid-cols-3">
+
+
+            {featuredCourses.map((course) => (
+
+              <Card key={course.id}>
+
+                <h3 className="text-xl font-semibold">
+                  {course.title}
+                </h3>
+
+
+                <p className="mt-3 text-neutral-600">
+                  {course.description}
+                </p>
+
+
+                <p className="mt-4 text-[#661093]">
+                  {course.duration}
+                </p>
+
+
+              </Card>
+
+            ))}
+
+
+          </div>
+
+        </Container>
+
+      </Section>
+
+
+
+
+
+      <Section className="bg-neutral-50">
+
+        <Container>
+
+          <div className="grid gap-10 md:grid-cols-3">
+
+
+            <div>
+              <h3 className="text-3xl font-bold">
+                {featuredVideos.length}
               </h3>
 
-
-              <p className="mt-3 text-neutral-600">
-                {course.description}
+              <p>
+                Video Lessons
               </p>
-
-
-              <p className="mt-4 text-[#661093]">
-                {course.duration}
-              </p>
-
             </div>
 
-          ))}
 
-        </div>
-
-      </section>
-
-
-
-
-
-      {/* Learning Library */}
-
-      <section className="bg-neutral-50 px-6 py-20">
-
-        <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-3">
-
-
-          <div>
-            <h3 className="text-2xl font-bold">
-              {featuredVideos.length}
-            </h3>
-
-            <p>
-              Video Lessons
-            </p>
-          </div>
-
-
-          <div>
-            <h3 className="text-2xl font-bold">
-              {featuredPatterns.length}
-            </h3>
-
-            <p>
-              Sewing Patterns
-            </p>
-          </div>
-
-
-          <div>
-            <h3 className="text-2xl font-bold">
-              {featuredResources.length}
-            </h3>
-
-            <p>
-              Learning Resources
-            </p>
-          </div>
-
-
-        </div>
-
-      </section>
-
-
-
-
-
-      {/* Community */}
-
-      <section className="mx-auto max-w-7xl px-6 py-20">
-
-        <h2 className="text-3xl font-bold">
-          Student Success Stories
-        </h2>
-
-
-        <div className="mt-8 grid gap-6 md:grid-cols-3">
-
-          {featuredStories.map((story) => (
-
-            <div
-              key={story.id}
-              className="rounded-2xl border p-6"
-            >
-
-              <h3 className="font-semibold">
-                {story.name}
+            <div>
+              <h3 className="text-3xl font-bold">
+                {featuredPatterns.length}
               </h3>
 
-
-              <p className="mt-3 text-neutral-600">
-                {story.story}
+              <p>
+                Sewing Patterns
               </p>
-
             </div>
 
-          ))}
 
-        </div>
+            <div>
+              <h3 className="text-3xl font-bold">
+                {featuredResources.length}
+              </h3>
+
+              <p>
+                Resources
+              </p>
+            </div>
 
 
-      </section>
+          </div>
+
+        </Container>
+
+      </Section>
+
+
+
+
+
+      <Section>
+
+        <Container>
+
+          <h2 className="text-3xl font-bold">
+            Student Success Stories
+          </h2>
+
+
+          <div className="mt-8 grid gap-6 md:grid-cols-3">
+
+
+            {featuredStories.map((story) => (
+
+              <Card key={story.id}>
+
+                <h3 className="font-semibold">
+                  {story.name}
+                </h3>
+
+
+                <p className="mt-3 text-neutral-600">
+                  {story.story}
+                </p>
+
+
+              </Card>
+
+            ))}
+
+
+          </div>
+
+
+        </Container>
+
+      </Section>
 
 
     </div>
   );
 }
-
