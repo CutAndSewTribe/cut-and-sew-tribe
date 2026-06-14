@@ -1,10 +1,12 @@
 import {
   Card,
-  Container,
   Section,
 } from "@/components/ui";
 
-import { PageHero } from "@/components/shared";
+import {
+  PageHero,
+  ContentGrid,
+} from "@/components/shared";
 
 import { videos } from "@/content/videos";
 
@@ -21,49 +23,44 @@ export default function VideosPage() {
       />
 
 
-
       <Section>
 
-        <Container>
-
-          <div className="grid gap-6 md:grid-cols-3">
+        <ContentGrid>
 
 
-            {videos.map((video) => (
+          {videos.map((video) => (
 
-              <Card key={video.id}>
-
-
-                <h2 className="text-xl font-semibold">
-                  {video.title}
-                </h2>
+            <Card key={video.id}>
 
 
-                <p className="mt-3 text-neutral-600">
-                  {video.description}
-                </p>
+              <h2 className="text-xl font-semibold">
+                {video.title}
+              </h2>
 
 
-                <div className="mt-4 text-sm text-[#661093]">
-
-                  {video.duration}
-
-                  {" • "}
-
-                  {video.views} views
-
-                </div>
+              <p className="mt-3 text-neutral-600">
+                {video.description}
+              </p>
 
 
-              </Card>
+              <div className="mt-4 text-sm text-[#661093]">
 
-            ))}
+                {video.duration}
+
+                {" • "}
+
+                {video.views} views
+
+              </div>
 
 
-          </div>
+            </Card>
+
+          ))}
 
 
-        </Container>
+        </ContentGrid>
+
 
       </Section>
 

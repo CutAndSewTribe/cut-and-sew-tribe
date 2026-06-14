@@ -1,10 +1,12 @@
 import {
   Card,
-  Container,
   Section,
 } from "@/components/ui";
 
-import { PageHero } from "@/components/shared";
+import {
+  PageHero,
+  ContentGrid,
+} from "@/components/shared";
 
 import { patterns } from "@/content/patterns";
 
@@ -21,45 +23,40 @@ export default function PatternsPage() {
       />
 
 
-
       <Section>
 
-        <Container>
-
-          <div className="grid gap-6 md:grid-cols-3">
+        <ContentGrid>
 
 
-            {patterns.map((pattern) => (
+          {patterns.map((pattern) => (
 
-              <Card key={pattern.id}>
-
-
-                <h2 className="text-xl font-semibold">
-                  {pattern.title}
-                </h2>
+            <Card key={pattern.id}>
 
 
-                <p className="mt-3 text-neutral-600">
-                  {pattern.description}
-                </p>
+              <h2 className="text-xl font-semibold">
+                {pattern.title}
+              </h2>
 
 
-                <div className="mt-4 text-sm text-[#661093]">
-
-                  {pattern.access}
-
-                </div>
+              <p className="mt-3 text-neutral-600">
+                {pattern.description}
+              </p>
 
 
-              </Card>
+              <div className="mt-4 text-sm text-[#661093]">
 
-            ))}
+                {pattern.access}
+
+              </div>
 
 
-          </div>
+            </Card>
+
+          ))}
 
 
-        </Container>
+        </ContentGrid>
+
 
       </Section>
 

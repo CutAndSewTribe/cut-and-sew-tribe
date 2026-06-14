@@ -1,10 +1,12 @@
 import {
   Card,
-  Container,
   Section,
 } from "@/components/ui";
 
-import { PageHero } from "@/components/shared";
+import {
+  PageHero,
+  ContentGrid,
+} from "@/components/shared";
 
 import { courses } from "@/content/courses";
 
@@ -23,45 +25,41 @@ export default function CoursesPage() {
 
       <Section>
 
-        <Container>
-
-          <div className="grid gap-6 md:grid-cols-3">
+        <ContentGrid>
 
 
-            {courses.map((course) => (
+          {courses.map((course) => (
 
-              <Card key={course.id}>
-
-                <h2 className="text-xl font-semibold">
-                  {course.title}
-                </h2>
+            <Card key={course.id}>
 
 
-                <p className="mt-3 text-neutral-600">
-                  {course.description}
-                </p>
+              <h2 className="text-xl font-semibold">
+                {course.title}
+              </h2>
 
 
-                <div className="mt-4 text-sm text-[#661093]">
-
-                  {course.level}
-
-                  {" • "}
-
-                  {course.duration}
-
-                </div>
+              <p className="mt-3 text-neutral-600">
+                {course.description}
+              </p>
 
 
-              </Card>
+              <div className="mt-4 text-sm text-[#661093]">
 
-            ))}
+                {course.level}
+
+                {" • "}
+
+                {course.duration}
+
+              </div>
 
 
-          </div>
+            </Card>
+
+          ))}
 
 
-        </Container>
+        </ContentGrid>
 
       </Section>
 
@@ -69,3 +67,4 @@ export default function CoursesPage() {
     </div>
   );
 }
+

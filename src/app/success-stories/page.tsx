@@ -1,10 +1,12 @@
 import {
   Card,
-  Container,
   Section,
 } from "@/components/ui";
 
-import { PageHero } from "@/components/shared";
+import {
+  PageHero,
+  ContentGrid,
+} from "@/components/shared";
 
 import { studentStories } from "@/content/success-stories";
 
@@ -21,48 +23,43 @@ export default function SuccessStoriesPage() {
       />
 
 
-
       <Section>
 
-        <Container>
-
-          <div className="grid gap-6 md:grid-cols-3">
+        <ContentGrid>
 
 
-            {studentStories.map((story) => (
+          {studentStories.map((story) => (
 
-              <Card key={story.name}>
-
-
-                <h2 className="text-xl font-semibold">
-                  {story.name}
-                </h2>
+            <Card key={story.name}>
 
 
-                <p className="mt-2 text-sm text-[#661093]">
-                  {story.location}
-                </p>
+              <h2 className="text-xl font-semibold">
+                {story.name}
+              </h2>
 
 
-                <p className="mt-4 text-neutral-600">
-                  {story.story}
-                </p>
+              <p className="mt-2 text-sm text-[#661093]">
+                {story.location}
+              </p>
 
 
-                <p className="mt-4 font-medium">
-                  {story.achievement}
-                </p>
+              <p className="mt-4 text-neutral-600">
+                {story.story}
+              </p>
 
 
-              </Card>
-
-            ))}
-
-
-          </div>
+              <p className="mt-4 font-medium">
+                {story.achievement}
+              </p>
 
 
-        </Container>
+            </Card>
+
+          ))}
+
+
+        </ContentGrid>
+
 
       </Section>
 

@@ -1,10 +1,12 @@
 import {
   Card,
-  Container,
   Section,
 } from "@/components/ui";
 
-import { PageHero } from "@/components/shared";
+import {
+  PageHero,
+  ContentGrid,
+} from "@/components/shared";
 
 import { resources } from "@/content/resources";
 
@@ -21,45 +23,40 @@ export default function ResourcesPage() {
       />
 
 
-
       <Section>
 
-        <Container>
-
-          <div className="grid gap-6 md:grid-cols-3">
+        <ContentGrid>
 
 
-            {resources.map((resource) => (
+          {resources.map((resource) => (
 
-              <Card key={resource.id}>
-
-
-                <h2 className="text-xl font-semibold">
-                  {resource.title}
-                </h2>
+            <Card key={resource.id}>
 
 
-                <p className="mt-3 text-neutral-600">
-                  {resource.description}
-                </p>
+              <h2 className="text-xl font-semibold">
+                {resource.title}
+              </h2>
 
 
-                <div className="mt-4 text-sm text-[#661093]">
-
-                  Download Resource
-
-                </div>
+              <p className="mt-3 text-neutral-600">
+                {resource.description}
+              </p>
 
 
-              </Card>
+              <div className="mt-4 text-sm text-[#661093]">
 
-            ))}
+                Download Resource
+
+              </div>
 
 
-          </div>
+            </Card>
+
+          ))}
 
 
-        </Container>
+        </ContentGrid>
+
 
       </Section>
 
