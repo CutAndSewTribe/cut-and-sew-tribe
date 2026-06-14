@@ -1,9 +1,10 @@
 import {
-  Badge,
   Card,
   Container,
   Section,
 } from "@/components/ui";
+
+import { PageHero } from "@/components/shared";
 
 import { studentStories } from "@/content/success-stories";
 
@@ -13,30 +14,11 @@ export default function SuccessStoriesPage() {
   return (
     <div>
 
-      <Section className="bg-neutral-950 text-white">
-
-        <Container>
-
-          <Badge>
-            Student Community
-          </Badge>
-
-
-          <h1 className="mt-6 text-5xl font-bold">
-            Stories From Our Fashion Creators
-          </h1>
-
-
-          <p className="mt-6 max-w-2xl text-neutral-300">
-            Discover how students transformed their skills,
-            launched brands, and built careers in fashion.
-          </p>
-
-
-        </Container>
-
-      </Section>
-
+      <PageHero
+        label="Student Community"
+        title="Stories From Our Fashion Creators"
+        description="Discover how students transformed their skills, launched brands, and built careers in fashion."
+      />
 
 
 

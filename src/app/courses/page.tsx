@@ -1,9 +1,10 @@
 import {
-  Badge,
   Card,
   Container,
   Section,
 } from "@/components/ui";
+
+import { PageHero } from "@/components/shared";
 
 import { courses } from "@/content/courses";
 
@@ -13,30 +14,11 @@ export default function CoursesPage() {
   return (
     <div>
 
-      <Section className="bg-neutral-950 text-white">
-
-        <Container>
-
-          <Badge>
-            Courses
-          </Badge>
-
-
-          <h1 className="mt-6 text-5xl font-bold">
-            Learn Fashion Design
-          </h1>
-
-
-          <p className="mt-6 max-w-2xl text-neutral-300">
-            Structured courses designed to take you
-            from beginner skills to professional fashion creation.
-          </p>
-
-
-        </Container>
-
-      </Section>
-
+      <PageHero
+        label="Courses"
+        title="Learn Fashion Design"
+        description="Structured courses designed to take you from beginner skills to professional fashion creation."
+      />
 
 
       <Section>
@@ -87,4 +69,3 @@ export default function CoursesPage() {
     </div>
   );
 }
-

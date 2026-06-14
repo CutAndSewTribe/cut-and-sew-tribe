@@ -1,9 +1,10 @@
 import {
-  Badge,
   Card,
   Container,
   Section,
 } from "@/components/ui";
+
+import { PageHero } from "@/components/shared";
 
 import { resources } from "@/content/resources";
 
@@ -13,30 +14,11 @@ export default function ResourcesPage() {
   return (
     <div>
 
-      <Section className="bg-neutral-950 text-white">
-
-        <Container>
-
-          <Badge>
-            Learning Resources
-          </Badge>
-
-
-          <h1 className="mt-6 text-5xl font-bold">
-            Tools To Build Your Fashion Career
-          </h1>
-
-
-          <p className="mt-6 max-w-2xl text-neutral-300">
-            Access guides, templates, checklists, and
-            professional resources to improve your workflow.
-          </p>
-
-
-        </Container>
-
-      </Section>
-
+      <PageHero
+        label="Learning Resources"
+        title="Tools To Build Your Fashion Career"
+        description="Access guides, templates, checklists, and professional resources to improve your workflow."
+      />
 
 
 

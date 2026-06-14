@@ -1,9 +1,10 @@
 import {
-  Badge,
   Card,
   Container,
   Section,
 } from "@/components/ui";
+
+import { PageHero } from "@/components/shared";
 
 import { patterns } from "@/content/patterns";
 
@@ -13,30 +14,11 @@ export default function PatternsPage() {
   return (
     <div>
 
-      <Section className="bg-neutral-950 text-white">
-
-        <Container>
-
-          <Badge>
-            Pattern Library
-          </Badge>
-
-
-          <h1 className="mt-6 text-5xl font-bold">
-            Sewing Patterns For Every Skill Level
-          </h1>
-
-
-          <p className="mt-6 max-w-2xl text-neutral-300">
-            Download professional sewing patterns and blocks
-            to improve your garment construction workflow.
-          </p>
-
-
-        </Container>
-
-      </Section>
-
+      <PageHero
+        label="Pattern Library"
+        title="Sewing Patterns For Every Skill Level"
+        description="Download professional sewing patterns and blocks to improve your garment construction workflow."
+      />
 
 
 
