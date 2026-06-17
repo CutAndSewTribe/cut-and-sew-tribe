@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import {
   Section,
 } from "@/components/ui";
@@ -30,18 +32,24 @@ export default function VideosPage() {
 
           {videos.map((video) => (
 
-            <ContentCard
+            <Link
               key={video.id}
-              title={video.title}
-              description={video.description}
-              meta={`${video.duration} • ${video.views} views`}
-            />
+              href={`/videos/${video.slug}`}
+              className="block"
+            >
+
+              <ContentCard
+                title={video.title}
+                description={video.description}
+                meta={`${video.duration} • ${video.views} views`}
+              />
+
+            </Link>
 
           ))}
 
 
         </ContentGrid>
-
 
       </Section>
 

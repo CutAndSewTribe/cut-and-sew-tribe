@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import {
   Section,
 } from "@/components/ui";
@@ -30,18 +32,24 @@ export default function SuccessStoriesPage() {
 
           {studentStories.map((story) => (
 
-            <ContentCard
-              key={story.name}
-              title={story.name}
-              description={story.story}
-              meta={`${story.location} • ${story.achievement}`}
-            />
+            <Link
+              key={story.id}
+              href={`/success-stories/${story.slug}`}
+              className="block"
+            >
+
+              <ContentCard
+                title={story.name}
+                description={story.story}
+                meta={`${story.course} • ${story.location}`}
+              />
+
+            </Link>
 
           ))}
 
 
         </ContentGrid>
-
 
       </Section>
 

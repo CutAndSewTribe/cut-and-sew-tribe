@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import {
   Section,
 } from "@/components/ui";
@@ -30,18 +32,24 @@ export default function ResourcesPage() {
 
           {resources.map((resource) => (
 
-            <ContentCard
+            <Link
               key={resource.id}
-              title={resource.title}
-              description={resource.description}
-              meta="Download Resource"
-            />
+              href={`/resources/${resource.slug}`}
+              className="block"
+            >
+
+              <ContentCard
+                title={resource.title}
+                description={resource.description}
+                meta={`${resource.fileType} • ${resource.access}`}
+              />
+
+            </Link>
 
           ))}
 
 
         </ContentGrid>
-
 
       </Section>
 

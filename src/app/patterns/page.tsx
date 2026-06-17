@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import {
   Section,
 } from "@/components/ui";
@@ -30,18 +32,24 @@ export default function PatternsPage() {
 
           {patterns.map((pattern) => (
 
-            <ContentCard
+            <Link
               key={pattern.id}
-              title={pattern.title}
-              description={pattern.description}
-              meta={pattern.access}
-            />
+              href={`/patterns/${pattern.slug}`}
+              className="block"
+            >
+
+              <ContentCard
+                title={pattern.title}
+                description={pattern.description}
+                meta={`${pattern.level} • ${pattern.access}`}
+              />
+
+            </Link>
 
           ))}
 
 
         </ContentGrid>
-
 
       </Section>
 

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import {
   Section,
 } from "@/components/ui";
@@ -30,12 +32,19 @@ export default function CoursesPage() {
 
           {courses.map((course) => (
 
-            <ContentCard
+            <Link
               key={course.id}
-              title={course.title}
-              description={course.description}
-              meta={`${course.level} • ${course.duration}`}
-            />
+              href={`/courses/${course.slug}`}
+              className="block"
+            >
+
+              <ContentCard
+                title={course.title}
+                description={course.description}
+                meta={`${course.level} • ${course.duration}`}
+              />
+
+            </Link>
 
           ))}
 
