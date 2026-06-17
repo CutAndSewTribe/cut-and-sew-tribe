@@ -1,11 +1,11 @@
 import {
-  Card,
   Section,
 } from "@/components/ui";
 
 import {
   PageHero,
   ContentGrid,
+  ContentCard,
 } from "@/components/shared";
 
 import { studentStories } from "@/content/success-stories";
@@ -30,30 +30,12 @@ export default function SuccessStoriesPage() {
 
           {studentStories.map((story) => (
 
-            <Card key={story.name}>
-
-
-              <h2 className="text-xl font-semibold">
-                {story.name}
-              </h2>
-
-
-              <p className="mt-2 text-sm text-[#661093]">
-                {story.location}
-              </p>
-
-
-              <p className="mt-4 text-neutral-600">
-                {story.story}
-              </p>
-
-
-              <p className="mt-4 font-medium">
-                {story.achievement}
-              </p>
-
-
-            </Card>
+            <ContentCard
+              key={story.name}
+              title={story.name}
+              description={story.story}
+              meta={`${story.location} • ${story.achievement}`}
+            />
 
           ))}
 
@@ -67,3 +49,4 @@ export default function SuccessStoriesPage() {
     </div>
   );
 }
+
