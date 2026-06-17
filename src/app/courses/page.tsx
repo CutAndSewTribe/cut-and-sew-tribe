@@ -1,11 +1,11 @@
 import {
-  Card,
   Section,
 } from "@/components/ui";
 
 import {
   PageHero,
   ContentGrid,
+  ContentCard,
 } from "@/components/shared";
 
 import { courses } from "@/content/courses";
@@ -30,31 +30,12 @@ export default function CoursesPage() {
 
           {courses.map((course) => (
 
-            <Card key={course.id}>
-
-
-              <h2 className="text-xl font-semibold">
-                {course.title}
-              </h2>
-
-
-              <p className="mt-3 text-neutral-600">
-                {course.description}
-              </p>
-
-
-              <div className="mt-4 text-sm text-[#661093]">
-
-                {course.level}
-
-                {" • "}
-
-                {course.duration}
-
-              </div>
-
-
-            </Card>
+            <ContentCard
+              key={course.id}
+              title={course.title}
+              description={course.description}
+              meta={`${course.level} • ${course.duration}`}
+            />
 
           ))}
 
