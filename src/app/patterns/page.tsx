@@ -1,11 +1,11 @@
 import {
-  Card,
   Section,
 } from "@/components/ui";
 
 import {
   PageHero,
   ContentGrid,
+  ContentCard,
 } from "@/components/shared";
 
 import { patterns } from "@/content/patterns";
@@ -30,27 +30,12 @@ export default function PatternsPage() {
 
           {patterns.map((pattern) => (
 
-            <Card key={pattern.id}>
-
-
-              <h2 className="text-xl font-semibold">
-                {pattern.title}
-              </h2>
-
-
-              <p className="mt-3 text-neutral-600">
-                {pattern.description}
-              </p>
-
-
-              <div className="mt-4 text-sm text-[#661093]">
-
-                {pattern.access}
-
-              </div>
-
-
-            </Card>
+            <ContentCard
+              key={pattern.id}
+              title={pattern.title}
+              description={pattern.description}
+              meta={pattern.access}
+            />
 
           ))}
 
@@ -64,3 +49,4 @@ export default function PatternsPage() {
     </div>
   );
 }
+
