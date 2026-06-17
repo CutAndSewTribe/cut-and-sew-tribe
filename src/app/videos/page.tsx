@@ -1,11 +1,11 @@
 import {
-  Card,
   Section,
 } from "@/components/ui";
 
 import {
   PageHero,
   ContentGrid,
+  ContentCard,
 } from "@/components/shared";
 
 import { videos } from "@/content/videos";
@@ -30,31 +30,12 @@ export default function VideosPage() {
 
           {videos.map((video) => (
 
-            <Card key={video.id}>
-
-
-              <h2 className="text-xl font-semibold">
-                {video.title}
-              </h2>
-
-
-              <p className="mt-3 text-neutral-600">
-                {video.description}
-              </p>
-
-
-              <div className="mt-4 text-sm text-[#661093]">
-
-                {video.duration}
-
-                {" • "}
-
-                {video.views} views
-
-              </div>
-
-
-            </Card>
+            <ContentCard
+              key={video.id}
+              title={video.title}
+              description={video.description}
+              meta={`${video.duration} • ${video.views} views`}
+            />
 
           ))}
 
@@ -68,3 +49,4 @@ export default function VideosPage() {
     </div>
   );
 }
+
