@@ -1,5 +1,6 @@
 import {
-  Container,
+ 
+ Container,
   Section,
 } from "@/components/ui";
 
@@ -10,6 +11,37 @@ import {
 } from "@/components/shared";
 
 import { resources } from "@/content/resources";
+
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{
+    slug: string;
+  }>;
+}) {
+
+  const { slug } = await params;
+
+
+const resource = resources.find(
+  (item) => item.slug === slug
+);
+
+
+
+  if (!resource) {
+    return {
+      title: "Resource Not Found",
+    };
+  }
+
+
+  return {
+    title: `${resource.title} | Cut and Sew Tribe`,
+    description: resource.description,
+  };
+}
 
 
 export function generateStaticParams() {

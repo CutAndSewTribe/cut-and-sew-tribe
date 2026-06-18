@@ -12,6 +12,37 @@ import {
 import { courses } from "@/content/courses";
 
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{
+    slug: string;
+  }>;
+}) {
+
+  const { slug } = await params;
+
+
+  const course = courses.find(
+    (item) => item.slug === slug
+  );
+
+
+  if (!course) {
+    return {
+      title: "Course Not Found",
+    };
+  }
+
+
+  return {
+    title: `${course.title} | Cut and Sew Tribe`,
+    description: course.description,
+  };
+}
+
+
+
 export function generateStaticParams() {
   return courses.map((course) => ({
     slug: course.slug,

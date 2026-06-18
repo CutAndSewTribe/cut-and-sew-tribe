@@ -11,6 +11,36 @@ import {
 
 import { patterns } from "@/content/patterns";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{
+    slug: string;
+  }>;
+}) {
+
+  const { slug } = await params;
+
+
+  const pattern = patterns.find(
+    (item) => item.slug === slug
+  );
+
+
+  if (!pattern) {
+    return {
+      title: "Pattern Not Found",
+    };
+  }
+
+
+  return {
+    title: `${pattern.title} | Cut and Sew Tribe`,
+    description: pattern.description,
+  };
+}
+
+
 
 export function generateStaticParams() {
   return patterns.map((pattern) => ({

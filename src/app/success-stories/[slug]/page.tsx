@@ -12,6 +12,37 @@ import {
 import { studentStories } from "@/content/success-stories";
 
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{
+    slug: string;
+  }>;
+}) {
+
+  const { slug } = await params;
+
+
+  const story = studentStories.find(
+    (item) => item.slug === slug
+  );
+
+
+  if (!story) {
+    return {
+      title: "Story Not Found",
+    };
+  }
+
+
+  return {
+    title: `${story.name} | Cut and Sew Tribe`,
+    description: story.shortStory,
+  };
+}
+
+
+
 export function generateStaticParams() {
   return studentStories.map((story) => ({
     slug: story.slug,

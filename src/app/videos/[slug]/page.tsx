@@ -11,6 +11,36 @@ import {
 
 import { videos } from "@/content/videos";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{
+    slug: string;
+  }>;
+}) {
+
+  const { slug } = await params;
+
+
+  const video = videos.find(
+    (item) => item.slug === slug
+  );
+
+
+  if (!video) {
+    return {
+      title: "Video Not Found",
+    };
+  }
+
+
+  return {
+    title: `${video.title} | Cut and Sew Tribe`,
+    description: video.description,
+  };
+}
+
+
 
 export function generateStaticParams() {
   return videos.map((video) => ({
