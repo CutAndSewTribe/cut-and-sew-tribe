@@ -1,5 +1,8 @@
 import Link from "next/link";
 
+import { SearchBar } from "@/components/shared";
+
+
 const navigation = [
   {
     label: "Courses",
@@ -23,21 +26,27 @@ const navigation = [
   },
 ];
 
+
 export default function Header() {
   return (
     <header className="w-full border-b border-neutral-200 bg-white">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-5">
+
 
         <Link
           href="/"
-          className="text-xl font-bold tracking-tight text-[#661093]"
+          className="shrink-0 text-xl font-bold tracking-tight text-[#661093]"
         >
           Cut & Sew Tribe
         </Link>
 
 
+
         <nav className="hidden gap-6 md:flex">
+
           {navigation.map((item) => (
+
             <Link
               key={item.href}
               href={item.href}
@@ -45,18 +54,31 @@ export default function Header() {
             >
               {item.label}
             </Link>
+
           ))}
+
         </nav>
+
+
+
+        <div className="hidden w-72 lg:block">
+
+          <SearchBar />
+
+        </div>
+
 
 
         <Link
           href="/courses"
-          className="rounded-full bg-[#661093] px-5 py-2 text-sm font-medium text-white transition hover:bg-[#7A16AF]"
+          className="shrink-0 rounded-full bg-[#661093] px-5 py-2 text-sm font-medium text-white transition hover:bg-[#7A16AF]"
         >
           Start Learning
         </Link>
 
+
       </div>
+
     </header>
   );
 }
