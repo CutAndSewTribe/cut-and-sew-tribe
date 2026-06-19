@@ -96,6 +96,7 @@ export default async function VideoDetailPage({
                 video.category
               }
               meta={`${video.duration} • ${video.views} views`}
+              thumbnail={video.thumbnail}
             />
 
 
@@ -105,6 +106,7 @@ export default async function VideoDetailPage({
                 video.instructor
               }
               meta={video.tags.join(", ")}
+              thumbnail={video.thumbnail}
             />
 
 
