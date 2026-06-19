@@ -96,6 +96,7 @@ export default async function PatternDetailPage({
                 pattern.category
               }
               meta={`${pattern.access} • ${pattern.fileFormat}`}
+              thumbnail={pattern.thumbnail}
             />
 
 
@@ -105,6 +106,7 @@ export default async function PatternDetailPage({
                 "Access this professional sewing pattern."
               }
               meta={pattern.downloadUrl}
+              thumbnail={pattern.thumbnail}
             />
 
 
