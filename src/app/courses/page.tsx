@@ -42,6 +42,7 @@ export default function CoursesPage() {
                 title={course.title}
                 description={course.description}
                 meta={`${course.level} • ${course.duration}`}
+                thumbnail={course.thumbnail}
               />
 
             </Link>
@@ -57,4 +58,3 @@ export default function CoursesPage() {
     </div>
   );
 }
-
