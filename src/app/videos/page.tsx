@@ -42,6 +42,7 @@ export default function VideosPage() {
                 title={video.title}
                 description={video.description}
                 meta={`${video.duration} • ${video.views} views`}
+                thumbnail={video.thumbnail}
               />
 
             </Link>
