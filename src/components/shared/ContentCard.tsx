@@ -17,9 +17,9 @@ export default function ContentCard({
   return (
     <Card>
 
-      <h2 className="text-xl font-semibold">
+      <h3 className="text-xl font-semibold">
         {title}
-      </h2>
+      </h3>
 
 
       <p className="mt-3 text-neutral-600">
@@ -28,7 +28,9 @@ export default function ContentCard({
 
 
       {meta && (
-        <div className="mt-4 text-sm text-[#661093]">
+        <div
+          className="mt-4 text-sm text-[#661093]"
+        >
           {meta}
         </div>
       )}
@@ -36,4 +38,3 @@ export default function ContentCard({
     </Card>
   );
 }
-
