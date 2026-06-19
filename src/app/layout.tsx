@@ -20,9 +20,34 @@ const geistMono = Geist_Mono({
 
 
 export const metadata: Metadata = {
-  title: "Cut & Sew Tribe",
+  title: {
+    default: "Cut & Sew Tribe | Fashion Design Academy",
+    template: "%s | Cut & Sew Tribe",
+  },
+
   description:
-    "Learn fashion design, sewing, and garment creation from beginner to professional level.",
+    "Learn fashion design, sewing, pattern drafting, and garment creation from beginner to professional level.",
+
+  keywords: [
+    "fashion design",
+    "sewing courses",
+    "pattern drafting",
+    "dressmaking",
+    "garment construction",
+    "fashion academy",
+  ],
+
+  openGraph: {
+    title: "Cut & Sew Tribe | Fashion Design Academy",
+
+    description:
+      "Learn fashion design, sewing, pattern drafting, and garment creation.",
+
+    type: "website",
+
+    siteName:
+      "Cut & Sew Tribe",
+  },
 };
 
 
