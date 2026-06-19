@@ -97,6 +97,7 @@ export default async function CourseDetailPage({
                 course.subtitle
               }
               meta={`${course.duration} • ${course.price} ${course.currency}`}
+              thumbnail={course.thumbnail}
             />
 
 
@@ -106,6 +107,7 @@ export default async function CourseDetailPage({
                 course.outcomes.join(", ")
               }
               meta={`${course.modules.length} modules`}
+              thumbnail={course.thumbnail}
             />
 
 
