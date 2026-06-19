@@ -42,6 +42,7 @@ export default function PatternsPage() {
                 title={pattern.title}
                 description={pattern.description}
                 meta={`${pattern.level} • ${pattern.access}`}
+                thumbnail={pattern.thumbnail}
               />
 
             </Link>
