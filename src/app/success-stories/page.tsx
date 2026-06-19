@@ -42,6 +42,7 @@ export default function SuccessStoriesPage() {
                 title={story.name}
                 description={story.story}
                 meta={`${story.course} • ${story.location}`}
+                thumbnail={story.image}
               />
 
             </Link>
