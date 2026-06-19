@@ -42,6 +42,7 @@ export default function ResourcesPage() {
                 title={resource.title}
                 description={resource.description}
                 meta={`${resource.fileType} • ${resource.access}`}
+                thumbnail={resource.thumbnail}
               />
 
             </Link>
