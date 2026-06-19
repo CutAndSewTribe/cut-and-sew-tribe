@@ -1,10 +1,18 @@
+import Link from "next/link";
+
 import {
-  Badge,
   Button,
-  Card,
   Container,
   Section,
 } from "@/components/ui";
+
+
+import {
+  PageHero,
+  ContentGrid,
+  ContentCard,
+} from "@/components/shared";
+
 
 import { courses } from "@/content/courses";
 import { videos } from "@/content/videos";
@@ -15,54 +23,54 @@ import { studentStories } from "@/content/success-stories";
 
 export default function Home() {
 
-  const featuredCourses = courses.filter(
-    (course) => course.featured,
-  );
 
-  const featuredVideos = videos.filter(
-    (video) => video.featured,
-  );
+  const featuredCourses =
+    courses.filter(
+      (course) => course.featured,
+    );
 
-  const featuredPatterns = patterns.filter(
-    (pattern) => pattern.featured,
-  );
 
-  const featuredResources = resources.filter(
-    (resource) => resource.featured,
-  );
+  const featuredVideos =
+    videos.filter(
+      (video) => video.featured,
+    );
 
-  const featuredStories = studentStories.filter(
-    (story) => story.featured,
-  );
+
+  const featuredPatterns =
+    patterns.filter(
+      (pattern) => pattern.featured,
+    );
+
+
+  const featuredResources =
+    resources.filter(
+      (resource) => resource.featured,
+    );
+
+
+  const featuredStories =
+    studentStories.filter(
+      (story) => story.featured,
+    );
+
 
 
   return (
     <div>
 
 
-      <Section className="bg-neutral-950 text-white">
+      <PageHero
+        label="Fashion Education Platform"
+        title="Build Fashion Skills. Create Beautiful Garments. Grow Your Brand."
+        description="Learn fashion design, sewing, pattern drafting, and fashion business from beginner to professional level."
+      />
+
+
+      <Section>
 
         <Container>
 
-          <Badge>
-            Fashion Education Platform
-          </Badge>
-
-
-          <h1 className="mt-6 max-w-3xl text-5xl font-bold">
-            Build Fashion Skills.
-            Create Beautiful Garments.
-            Grow Your Brand.
-          </h1>
-
-
-          <p className="mt-6 max-w-2xl text-neutral-300">
-            Learn fashion design, sewing, pattern making,
-            and fashion business from beginner to professional level.
-          </p>
-
-
-          <div className="mt-10 flex gap-4">
+          <div className="flex gap-4">
 
             <Button href="/courses">
               Explore Courses
@@ -82,44 +90,39 @@ export default function Home() {
 
 
 
-
       <Section>
 
         <Container>
 
-          <h2 className="text-3xl font-bold">
+
+          <h2 className="mb-8 text-3xl font-bold">
             Featured Courses
           </h2>
 
 
-          <div className="mt-8 grid gap-6 md:grid-cols-3">
+          <ContentGrid>
 
 
             {featuredCourses.map((course) => (
 
-              <Card key={course.id}>
+              <Link
+                key={course.id}
+                href={`/courses/${course.slug}`}
+              >
 
-                <h3 className="text-xl font-semibold">
-                  {course.title}
-                </h3>
+                <ContentCard
+                  title={course.title}
+                  description={course.description}
+                  meta={`${course.level} • ${course.duration}`}
+                />
 
-
-                <p className="mt-3 text-neutral-600">
-                  {course.description}
-                </p>
-
-
-                <p className="mt-4 text-[#661093]">
-                  {course.duration}
-                </p>
-
-
-              </Card>
+              </Link>
 
             ))}
 
 
-          </div>
+          </ContentGrid>
+
 
         </Container>
 
@@ -133,10 +136,12 @@ export default function Home() {
 
         <Container>
 
-          <div className="grid gap-10 md:grid-cols-3">
+
+          <div className="grid gap-8 md:grid-cols-3">
 
 
             <div>
+
               <h3 className="text-3xl font-bold">
                 {featuredVideos.length}
               </h3>
@@ -144,10 +149,12 @@ export default function Home() {
               <p>
                 Video Lessons
               </p>
+
             </div>
 
 
             <div>
+
               <h3 className="text-3xl font-bold">
                 {featuredPatterns.length}
               </h3>
@@ -155,21 +162,25 @@ export default function Home() {
               <p>
                 Sewing Patterns
               </p>
+
             </div>
 
 
             <div>
+
               <h3 className="text-3xl font-bold">
                 {featuredResources.length}
               </h3>
 
               <p>
-                Resources
+                Learning Resources
               </p>
+
             </div>
 
 
           </div>
+
 
         </Container>
 
@@ -183,37 +194,81 @@ export default function Home() {
 
         <Container>
 
-          <h2 className="text-3xl font-bold">
-            Student Success Stories
+
+          <h2 className="mb-8 text-3xl font-bold">
+            Featured Videos
           </h2>
 
 
-          <div className="mt-8 grid gap-6 md:grid-cols-3">
+          <ContentGrid>
 
 
-            {featuredStories.map((story) => (
+            {featuredVideos.slice(0,3).map((video) => (
 
-              <Card key={story.id}>
+              <Link
+                key={video.id}
+                href={`/videos/${video.slug}`}
+              >
 
-                <h3 className="font-semibold">
-                  {story.name}
-                </h3>
+                <ContentCard
+                  title={video.title}
+                  description={video.description}
+                  meta={`${video.level} • ${video.duration}`}
+                />
 
-
-                <p className="mt-3 text-neutral-600">
-                  {story.story}
-                </p>
-
-
-              </Card>
+              </Link>
 
             ))}
 
 
-          </div>
+          </ContentGrid>
 
 
         </Container>
+
+      </Section>
+
+
+
+
+
+      <Section>
+
+
+        <Container>
+
+
+          <h2 className="mb-8 text-3xl font-bold">
+            Student Success Stories
+          </h2>
+
+
+          <ContentGrid>
+
+
+            {featuredStories.map((story) => (
+
+              <Link
+                key={story.id}
+                href={`/success-stories/${story.slug}`}
+              >
+
+                <ContentCard
+                  title={story.name}
+                  description={story.shortStory}
+                  meta={story.course}
+                />
+
+              </Link>
+
+            ))}
+
+
+          </ContentGrid>
+
+
+        </Container>
+
 
       </Section>
 
