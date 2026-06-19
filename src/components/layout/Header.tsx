@@ -1,5 +1,5 @@
 import Link from "next/link";
-
+import MobileMenu from "./MobileMenu";
 import { SearchBar } from "@/components/shared";
 
 
@@ -31,7 +31,7 @@ export default function Header() {
   return (
     <header className="w-full border-b border-neutral-200 bg-white">
 
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-5">
+      <div className="relative mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
 
 
         <Link
@@ -69,12 +69,17 @@ export default function Header() {
 
 
 
-        <Link
-          href="/courses"
-          className="shrink-0 rounded-full bg-[#661093] px-5 py-2 text-sm font-medium text-white transition hover:bg-[#7A16AF]"
-        >
-          Start Learning
-        </Link>
+        <div className="hidden md:block">
+  <Link
+    href="/courses"
+    className="rounded-full bg-[#661093] px-5 py-2 text-sm font-medium text-white transition hover:bg-[#7A16AF]"
+  >
+    Start Learning
+  </Link>
+</div>
+
+
+<MobileMenu />
 
 
       </div>
