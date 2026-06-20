@@ -99,6 +99,7 @@ export default async function ResourceDetailPage({
                 resource.fileType
               }
               meta={`${resource.access} • ${resource.downloads} downloads`}
+              thumbnail={resource.thumbnail}
             />
 
 
@@ -108,6 +109,7 @@ export default async function ResourceDetailPage({
                 "Access this professional fashion resource."
               }
               meta={resource.fileUrl}
+              thumbnail={resource.thumbnail}
             />
 
 
