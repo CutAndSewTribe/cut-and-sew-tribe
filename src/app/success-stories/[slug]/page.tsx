@@ -99,6 +99,7 @@ export default async function SuccessStoryDetailPage({
                 story.achievement
               }
               meta={story.location}
+              thumbnail={story.image}
             />
 
 
@@ -108,6 +109,7 @@ export default async function SuccessStoryDetailPage({
                 story.story
               }
               meta="Student Success Story"
+              thumbnail={story.image}
             />
 
 
