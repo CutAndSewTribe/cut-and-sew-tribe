@@ -20,6 +20,10 @@ const geistMono = Geist_Mono({
 
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    "https://your-domain.com"
+  ),
+
   title: {
     default: "Cut & Sew Tribe | Fashion Design Academy",
     template: "%s | Cut & Sew Tribe",
@@ -37,8 +41,10 @@ export const metadata: Metadata = {
     "fashion academy",
   ],
 
+
   openGraph: {
-    title: "Cut & Sew Tribe | Fashion Design Academy",
+    title:
+      "Cut & Sew Tribe | Fashion Design Academy",
 
     description:
       "Learn fashion design, sewing, pattern drafting, and garment creation.",
@@ -47,6 +53,32 @@ export const metadata: Metadata = {
 
     siteName:
       "Cut & Sew Tribe",
+
+    images: [
+      {
+        url: "/images/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt:
+          "Cut & Sew Tribe Fashion Design Academy",
+      },
+    ],
+  },
+
+
+  twitter: {
+    card:
+      "summary_large_image",
+
+    title:
+      "Cut & Sew Tribe | Fashion Design Academy",
+
+    description:
+      "Learn fashion design, sewing, pattern drafting, and garment creation.",
+
+    images: [
+      "/images/og-image.jpg",
+    ],
   },
 };
 
