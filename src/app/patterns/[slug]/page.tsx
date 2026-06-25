@@ -18,9 +18,7 @@ export async function generateMetadata({
     slug: string;
   }>;
 }) {
-
   const { slug } = await params;
-
 
   const pattern = patterns.find(
     (item) => item.slug === slug
@@ -35,8 +33,40 @@ export async function generateMetadata({
 
 
   return {
-    title: `${pattern.title} | Cut and Sew Tribe`,
+    title: pattern.title,
+
     description: pattern.description,
+
+
+    openGraph: {
+      title: pattern.title,
+
+      description: pattern.description,
+
+      type: "article",
+
+      images: [
+        {
+          url: pattern.thumbnail,
+          width: 1200,
+          height: 630,
+          alt: pattern.title,
+        },
+      ],
+    },
+
+
+    twitter: {
+      card: "summary_large_image",
+
+      title: pattern.title,
+
+      description: pattern.description,
+
+      images: [
+        pattern.thumbnail,
+      ],
+    },
   };
 }
 
