@@ -19,9 +19,7 @@ export async function generateMetadata({
     slug: string;
   }>;
 }) {
-
   const { slug } = await params;
-
 
   const story = studentStories.find(
     (item) => item.slug === slug
@@ -36,8 +34,40 @@ export async function generateMetadata({
 
 
   return {
-    title: `${story.name} | Cut and Sew Tribe`,
+    title: story.name,
+
     description: story.shortStory,
+
+
+    openGraph: {
+      title: story.name,
+
+      description: story.shortStory,
+
+      type: "article",
+
+      images: [
+        {
+          url: story.image,
+          width: 1200,
+          height: 630,
+          alt: story.name,
+        },
+      ],
+    },
+
+
+    twitter: {
+      card: "summary_large_image",
+
+      title: story.name,
+
+      description: story.shortStory,
+
+      images: [
+        story.image,
+      ],
+    },
   };
 }
 
