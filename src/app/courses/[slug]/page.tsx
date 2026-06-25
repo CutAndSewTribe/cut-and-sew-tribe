@@ -19,14 +19,11 @@ export async function generateMetadata({
     slug: string;
   }>;
 }) {
-
   const { slug } = await params;
-
 
   const course = courses.find(
     (item) => item.slug === slug
   );
-
 
   if (!course) {
     return {
@@ -36,11 +33,42 @@ export async function generateMetadata({
 
 
   return {
-    title: `${course.title} | Cut and Sew Tribe`,
+    title: course.title,
+
     description: course.description,
+
+
+    openGraph: {
+      title: course.title,
+
+      description: course.description,
+
+      type: "article",
+
+      images: [
+        {
+          url: course.thumbnail,
+          width: 1200,
+          height: 630,
+          alt: course.title,
+        },
+      ],
+    },
+
+
+    twitter: {
+      card: "summary_large_image",
+
+      title: course.title,
+
+      description: course.description,
+
+      images: [
+        course.thumbnail,
+      ],
+    },
   };
 }
-
 
 
 export function generateStaticParams() {
