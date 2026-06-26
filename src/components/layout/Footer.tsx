@@ -1,5 +1,13 @@
 import Link from "next/link";
 
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaYoutube,
+  FaWhatsapp,
+  FaTiktok,
+} from "react-icons/fa";
+
 
 const exploreLinks = [
   {
@@ -41,22 +49,27 @@ const socialLinks = [
   {
     label: "Facebook",
     href: "https://facebook.com/",
+    icon: FaFacebookF,
   },
   {
     label: "Instagram",
     href: "https://instagram.com/",
+    icon: FaInstagram,
   },
   {
     label: "TikTok",
     href: "https://tiktok.com/",
+    icon: FaTiktok,
   },
   {
     label: "YouTube",
     href: "https://youtube.com/",
+    icon: FaYoutube,
   },
   {
     label: "WhatsApp",
     href: "https://wa.me/",
+    icon: FaWhatsapp,
   },
 ];
 
@@ -65,7 +78,6 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-neutral-200 bg-neutral-50">
-
 
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-12 md:grid-cols-4">
 
@@ -155,21 +167,37 @@ export default function Footer() {
           </p>
 
 
+
           <div className="mt-5 flex flex-wrap gap-3">
 
-            {socialLinks.map((item) => (
+            {socialLinks.map((item) => {
 
-              <a
-                key={item.label}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-full border border-neutral-200 px-3 py-2 text-sm text-neutral-700 hover:border-[#661093] hover:text-[#661093]"
-              >
-                {item.label}
-              </a>
+              const Icon = item.icon;
 
-            ))}
+
+              return (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={item.label}
+                  className="
+                    flex h-10 w-10 items-center justify-center
+                    rounded-full border border-neutral-200
+                    text-neutral-700
+                    transition
+                    hover:border-[#661093]
+                    hover:text-[#661093]
+                  "
+                >
+
+                  <Icon size={18} />
+
+                </a>
+              );
+
+            })}
 
           </div>
 
