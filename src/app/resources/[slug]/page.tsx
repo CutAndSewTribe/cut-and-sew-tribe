@@ -10,6 +10,8 @@ import {
   ContentGrid,
 } from "@/components/shared";
 
+import ShareButtons from "@/components/shared/ShareButtons";
+
 import { resources } from "@/content/resources";
 
 
@@ -141,12 +143,17 @@ export default async function ResourceDetailPage({
             />
 
 
-          </ContentGrid>
+                    </ContentGrid>
 
 
-        </Container>
+                    <ShareButtons
+                      title={resource.title}
+                    />
 
-      </Section>
+
+                  </Container>
+
+                 </Section>
 
 
     </div>
