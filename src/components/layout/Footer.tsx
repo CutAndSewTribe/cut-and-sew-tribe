@@ -37,6 +37,30 @@ const supportLinks = [
 ];
 
 
+const socialLinks = [
+  {
+    label: "Facebook",
+    href: "https://facebook.com/",
+  },
+  {
+    label: "Instagram",
+    href: "https://instagram.com/",
+  },
+  {
+    label: "TikTok",
+    href: "https://tiktok.com/",
+  },
+  {
+    label: "YouTube",
+    href: "https://youtube.com/",
+  },
+  {
+    label: "WhatsApp",
+    href: "https://wa.me/",
+  },
+];
+
+
 export default function Footer() {
 
   return (
@@ -72,7 +96,6 @@ export default function Footer() {
 
           <div className="mt-4 flex flex-col gap-3 text-sm">
 
-
             {exploreLinks.map((item) => (
 
               <Link
@@ -84,7 +107,6 @@ export default function Footer() {
               </Link>
 
             ))}
-
 
           </div>
 
@@ -101,7 +123,6 @@ export default function Footer() {
 
           <div className="mt-4 flex flex-col gap-3 text-sm">
 
-
             {supportLinks.map((item) => (
 
               <Link
@@ -113,7 +134,6 @@ export default function Footer() {
               </Link>
 
             ))}
-
 
           </div>
 
@@ -133,6 +153,25 @@ export default function Footer() {
             Join creatives building professional fashion
             skills and turning ideas into garments.
           </p>
+
+
+          <div className="mt-5 flex flex-wrap gap-3">
+
+            {socialLinks.map((item) => (
+
+              <a
+                key={item.label}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border border-neutral-200 px-3 py-2 text-sm text-neutral-700 hover:border-[#661093] hover:text-[#661093]"
+              >
+                {item.label}
+              </a>
+
+            ))}
+
+          </div>
 
 
         </div>
