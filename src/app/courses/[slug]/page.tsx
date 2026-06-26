@@ -9,6 +9,8 @@ import {
   ContentGrid,
 } from "@/components/shared";
 
+import ShareButtons from "@/components/shared/ShareButtons";
+
 import { courses } from "@/content/courses";
 
 
@@ -139,7 +141,12 @@ export default async function CourseDetailPage({
             />
 
 
-          </ContentGrid>
+                    </ContentGrid>
+
+
+                    <ShareButtons
+                      title={course.title}
+                    />
 
 
         </Container>
