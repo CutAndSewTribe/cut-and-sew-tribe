@@ -9,6 +9,8 @@ import {
   ContentGrid,
 } from "@/components/shared";
 
+import ShareButtons from "@/components/shared/ShareButtons";
+
 import { videos } from "@/content/videos";
 
 export async function generateMetadata({
@@ -139,11 +141,17 @@ export default async function VideoDetailPage({
             />
 
 
-          </ContentGrid>
+                    </ContentGrid>
 
-        </Container>
 
-      </Section>
+                    <ShareButtons
+                      title={video.title}
+                    />
+
+
+                  </Container>
+
+                </Section>
 
 
     </div>
