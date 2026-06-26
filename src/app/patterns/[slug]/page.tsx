@@ -9,6 +9,8 @@ import {
   ContentGrid,
 } from "@/components/shared";
 
+import ShareButtons from "@/components/shared/ShareButtons";
+
 import { patterns } from "@/content/patterns";
 
 export async function generateMetadata({
@@ -140,11 +142,17 @@ export default async function PatternDetailPage({
             />
 
 
-          </ContentGrid>
+                    </ContentGrid>
 
-        </Container>
 
-      </Section>
+                    <ShareButtons
+                      title={pattern.title}
+                    />
+
+
+                 </Container>
+
+               </Section>
 
 
     </div>
