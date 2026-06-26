@@ -30,6 +30,10 @@ const exploreLinks = [
     label: "Success Stories",
     href: "/success-stories",
   },
+  {
+    label: "Community",
+    href: "/community",
+  },
 ];
 
 

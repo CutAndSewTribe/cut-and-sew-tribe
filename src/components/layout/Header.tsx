@@ -32,6 +32,10 @@ const navigation = [
     label: "Success Stories",
     href: "/success-stories",
   },
+  {
+    label: "Community",
+    href: "/community",
+  },
 ];
 
 
