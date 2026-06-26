@@ -28,6 +28,22 @@ const navigation = [
 ];
 
 
+const communityLinks = [
+  {
+    label: "WhatsApp",
+    href: "https://wa.me/",
+  },
+  {
+    label: "Instagram",
+    href: "https://instagram.com/",
+  },
+  {
+    label: "YouTube",
+    href: "https://youtube.com/",
+  },
+];
+
+
 export default function MobileMenu() {
 
   const [open, setOpen] = useState(false);
@@ -80,6 +96,35 @@ export default function MobileMenu() {
             >
               Start Learning
             </Link>
+
+
+
+            <div className="mt-3 border-t pt-4">
+
+              <p className="mb-3 text-sm font-semibold text-neutral-800">
+                Community
+              </p>
+
+
+              <div className="flex flex-wrap gap-3">
+
+                {communityLinks.map((item) => (
+
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-full border px-3 py-2 text-sm text-neutral-700 hover:border-[#661093] hover:text-[#661093]"
+                  >
+                    {item.label}
+                  </a>
+
+                ))}
+
+              </div>
+
+            </div>
 
 
           </div>
