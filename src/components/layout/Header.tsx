@@ -1,6 +1,14 @@
 import Link from "next/link";
+
 import MobileMenu from "./MobileMenu";
+
 import { SearchBar } from "@/components/shared";
+
+import {
+  FaInstagram,
+  FaTiktok,
+  FaWhatsapp,
+} from "react-icons/fa";
 
 
 const navigation = [
@@ -27,7 +35,32 @@ const navigation = [
 ];
 
 
+const socialLinks = [
+  {
+    label: "Instagram",
+    href: "https://instagram.com/",
+    icon: FaInstagram,
+    className: "text-pink-600",
+  },
+
+  {
+    label: "TikTok",
+    href: "https://tiktok.com/",
+    icon: FaTiktok,
+    className: "text-black",
+  },
+
+  {
+    label: "WhatsApp",
+    href: "https://wa.me/",
+    icon: FaWhatsapp,
+    className: "text-green-600",
+  },
+];
+
+
 export default function Header() {
+
   return (
     <header className="w-full border-b border-neutral-200 bg-white">
 
@@ -69,17 +102,62 @@ export default function Header() {
 
 
 
-        <div className="hidden md:block">
-  <Link
-    href="/courses"
-    className="rounded-full bg-[#661093] px-5 py-2 text-sm font-medium text-white transition hover:bg-[#7A16AF]"
-  >
-    Start Learning
-  </Link>
-</div>
+        <div className="hidden items-center gap-4 lg:flex">
 
 
-<MobileMenu />
+          <div className="flex items-center gap-3">
+
+            {socialLinks.map((item) => {
+
+              const Icon = item.icon;
+
+
+              return (
+
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={item.label}
+                  className={`${item.className} transition hover:scale-110`}
+                >
+
+                  <Icon size={20} />
+
+                </a>
+
+              );
+
+            })}
+
+          </div>
+
+
+
+          <Link
+            href="/courses"
+            className="
+              rounded-full
+              bg-[#661093]
+              px-5
+              py-2
+              text-sm
+              font-medium
+              text-white
+              transition
+              hover:bg-[#7A16AF]
+            "
+          >
+            Start Learning
+          </Link>
+
+
+        </div>
+
+
+
+        <MobileMenu />
 
 
       </div>
