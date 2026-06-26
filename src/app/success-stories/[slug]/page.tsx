@@ -9,6 +9,8 @@ import {
   ContentGrid,
 } from "@/components/shared";
 
+import ShareButtons from "@/components/shared/ShareButtons";
+
 import { studentStories } from "@/content/success-stories";
 
 
@@ -143,12 +145,17 @@ export default async function SuccessStoryDetailPage({
             />
 
 
-          </ContentGrid>
+                    </ContentGrid>
 
 
-        </Container>
+                    <ShareButtons
+                      title={story.name}
+                    />
 
-      </Section>
+
+                  </Container>
+
+                </Section>
 
 
     </div>
