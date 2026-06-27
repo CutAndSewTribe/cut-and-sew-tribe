@@ -37,8 +37,7 @@ export default function PageHero({
           bg-center
         "
         style={{
-          backgroundImage:
-            `url(${backgroundImage})`,
+          backgroundImage: `url(${backgroundImage})`,
         }}
       />
 
@@ -47,7 +46,19 @@ export default function PageHero({
         className="
           absolute
           inset-0
-          bg-black/60
+          bg-black/50
+        "
+      />
+
+
+      <div
+        className="
+          absolute
+          inset-0
+          bg-linear-to-r
+          from-[#661093]/70
+          via-transparent
+          to-black/40
         "
       />
 
@@ -58,8 +69,8 @@ export default function PageHero({
           className="
             relative
             z-10
-            py-24
-            md:py-32
+            py-28
+            md:py-36
           "
         >
 
@@ -71,7 +82,7 @@ export default function PageHero({
           <h1
             className="
               mt-6
-              max-w-4xl
+              max-w-5xl
               text-5xl
               font-bold
               tracking-tight
@@ -84,8 +95,8 @@ export default function PageHero({
 
           <p
             className="
-              mt-6
-              max-w-2xl
+              mt-8
+              max-w-3xl
               text-lg
               leading-8
               text-neutral-200
@@ -96,7 +107,6 @@ export default function PageHero({
 
 
         </div>
-
 
       </Container>
 
