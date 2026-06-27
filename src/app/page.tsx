@@ -6,6 +6,7 @@ import {
   Section,
 } from "@/components/ui";
 
+
 import {
   PageHero,
   ContentGrid,
@@ -55,7 +56,7 @@ export default function Home() {
 
 
   return (
-    <div>
+    <div className="bg-white">
 
 
       <PageHero
@@ -66,24 +67,55 @@ export default function Home() {
 
 
 
-      <Section className="bg-linear-to-b from-white to-neutral-50">
+      {/* CTA */}
+
+      <Section>
 
         <Container>
 
-          <div className="flex flex-wrap gap-4">
+          <div
+            className="
+              rounded-3xl
+              bg-[#661093]
+              p-8
+              text-white
+              md:flex
+              md:items-center
+              md:justify-between
+            "
+          >
 
-            <Button href="/courses">
-              Explore Courses
-            </Button>
+            <div>
+
+              <h2 className="text-3xl font-bold">
+                Start creating your fashion future
+              </h2>
 
 
-            <Button href="/videos">
-              Watch Lessons
-            </Button>
+              <p className="mt-3 text-white/80">
+                Learn practical skills and build your fashion confidence.
+              </p>
+
+            </div>
+
+
+
+            <div className="mt-6 flex gap-4 md:mt-0">
+
+              <Button href="/courses">
+                Explore Courses
+              </Button>
+
+
+              <Button href="/videos">
+                Watch Lessons
+              </Button>
+
+
+            </div>
 
 
           </div>
-
 
         </Container>
 
@@ -93,14 +125,22 @@ export default function Home() {
 
 
 
-      <Section>
+      {/* COURSES */}
+
+      <Section className="bg-neutral-50">
 
         <Container>
 
 
-          <h2 className="mb-8 text-3xl font-bold text-neutral-900">
+          <p className="text-sm font-semibold uppercase tracking-widest text-[#661093]">
+            Learn
+          </p>
+
+
+          <h2 className="mt-3 text-4xl font-bold">
             Featured Courses
           </h2>
+
 
 
           <ContentGrid>
@@ -131,30 +171,36 @@ export default function Home() {
 
         </Container>
 
-
       </Section>
 
 
 
 
 
+      {/* STATS */}
 
-      <Section className="bg-neutral-950 text-white">
+      <Section>
 
 
         <Container>
 
 
-          <div className="grid gap-8 md:grid-cols-3">
+          <div
+            className="
+              grid
+              gap-6
+              md:grid-cols-3
+            "
+          >
 
 
-            <div>
+            <div className="rounded-3xl border p-8">
 
-              <h3 className="text-4xl font-bold">
+              <h3 className="text-4xl font-bold text-[#661093]">
                 {featuredVideos.length}
               </h3>
 
-              <p className="mt-2 text-neutral-300">
+              <p className="mt-2 font-medium">
                 Video Lessons
               </p>
 
@@ -162,13 +208,13 @@ export default function Home() {
 
 
 
-            <div>
+            <div className="rounded-3xl border p-8">
 
-              <h3 className="text-4xl font-bold">
+              <h3 className="text-4xl font-bold text-[#661093]">
                 {featuredPatterns.length}
               </h3>
 
-              <p className="mt-2 text-neutral-300">
+              <p className="mt-2 font-medium">
                 Sewing Patterns
               </p>
 
@@ -176,15 +222,14 @@ export default function Home() {
 
 
 
+            <div className="rounded-3xl border p-8">
 
-            <div>
-
-              <h3 className="text-4xl font-bold">
+              <h3 className="text-4xl font-bold text-[#661093]">
                 {featuredResources.length}
               </h3>
 
-              <p className="mt-2 text-neutral-300">
-                Learning Resources
+              <p className="mt-2 font-medium">
+                Resources
               </p>
 
             </div>
@@ -202,18 +247,22 @@ export default function Home() {
 
 
 
+      {/* VIDEOS */}
 
-
-      <Section className="bg-linear-to-b from-neutral-50 to-white">
+      <Section className="bg-neutral-50">
 
 
         <Container>
 
 
-          <h2 className="mb-8 text-3xl font-bold text-neutral-900">
+          <p className="text-sm font-semibold uppercase tracking-widest text-[#661093]">
+            Tutorials
+          </p>
+
+
+          <h2 className="mt-3 text-4xl font-bold">
             Featured Videos
           </h2>
-
 
 
           <ContentGrid>
@@ -236,7 +285,6 @@ export default function Home() {
 
               </Link>
 
-
             ))}
 
 
@@ -252,7 +300,7 @@ export default function Home() {
 
 
 
-
+      {/* STORIES */}
 
       <Section>
 
@@ -260,113 +308,14 @@ export default function Home() {
         <Container>
 
 
-          <h2 className="mb-8 text-3xl font-bold text-neutral-900">
-            Featured Patterns
-          </h2>
+          <p className="text-sm font-semibold uppercase tracking-widest text-[#661093]">
+            Community
+          </p>
 
 
-
-          <ContentGrid>
-
-
-            {featuredPatterns.slice(0,3).map((pattern) => (
-
-              <Link
-                key={pattern.id}
-                href={`/patterns/${pattern.slug}`}
-              >
-
-                <ContentCard
-                  title={pattern.title}
-                  description={pattern.description}
-                  meta={pattern.category}
-                  thumbnail={pattern.thumbnail}
-                />
-
-
-              </Link>
-
-            ))}
-
-
-          </ContentGrid>
-
-
-        </Container>
-
-
-      </Section>
-
-
-
-
-
-
-
-
-      <Section className="bg-neutral-50">
-
-
-        <Container>
-
-
-          <h2 className="mb-8 text-3xl font-bold text-neutral-900">
-            Learning Resources
-          </h2>
-
-
-
-          <ContentGrid>
-
-
-            {featuredResources.slice(0,3).map((resource) => (
-
-              <Link
-                key={resource.id}
-                href={`/resources/${resource.slug}`}
-              >
-
-
-                <ContentCard
-                  title={resource.title}
-                  description={resource.description}
-                  meta={resource.fileType}
-                  thumbnail={resource.thumbnail}
-                />
-
-
-              </Link>
-
-
-            ))}
-
-
-          </ContentGrid>
-
-
-        </Container>
-
-
-      </Section>
-
-
-
-
-
-
-
-
-
-      <Section>
-
-
-        <Container>
-
-
-          <h2 className="mb-8 text-3xl font-bold text-neutral-900">
+          <h2 className="mt-3 text-4xl font-bold">
             Student Success Stories
           </h2>
-
 
 
 
@@ -380,7 +329,6 @@ export default function Home() {
                 href={`/success-stories/${story.slug}`}
               >
 
-
                 <ContentCard
                   title={story.name}
                   description={story.shortStory}
@@ -390,7 +338,6 @@ export default function Home() {
 
 
               </Link>
-
 
             ))}
 
@@ -402,8 +349,6 @@ export default function Home() {
 
 
       </Section>
-
-
 
 
 
