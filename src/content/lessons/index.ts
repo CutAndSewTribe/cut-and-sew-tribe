@@ -1,0 +1,1 @@
+export { professionalDressmakingLessons } from "./professional-dressmaking";

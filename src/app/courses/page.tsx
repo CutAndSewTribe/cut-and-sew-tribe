@@ -2,6 +2,8 @@ import Link from "next/link";
 
 import {
   Section,
+  Container,
+  Button,
 } from "@/components/ui";
 
 import {
@@ -21,36 +23,73 @@ export default function CoursesPage() {
       <PageHero
         label="Courses"
         title="Learn Fashion Design"
-        description="Structured courses designed to take you from beginner skills to professional fashion creation."
+        description="Structured fashion programs that take you from beginner skills to professional garment creation."
       />
 
 
       <Section>
 
-        <ContentGrid>
+        <Container>
+
+          <ContentGrid>
 
 
-          {courses.map((course) => (
-
-            <Link
-              key={course.id}
-              href={`/courses/${course.slug}`}
-              className="block"
-            >
+            {courses.map((course) => (
 
               <ContentCard
+
+                key={course.id}
+
                 title={course.title}
+
                 description={course.description}
-                meta={`${course.level} • ${course.duration}`}
+
+                meta={`${course.level} • ${course.duration} • ${course.price.toLocaleString()} ${course.currency}`}
+
                 thumbnail={course.thumbnail}
-              />
 
-            </Link>
+              >
 
-          ))}
+                <div className="mt-6 flex gap-3">
+
+                  <Link
+                    href={`/courses/${course.slug}`}
+                    className="flex-1"
+                  >
+
+                    <Button className="w-full">
+                      View Course
+                    </Button>
+
+                  </Link>
 
 
-        </ContentGrid>
+                  <Link
+                    href={`/courses/${course.slug}`}
+                    className="flex-1"
+                  >
+
+                    <Button
+                      className="w-full bg-[#661093] text-white"
+                    >
+                      Enroll Now
+                    </Button>
+
+                  </Link>
+
+
+                </div>
+
+
+              </ContentCard>
+
+            ))}
+
+
+          </ContentGrid>
+
+
+        </Container>
 
       </Section>
 

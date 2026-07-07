@@ -1,6 +1,6 @@
 import type { Course } from "@/types";
 
-export const professionalDressmakingCourse: Course = {
+const professionalDressmakingCourse: Course = {
   id: "course-professional-dressmaking",
 
   slug: "professional-dressmaking",
@@ -17,9 +17,11 @@ export const professionalDressmakingCourse: Course = {
 
   category: "dressmaking",
 
-  thumbnail: "/images/courses/professional-dressmaking.jpg",
+  thumbnail:
+    "/images/courses/professional-dressmaking.jpg",
 
-  previewVideo: "/videos/previews/professional-dressmaking.mp4",
+  previewVideo:
+    "/videos/previews/professional-dressmaking.mp4",
 
   price: 149900,
 

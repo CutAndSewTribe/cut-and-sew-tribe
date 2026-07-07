@@ -3,14 +3,17 @@ import {
   Section,
 } from "@/components/ui";
 
+
 import {
   PageHero,
   ContentCard,
 } from "@/components/shared";
 
+
 import Button from "@/components/ui/Button";
 
 import ShareButtons from "@/components/shared/ShareButtons";
+
 
 import { courses } from "@/content/courses";
 
@@ -25,6 +28,7 @@ export async function generateMetadata({
 }) {
 
   const { slug } = await params;
+
 
   const course = courses.find(
     (item) => item.slug === slug
@@ -47,6 +51,7 @@ export async function generateMetadata({
 
 
 
+
 export function generateStaticParams() {
 
   return courses.map((course) => ({
@@ -54,6 +59,8 @@ export function generateStaticParams() {
   }));
 
 }
+
+
 
 
 
@@ -74,6 +81,7 @@ export default async function CourseDetailPage({
   );
 
 
+
   if (!course) {
 
     return (
@@ -86,6 +94,7 @@ export default async function CourseDetailPage({
 
 
 
+
   return (
 
     <div>
@@ -93,7 +102,7 @@ export default async function CourseDetailPage({
 
       <PageHero
 
-        label={`${course.level} course`}
+        label={course.level}
 
         title={course.title}
 
@@ -105,31 +114,29 @@ export default async function CourseDetailPage({
 
 
 
-      <Section className="bg-neutral-50">
+      <Section>
 
         <Container>
 
 
+          {/* Top purchase area */}
+
           <div
             className="
+              mb-12
               grid
-              gap-10
+              gap-8
+              rounded-3xl
+              bg-white
+              p-8
+              shadow-xl
               lg:grid-cols-3
             "
           >
 
 
 
-
-
-            <div
-              className="
-                lg:col-span-2
-                space-y-10
-              "
-            >
-
-
+            <div className="lg:col-span-2">
 
 
               <ContentCard
@@ -145,298 +152,73 @@ export default async function CourseDetailPage({
               />
 
 
-
-
-
-              <div
-                className="
-                  rounded-3xl
-                  bg-white
-                  border
-                  border-neutral-200
-                  p-8
-                  shadow-sm
-                "
-              >
-
-                <h2
-                  className="
-                    text-3xl
-                    font-bold
-                    text-neutral-900
-                  "
-                >
-                  Course Modules
-                </h2>
-
-
-                <p
-                  className="
-                    mt-3
-                    text-neutral-600
-                  "
-                >
-                  Follow the complete learning path step by step.
-                </p>
-
-
-
-                <div
-                  className="
-                    mt-8
-                    space-y-5
-                  "
-                >
-
-
-                  {course.modules.map(
-                    (module, index) => (
-
-                    <div
-                      key={module.id}
-                      className="
-                        rounded-2xl
-                        border
-                        border-neutral-200
-                        bg-white
-                        p-6
-                        shadow-sm
-                        transition
-                        hover:-translate-y-1
-                        hover:shadow-lg
-                      "
-                    >
-
-
-                      <div
-                        className="
-                          flex
-                          items-start
-                          gap-4
-                        "
-                      >
-
-
-                        <div
-                          className="
-                            flex
-                            h-10
-                            w-10
-                            shrink-0
-                            items-center
-                            justify-center
-                            rounded-full
-                            bg-[#661093]
-                            font-bold
-                            text-white
-                          "
-                        >
-                          {index + 1}
-                        </div>
-
-
-
-                        <div>
-
-                          <h3
-                            className="
-                              text-xl
-                              font-bold
-                              text-neutral-900
-                            "
-                          >
-                            {module.title}
-                          </h3>
-
-
-                          <div
-                            className="
-                              mt-3
-                              flex
-                              gap-4
-                              text-sm
-                              font-semibold
-                              text-[#661093]
-                            "
-                          >
-
-                            <span>
-                              {module.lessons} lessons
-                            </span>
-
-                            <span>
-                              {module.duration}
-                            </span>
-
-                          </div>
-
-
-                        </div>
-
-
-                      </div>
-
-
-                    </div>
-
-                  ))}
-
-
-                </div>
-
-
-              </div>
-
-
-
-
-
-
-
-              <div
-                className="
-                  rounded-3xl
-                  bg-white
-                  border
-                  border-neutral-200
-                  p-8
-                  shadow-sm
-                "
-              >
-
-
-                <h2
-                  className="
-                    text-3xl
-                    font-bold
-                    text-neutral-900
-                  "
-                >
-                  What You Will Learn
-                </h2>
-
-
-
-                <div
-                  className="
-                    mt-6
-                    grid
-                    gap-4
-                    md:grid-cols-2
-                  "
-                >
-
-                {course.outcomes.map((item) => (
-
-                  <div
-                    key={item}
-                    className="
-                      rounded-xl
-                      bg-neutral-50
-                      p-4
-                      font-medium
-                      text-neutral-800
-                    "
-                  >
-
-                    ✓ {item}
-
-                  </div>
-
-                ))}
-
-
-                </div>
-
-
-              </div>
-
-
-
-
             </div>
 
 
 
 
 
-
-
-
-
-            <aside
+            <div
               className="
-                h-fit
+                flex
+                flex-col
+                justify-center
                 rounded-3xl
-                bg-white
-                border
-                border-neutral-200
+                bg-[#661093]
                 p-8
-                shadow-xl
-                lg:sticky
-                lg:top-24
+                text-white
               "
             >
 
 
               <p
                 className="
+                  text-sm
                   font-semibold
-                  text-neutral-500
+                  text-purple-200
                 "
               >
-                Enroll today
+                Investment
               </p>
+
 
 
               <h2
                 className="
-                  mt-3
+                  mt-2
                   text-5xl
                   font-bold
-                  text-[#661093]
                 "
               >
-
                 ₦{course.price.toLocaleString()}
-
               </h2>
 
 
 
-              <div
+              <p
                 className="
-                  mt-5
-                  space-y-3
-                  text-sm
-                  text-neutral-700
+                  mt-3
+                  text-purple-100
                 "
               >
-
-                <p>
-                  ✓ Lifetime course access
-                </p>
-
-                <p>
-                  ✓ Structured lessons
-                </p>
-
-                <p>
-                  ✓ Fashion skill development
-                </p>
-
-              </div>
+                Lifetime access to course materials.
+              </p>
 
 
 
 
               <Button
                 href={`/checkout/${course.slug}`}
-                className="mt-8 w-full"
+                className="
+                  mt-8
+                  w-full
+                  bg-white
+                  text-[#661093]
+                  hover:bg-purple-100
+                "
               >
                 Enroll Now
               </Button>
-
 
 
 
@@ -445,11 +227,181 @@ export default async function CourseDetailPage({
               />
 
 
-            </aside>
+            </div>
 
 
 
           </div>
+
+
+
+
+
+
+          {/* Modules */}
+
+
+          <div
+            className="
+              rounded-3xl
+              border
+              border-neutral-200
+              bg-white
+              p-8
+              shadow-lg
+            "
+          >
+
+
+            <h2
+              className="
+                text-3xl
+                font-bold
+                text-neutral-900
+              "
+            >
+              Course Modules
+            </h2>
+
+
+
+            <div
+              className="
+                mt-8
+                grid
+                gap-5
+                md:grid-cols-2
+              "
+            >
+
+
+
+              {course.modules.map((module, index) => (
+
+                <div
+                  key={module.id}
+                  className="
+                    rounded-2xl
+                    border
+                    border-neutral-200
+                    bg-neutral-50
+                    p-6
+                    transition
+                    hover:border-[#661093]
+                    hover:shadow-md
+                  "
+                >
+
+
+                  <div
+                    className="
+                      mb-3
+                      text-sm
+                      font-bold
+                      text-[#661093]
+                    "
+                  >
+                    MODULE {index + 1}
+                  </div>
+
+
+
+                  <h3
+                    className="
+                      text-xl
+                      font-bold
+                      text-neutral-900
+                    "
+                  >
+                    {module.title}
+                  </h3>
+
+
+
+                  <p
+                    className="
+                      mt-3
+                      font-medium
+                      text-neutral-700
+                    "
+                  >
+                    {module.lessons} lessons
+                    {" • "}
+                    {module.duration}
+                  </p>
+
+
+                </div>
+
+
+              ))}
+
+
+            </div>
+
+
+          </div>
+
+
+
+
+
+
+
+          {/* Learning outcomes */}
+
+
+          <div
+            className="
+              mt-12
+              rounded-3xl
+              bg-neutral-950
+              p-8
+              text-white
+            "
+          >
+
+
+            <h2
+              className="
+                text-3xl
+                font-bold
+              "
+            >
+              What You Will Learn
+            </h2>
+
+
+
+            <ul
+              className="
+                mt-6
+                grid
+                gap-4
+                md:grid-cols-2
+              "
+            >
+
+              {course.outcomes.map((item)=>(
+                <li
+                  key={item}
+                  className="
+                    rounded-xl
+                    bg-white/10
+                    p-4
+                    font-medium
+                  "
+                >
+                  ✓ {item}
+                </li>
+              ))}
+
+            </ul>
+
+
+          </div>
+
+
 
 
         </Container>

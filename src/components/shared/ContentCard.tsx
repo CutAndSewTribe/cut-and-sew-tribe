@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { ReactNode } from "react";
 
 import Card from "@/components/ui/Card";
 
@@ -8,6 +9,7 @@ interface ContentCardProps {
   description: string;
   meta?: string;
   thumbnail?: string;
+  children?: ReactNode;
 }
 
 
@@ -16,6 +18,7 @@ export default function ContentCard({
   description,
   meta,
   thumbnail,
+  children,
 }: ContentCardProps) {
 
   return (
@@ -70,18 +73,15 @@ export default function ContentCard({
               absolute
               inset-0
               bg-linear-to-t
-              from-black/40
+              from-black/50
               to-transparent
-              opacity-0
-              transition
-              group-hover:opacity-100
             "
           />
+
 
         </div>
 
       )}
-
 
 
 
@@ -124,7 +124,7 @@ export default function ContentCard({
 
           <div
             className="
-              mt-6
+              mt-5
               inline-flex
               rounded-full
               bg-[#661093]/10
@@ -135,27 +135,27 @@ export default function ContentCard({
               text-[#661093]
             "
           >
-
             {meta}
-
           </div>
 
         )}
 
 
 
-        <div
-          className="
-            mt-6
-            text-sm
-            font-semibold
-            text-neutral-500
-            transition
-            group-hover:text-[#661093]
-          "
-        >
-          Explore →
-        </div>
+        {children && (
+
+          <div
+            className="
+              mt-7
+              border-t
+              border-neutral-100
+              pt-6
+            "
+          >
+            {children}
+          </div>
+
+        )}
 
 
 
