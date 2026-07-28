@@ -100,6 +100,12 @@ const professionalDressmakingCourse: Course = {
     "Prepare for specialization in bridal, couture, or fashion business.",
   ],
 
+  community: {
+    platform: "telegram",
+    groupName: "Professional Dressmaking Students",
+    inviteLink: "https://t.me/+PROFESSIONAL_DRESSMAKING",
+  },
+
   featured: true,
 
   publishedAt: "2026-06-08T00:00:00.000Z",

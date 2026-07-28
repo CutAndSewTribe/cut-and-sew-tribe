@@ -1,6 +1,10 @@
 import { createClient } from "@/lib/supabase/client";
 
-export async function getCompletedLessons() {
+interface LessonProgressRow {
+  lesson_id: string;
+}
+
+export async function getCompletedLessons(): Promise<string[]> {
   const supabase = createClient();
 
   const {
@@ -21,5 +25,7 @@ export async function getCompletedLessons() {
     throw error;
   }
 
-  return data.map((row) => row.lesson_id);
+  return (data as LessonProgressRow[]).map(
+    (row) => row.lesson_id
+  );
 }

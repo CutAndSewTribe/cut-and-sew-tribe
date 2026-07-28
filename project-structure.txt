@@ -1,0 +1,436 @@
+.
+├── components
+├── content
+├── .env.local
+├── eslint.config.mjs
+├── features
+├── .gitignore
+├── lib
+├── middleware.ts
+├── next.config.ts
+├── next-env.d.ts
+├── package.json
+├── pnpm-lock.yaml
+├── pnpm-workspace.yaml
+├── postcss.config.mjs
+├── project-structure.txt
+├── public
+│   ├── brand
+│   │   ├── telegram1.svg
+│   │   └── telegram.svg
+│   ├── file.svg
+│   ├── globe.svg
+│   ├── images
+│   │   ├── backgrounds
+│   │   │   ├── fashion-hero1.jpg
+│   │   │   └── fashion-hero.jpg
+│   │   ├── courses
+│   │   │   ├── beginner-fashion-design.jpg
+│   │   │   ├── bridal-masterclass.jpg
+│   │   │   ├── fashion-business-blueprint.jpg
+│   │   │   ├── menswear-masterclass.jpg
+│   │   │   └── professional-dressmaking.jpg
+│   │   ├── og-image.jpg
+│   │   ├── patterns
+│   │   │   ├── basic-bodice-block.jpg
+│   │   │   ├── bridal-bodice-pattern.jpg
+│   │   │   ├── mens-shirt-block.jpg
+│   │   │   └── pencil-skirt-pattern.jpg
+│   │   └── students
+│   │       ├── ada-fashion-brand.jpg
+│   │       └── david-menswear-designer.jpg
+│   ├── next.svg
+│   ├── resources
+│   │   └── thumbnails
+│   │       ├── client-measurement-form.jpg
+│   │       ├── fashion-measurement-guide.jpg
+│   │       ├── pricing-template.jpg
+│   │       └── sewing-tools-checklist.jpg
+│   ├── vercel.svg
+│   ├── videos
+│   │   └── thumbnails
+│   │       ├── beginner-sewing-tools.jpg
+│   │       ├── drafting-basic-bodice.jpg
+│   │       ├── sewing-machine-setup.jpg
+│   │       └── taking-body-measurements.jpg
+│   └── window.svg
+├── README.md
+├── src
+│   ├── app
+│   │   ├── api
+│   │   │   ├── checkout
+│   │   │   │   └── route.ts
+│   │   │   ├── payments
+│   │   │   │   └── verify
+│   │   │   │       └── route.ts
+│   │   │   └── paystack
+│   │   │       └── webhook
+│   │   │           └── route.ts
+│   │   ├── auth
+│   │   │   └── callback
+│   │   │       └── route.ts
+│   │   ├── checkout
+│   │   │   └── [slug]
+│   │   │       └── page.tsx
+│   │   ├── community
+│   │   │   └── page.tsx
+│   │   ├── courses
+│   │   │   ├── page.tsx
+│   │   │   └── [slug]
+│   │   │       └── page.tsx
+│   │   ├── dashboard
+│   │   │   └── page.tsx
+│   │   ├── error.tsx
+│   │   ├── favicon.ico
+│   │   ├── globals.css
+│   │   ├── instructor
+│   │   │   ├── analytics
+│   │   │   │   └── page.tsx
+│   │   │   ├── blog
+│   │   │   │   └── page.tsx
+│   │   │   ├── certificates
+│   │   │   │   └── page.tsx
+│   │   │   ├── courses
+│   │   │   │   ├── actions.ts
+│   │   │   │   ├── [courseId]
+│   │   │   │   │   ├── announcements
+│   │   │   │   │   │   └── page.tsx
+│   │   │   │   │   ├── edit
+│   │   │   │   │   │   └── page.tsx
+│   │   │   │   │   ├── layout.tsx
+│   │   │   │   │   ├── lessons
+│   │   │   │   │   │   └── page.tsx
+│   │   │   │   │   ├── modules
+│   │   │   │   │   │   ├── [moduleId]
+│   │   │   │   │   │   │   ├── lessons
+│   │   │   │   │   │   │   │   └── new
+│   │   │   │   │   │   │   │       ├── actions.ts
+│   │   │   │   │   │   │   │       └── page.tsx
+│   │   │   │   │   │   │   └── page.tsx
+│   │   │   │   │   │   └── page.tsx
+│   │   │   │   │   ├── page.tsx
+│   │   │   │   │   ├── resources
+│   │   │   │   │   │   └── page.tsx
+│   │   │   │   │   ├── reviews
+│   │   │   │   │   │   └── page.tsx
+│   │   │   │   │   ├── settings
+│   │   │   │   │   │   └── page.tsx
+│   │   │   │   │   └── students
+│   │   │   │   │       └── page.tsx
+│   │   │   │   ├── new
+│   │   │   │   │   └── page.tsx
+│   │   │   │   └── page.tsx
+│   │   │   ├── dashboard
+│   │   │   │   └── page.tsx
+│   │   │   ├── layout.tsx
+│   │   │   ├── login
+│   │   │   │   └── page.tsx
+│   │   │   ├── media
+│   │   │   │   └── page.tsx
+│   │   │   ├── page.tsx
+│   │   │   ├── sales
+│   │   │   │   └── page.tsx
+│   │   │   ├── settings
+│   │   │   │   └── page.tsx
+│   │   │   ├── students
+│   │   │   │   └── page.tsx
+│   │   │   └── telegram
+│   │   │       └── page.tsx
+│   │   ├── layout.tsx
+│   │   ├── learn
+│   │   │   ├── page.tsx
+│   │   │   └── [slug]
+│   │   │       └── page.tsx
+│   │   ├── loading.tsx
+│   │   ├── login
+│   │   │   └── page.tsx
+│   │   ├── not-found.tsx
+│   │   ├── page.tsx
+│   │   ├── patterns
+│   │   │   ├── page.tsx
+│   │   │   └── [slug]
+│   │   │       └── page.tsx
+│   │   ├── payment
+│   │   │   └── callback
+│   │   │       └── page.tsx
+│   │   ├── reset-password
+│   │   │   └── page.tsx
+│   │   ├── resources
+│   │   │   ├── page.tsx
+│   │   │   └── [slug]
+│   │   │       └── page.tsx
+│   │   ├── search
+│   │   │   └── page.tsx
+│   │   ├── signup
+│   │   │   └── page.tsx
+│   │   ├── success-stories
+│   │   │   ├── page.tsx
+│   │   │   └── [slug]
+│   │   │       └── page.tsx
+│   │   └── videos
+│   │       ├── page.tsx
+│   │       └── [slug]
+│   │           └── page.tsx
+│   ├── components
+│   │   ├── checkout
+│   │   │   ├── CheckoutButton.tsx
+│   │   │   ├── CheckoutHero.tsx
+│   │   │   ├── CheckoutSidebar.tsx
+│   │   │   ├── CourseBenefits.tsx
+│   │   │   ├── CurrencySelector.tsx
+│   │   │   ├── index.ts
+│   │   │   ├── OrderSummary.tsx
+│   │   │   ├── PaymentMethodSelector.tsx
+│   │   │   ├── PromoCode.tsx
+│   │   │   └── SecureCheckout.tsx
+│   │   ├── dashboard
+│   │   │   ├── AchievementCard.tsx
+│   │   │   ├── ContinueLearning.tsx
+│   │   │   ├── CourseCard.tsx
+│   │   │   ├── CourseGrid.tsx
+│   │   │   ├── DashboardHero.tsx
+│   │   │   ├── DashboardStats.tsx
+│   │   │   ├── DownloadsCard.tsx
+│   │   │   ├── EmptyDashboard.tsx
+│   │   │   └── RecentActivity.tsx
+│   │   ├── instructor
+│   │   │   ├── course-builder
+│   │   │   │   ├── layout
+│   │   │   │   │   ├── CourseBreadcrumbs.tsx
+│   │   │   │   │   ├── CourseBuilderHeader.tsx
+│   │   │   │   │   ├── CourseBuilderLayout.tsx
+│   │   │   │   │   ├── CourseBuilderSidebar.tsx
+│   │   │   │   │   └── CourseWorkspace.tsx
+│   │   │   │   └── shared
+│   │   │   │       ├── EmptyWorkspace.tsx
+│   │   │   │       ├── PageToolbar.tsx
+│   │   │   │       └── StatusBadge.tsx
+│   │   │   ├── courses
+│   │   │   │   ├── CourseFilters.tsx
+│   │   │   │   ├── CourseForm.tsx
+│   │   │   │   ├── CourseSearch.tsx
+│   │   │   │   ├── CourseStats.tsx
+│   │   │   │   ├── CourseTable.tsx
+│   │   │   │   ├── CourseToolbar.tsx
+│   │   │   │   └── NewCourseButton.tsx
+│   │   │   └── layout
+│   │   │       ├── InstructorLayout.tsx
+│   │   │       ├── InstructorPage.tsx
+│   │   │       ├── InstructorSidebar.tsx
+│   │   │       └── InstructorTopbar.tsx
+│   │   ├── layout
+│   │   │   ├── Footer.tsx
+│   │   │   ├── Header.tsx
+│   │   │   ├── MegaMenu.tsx
+│   │   │   ├── MobileMenu.tsx
+│   │   │   └── SearchCommand.tsx
+│   │   ├── learn
+│   │   │   ├── CourseCommunityCard.tsx
+│   │   │   ├── CourseSidebar.tsx
+│   │   │   ├── LearningWorkspace.tsx
+│   │   │   ├── LessonCompletionCard.tsx
+│   │   │   ├── LessonHeader.tsx
+│   │   │   ├── LessonList.tsx
+│   │   │   ├── LessonNavigation.tsx
+│   │   │   ├── LessonOverview.tsx
+│   │   │   ├── LessonPlayer.tsx
+│   │   │   ├── LessonResources.tsx
+│   │   │   ├── ProgressCard.tsx
+│   │   │   └── VideoPlayer.tsx
+│   │   ├── LessonNavigation.tsx
+│   │   ├── marketing
+│   │   │   ├── ConversionBanner.tsx
+│   │   │   ├── LeadMagnet.tsx
+│   │   │   ├── Newsletter.tsx
+│   │   │   ├── TrustIndicators.tsx
+│   │   │   └── WhatsAppCTA.tsx
+│   │   ├── media
+│   │   │   ├── PatternCard.tsx
+│   │   │   ├── ResourceCard.tsx
+│   │   │   ├── ShowcaseCard.tsx
+│   │   │   ├── StudentStoryCard.tsx
+│   │   │   └── VideoCard.tsx
+│   │   ├── shared
+│   │   │   ├── ContentCard.tsx
+│   │   │   ├── ContentGrid.tsx
+│   │   │   ├── index.ts
+│   │   │   ├── PageHero.tsx
+│   │   │   ├── SearchBar.tsx
+│   │   │   ├── ShareButtons.tsx
+│   │   │   └── WhatsAppButton.tsx
+│   │   ├── telegram
+│   │   │   └── JoinTelegramButton.tsx
+│   │   └── ui
+│   │       ├── Badge.tsx
+│   │       ├── Button.tsx
+│   │       ├── Card.tsx
+│   │       ├── Container.tsx
+│   │       ├── index.ts
+│   │       └── Section.tsx
+│   ├── content
+│   │   ├── courses
+│   │   │   ├── beginner-fashion-design.ts
+│   │   │   ├── bridal-masterclass.ts
+│   │   │   ├── fashion-business-blueprint.ts
+│   │   │   ├── .gitkeep
+│   │   │   ├── index.ts
+│   │   │   ├── menswear-masterclass.ts
+│   │   │   └── professional-dressmaking.ts
+│   │   ├── learning
+│   │   │   ├── index.ts
+│   │   │   ├── professional-dressmaking
+│   │   │   │   ├── index.ts
+│   │   │   │   ├── module-01.ts
+│   │   │   │   └── module-02.ts
+│   │   │   └── types.ts
+│   │   ├── learning.zip
+│   │   ├── lessons
+│   │   │   ├── index.ts
+│   │   │   └── professional-dressmaking.ts
+│   │   ├── patterns
+│   │   │   ├── basic-bodice-block.ts
+│   │   │   ├── bridal-bodice-pattern.ts
+│   │   │   ├── index.ts
+│   │   │   ├── mens-shirt-block.ts
+│   │   │   └── pencil-skirt-pattern.ts
+│   │   ├── resources
+│   │   │   ├── client-measurement-form.ts
+│   │   │   ├── fashion-measurement-guide.ts
+│   │   │   ├── index.ts
+│   │   │   ├── pricing-template.ts
+│   │   │   └── sewing-tools-checklist.ts
+│   │   ├── success-stories
+│   │   │   ├── ada-fashion-brand.ts
+│   │   │   ├── chioma-bridal-specialist.ts
+│   │   │   ├── david-menswear-designer.ts
+│   │   │   └── index.ts
+│   │   └── videos
+│   │       ├── beginner-sewing-tools.ts
+│   │       ├── drafting-basic-bodice.ts
+│   │       ├── index.ts
+│   │       ├── sewing-machine-setup.ts
+│   │       └── taking-body-measurements.ts
+│   ├── design-system
+│   │   ├── themes
+│   │   │   ├── cut-and-sew-dark.ts
+│   │   │   └── cut-and-sew-light.ts
+│   │   └── tokens
+│   │       ├── colors.ts
+│   │       ├── motion.ts
+│   │       ├── radii.ts
+│   │       ├── shadows.ts
+│   │       ├── spacing.ts
+│   │       └── typography.ts
+│   ├── features
+│   │   ├── community
+│   │   │   └── services
+│   │   │       └── student-story.service.ts
+│   │   ├── courses
+│   │   │   ├── components
+│   │   │   │   ├── CourseCard.tsx
+│   │   │   │   ├── CourseCarousel.tsx
+│   │   │   │   ├── CourseComparison.tsx
+│   │   │   │   ├── CourseCurriculum.tsx
+│   │   │   │   ├── CourseFAQ.tsx
+│   │   │   │   ├── EnrollmentCTA.tsx
+│   │   │   │   ├── PricingCard.tsx
+│   │   │   │   └── StudentOutcomes.tsx
+│   │   │   ├── hooks
+│   │   │   ├── services
+│   │   │   │   ├── course.service.ts
+│   │   │   │   └── index.ts
+│   │   │   └── types
+│   │   │       ├── course-filter.ts
+│   │   │       └── index.ts
+│   │   ├── enrollment
+│   │   ├── learn
+│   │   ├── patterns
+│   │   │   └── services
+│   │   │       └── pattern.service.ts
+│   │   ├── resources
+│   │   │   └── services
+│   │   │       └── resource.service.ts
+│   │   ├── search
+│   │   │   ├── services
+│   │   │   │   └── content-search.service.ts
+│   │   │   └── types
+│   │   │       └── search-result.ts
+│   │   └── videos
+│   │       └── services
+│   │           └── video.service.ts
+│   ├── hooks
+│   │   └── .gitkeep
+│   ├── lib
+│   │   ├── access
+│   │   │   └── course-access.ts
+│   │   ├── auth
+│   │   │   └── get-user.ts
+│   │   ├── dashboard.server.ts
+│   │   ├── get-lesson-progress.ts
+│   │   ├── get-resume-lesson.ts
+│   │   ├── .gitkeep
+│   │   ├── instructor
+│   │   │   ├── courses.ts
+│   │   │   └── navigation.ts
+│   │   ├── lesson-progress.server.ts
+│   │   ├── lesson-progress.ts
+│   │   ├── lms
+│   │   │   ├── courses.ts
+│   │   │   ├── lessons.ts
+│   │   │   ├── modules.ts
+│   │   │   ├── progress.ts
+│   │   │   └── resources.ts
+│   │   ├── payments
+│   │   │   ├── currencies.ts
+│   │   │   ├── index.ts
+│   │   │   ├── providers
+│   │   │   │   ├── flutterwave.ts
+│   │   │   │   ├── paystack.ts
+│   │   │   │   └── stripe.ts
+│   │   │   ├── provider.ts
+│   │   │   ├── types.ts
+│   │   │   └── utils.ts
+│   │   └── supabase
+│   │       ├── admin.ts
+│   │       ├── client.ts
+│   │       └── server.ts
+│   ├── services
+│   │   ├── analytics
+│   │   │   └── .gitkeep
+│   │   ├── cms
+│   │   │   └── .gitkeep
+│   │   ├── email
+│   │   │   └── .gitkeep
+│   │   ├── paystack
+│   │   │   └── .gitkeep
+│   │   └── search
+│   │       ├── search.service.ts
+│   │       └── search.types.ts
+│   ├── stores
+│   │   └── .gitkeep
+│   └── types
+│       ├── course.ts
+│       ├── enrollment.ts
+│       ├── index.ts
+│       ├── instructor-course.ts
+│       ├── learning-course.ts
+│       ├── lesson.ts
+│       ├── lms
+│       │   ├── course.ts
+│       │   ├── lesson.ts
+│       │   ├── module.ts
+│       │   └── resource.ts
+│       ├── module.ts
+│       ├── pattern.ts
+│       ├── resource.ts
+│       ├── student-story.ts
+│       ├── user.ts
+│       └── video.ts
+├── styles
+├── supabase
+│   └── schema.sql
+├── tsconfig.json
+├── tsconfig.tsbuildinfo
+└── types
+
+141 directories, 293 files

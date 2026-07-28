@@ -91,6 +91,12 @@ export const beginnerFashionDesignCourse: Course = {
     "Prepare for professional fashion design opportunities or further specialization.",
   ],
 
+community: {
+  platform: "telegram",
+  groupName: "Beginner Fashion Design Students",
+  inviteLink: "https://t.me/replace_with_beginner_group",
+},
+
   featured: true,
 
   publishedAt: "2026-06-08T00:00:00.000Z",

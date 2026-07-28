@@ -98,6 +98,12 @@ export const menswearMasterclassCourse: Course = {
     "Increase revenue through custom menswear production.",
   ],
 
+community: {
+  platform: "telegram",
+  groupName: "Menswear Masterclass Students",
+  inviteLink: "https://t.me/replace_with_menswear_group",
+},
+
   featured: true,
 
   publishedAt: "2026-06-08T00:00:00.000Z",

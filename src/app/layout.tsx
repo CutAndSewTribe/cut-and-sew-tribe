@@ -1,24 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/shared";
 
 import "./globals.css";
-
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -41,7 +27,6 @@ export const metadata: Metadata = {
     "garment construction",
     "fashion academy",
   ],
-
 
   openGraph: {
     title:
@@ -66,10 +51,8 @@ export const metadata: Metadata = {
     ],
   },
 
-
   twitter: {
-    card:
-      "summary_large_image",
+    card: "summary_large_image",
 
     title:
       "Cut & Sew Tribe | Fashion Design Academy",
@@ -83,33 +66,24 @@ export const metadata: Metadata = {
   },
 };
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-
-      <body className="min-h-full flex flex-col">
-
+    <html lang="en" className="h-full antialiased">
+      <body className="flex min-h-full flex-col">
         <Header />
 
         <main className="flex-1">
-  {children}
-</main>
+          {children}
+        </main>
 
-<WhatsAppButton />
+        <WhatsAppButton />
 
-<Footer />
-
+        <Footer />
       </body>
-
     </html>
   );
 }

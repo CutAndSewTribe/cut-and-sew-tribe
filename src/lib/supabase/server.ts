@@ -9,15 +9,25 @@ export async function createClient() {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        get(name: string) {
-          return cookieStore.get(name)?.value;
+        getAll() {
+          return cookieStore.getAll();
         },
 
-        // Server Components cannot modify cookies.
-        // These are intentionally no-ops.
-        set() {},
-
-        remove() {},
+        setAll(cookiesToSet) {
+          try {
+            cookiesToSet.forEach(({ name, value, options }) => {
+              cookieStore.set(name, value, options);
+            });
+          } catch {
+            /**
+             * Server Components cannot always write cookies.
+             *
+             * This is expected.
+             *
+             * Middleware will refresh the session and persist cookies.
+             */
+          }
+        },
       },
     }
   );

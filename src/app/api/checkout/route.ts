@@ -1,11 +1,26 @@
+import crypto from "crypto";
+
 import { NextResponse } from "next/server";
 
-import { courses } from "@/content/courses";
-
+import { getCourseBySlug } from "@/lib/lms/courses";
 import { createClient } from "@/lib/supabase/server";
 
 export async function POST(request: Request) {
   const { courseSlug } = await request.json();
+
+  if (
+    typeof courseSlug !== "string" ||
+    !courseSlug.trim()
+  ) {
+    return NextResponse.json(
+      {
+        error: "Course slug is required.",
+      },
+      {
+        status: 400,
+      }
+    );
+  }
 
   const supabase = await createClient();
 
@@ -24,9 +39,8 @@ export async function POST(request: Request) {
     );
   }
 
-  const course = courses.find(
-    (course) => course.slug === courseSlug
-  );
+  const course =
+    await getCourseBySlug(courseSlug);
 
   if (!course) {
     return NextResponse.json(
@@ -39,7 +53,20 @@ export async function POST(request: Request) {
     );
   }
 
-  const secretKey = process.env.PAYSTACK_SECRET_KEY!;
+  const secretKey =
+    process.env.PAYSTACK_SECRET_KEY;
+
+  if (!secretKey) {
+    return NextResponse.json(
+      {
+        error:
+          "Paystack secret key is not configured.",
+      },
+      {
+        status: 500,
+      }
+    );
+  }
 
   const paymentReference =
     crypto.randomUUID();
@@ -57,7 +84,9 @@ export async function POST(request: Request) {
       body: JSON.stringify({
         email: user.email,
 
-        amount: course.price * 100,
+        amount: Math.round(
+          course.price * 100
+        ),
 
         currency: course.currency,
 
@@ -65,6 +94,8 @@ export async function POST(request: Request) {
 
         metadata: {
           userId: user.id,
+
+          courseId: course.id,
 
           courseSlug: course.slug,
 
@@ -76,16 +107,22 @@ export async function POST(request: Request) {
 
           environment: "test",
         },
+
+        callback_url:
+          `${process.env.NEXT_PUBLIC_APP_URL}` +
+          "/payment/callback",
       }),
     }
   );
 
   const result = await response.json();
 
-  if (!result.status) {
+  if (!response.ok || !result.status) {
     return NextResponse.json(
       {
-        error: result.message,
+        error:
+          result.message ??
+          "Unable to initialize payment.",
       },
       {
         status: 400,

@@ -17,6 +17,12 @@ export interface CourseModule {
   duration: string;
 }
 
+export interface CourseCommunity {
+  platform: "telegram";
+  groupName: string;
+  inviteLink: string;
+}
+
 export interface Course {
   id: string;
   slug: string;
@@ -40,6 +46,8 @@ export interface Course {
   modules: CourseModule[];
 
   outcomes: string[];
+
+  community: CourseCommunity;
 
   featured: boolean;
 

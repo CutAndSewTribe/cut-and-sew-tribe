@@ -102,6 +102,12 @@ export const fashionBusinessBlueprint: Course = {
     "Develop long-term growth and expansion plans",
   ],
 
+community: {
+  platform: "telegram",
+  groupName: "Fashion Business Blueprint Students",
+  inviteLink: "https://t.me/replace_with_business_group",
+},
+
   featured: true,
 
   publishedAt: "2026-06-10T00:00:00.000Z",

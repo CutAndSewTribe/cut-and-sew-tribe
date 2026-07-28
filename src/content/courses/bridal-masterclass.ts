@@ -105,6 +105,12 @@ export const bridalMasterclassCourse: Course = {
     "Launch or expand a bridal fashion business.",
   ],
 
+community: {
+  platform: "telegram",
+  groupName: "Bridal Masterclass Students",
+  inviteLink: "https://t.me/replace_with_bridal_group",
+},
+
   featured: true,
 
   publishedAt: "2026-06-08T00:00:00.000Z",

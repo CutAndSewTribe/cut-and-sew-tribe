@@ -2,110 +2,129 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/client";
 
+export default function LoginPage() {
+  const router = useRouter();
 
-export default function LoginPage(){
+  const supabase = createClient();
 
-const supabase=createClient();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-const [email,setEmail]=useState("");
-const [password,setPassword]=useState("");
-const [message,setMessage]=useState("");
+  const [loading, setLoading] = useState(false);
 
+  const [message, setMessage] = useState("");
 
-async function login(){
+  async function login() {
+    setLoading(true);
+    setMessage("");
 
-setMessage("Logging in...");
+    const { error } =
+      await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
+    if (error) {
+      setLoading(false);
+      setMessage(error.message);
+      return;
+    }
 
-const {error}=await supabase.auth.signInWithPassword({
-email,
-password,
-});
+    /**
+     * Refresh the App Router.
+     * This allows the middleware/server components
+     * to receive the new authenticated cookies.
+     */
+    router.refresh();
 
+    /**
+     * Small delay so the refreshed auth cookies
+     * are available before navigating.
+     */
+    setTimeout(() => {
+      router.replace("/dashboard");
+    }, 150);
+  }
 
-if(error){
-setMessage(error.message);
-return;
-}
+  return (
+    <main className="mx-auto flex min-h-screen max-w-md items-center justify-center px-6">
+      <div className="w-full rounded-3xl bg-white p-10 shadow-lg">
+        <h1 className="text-4xl font-bold text-[#661093]">
+          Student Login
+        </h1>
 
+        <div className="mt-8 space-y-5">
+          <div>
+            <label className="mb-2 block font-medium text-neutral-800">
+              Email
+            </label>
 
-window.location.href="/dashboard";
+            <input
+              type="email"
+              value={email}
+              onChange={(e) =>
+                setEmail(e.target.value)
+              }
+              className="w-full rounded-xl border border-neutral-300 px-4 py-3 text-neutral-900 outline-none focus:border-[#661093]"
+            />
+          </div>
 
-}
+          <div>
+            <label className="mb-2 block font-medium text-neutral-800">
+              Password
+            </label>
 
+            <input
+              type="password"
+              value={password}
+              onChange={(e) =>
+                setPassword(e.target.value)
+              }
+              className="w-full rounded-xl border border-neutral-300 px-4 py-3 text-neutral-900 outline-none focus:border-[#661093]"
+            />
+          </div>
 
+          <div className="flex justify-end">
+            <Link
+              href="/reset-password"
+              className="text-sm font-medium text-[#661093] hover:underline"
+            >
+              Forgot password?
+            </Link>
+          </div>
 
-return (
+          {message && (
+            <p className="text-sm text-red-600">
+              {message}
+            </p>
+          )}
 
-<div className="mx-auto max-w-md px-6 py-20">
+          <button
+            onClick={login}
+            disabled={loading}
+            className="w-full rounded-xl bg-[#661093] py-3 font-semibold text-white transition hover:opacity-90 disabled:opacity-60"
+          >
+            {loading
+              ? "Logging in..."
+              : "Login"}
+          </button>
 
-<h1 className="text-4xl font-bold">
-Student Login
-</h1>
+          <p className="text-center text-sm text-neutral-600">
+            New student?
 
-
-<div className="mt-8 space-y-4">
-
-
-<input
-className="w-full rounded-xl border p-3"
-placeholder="Email"
-onChange={
-e=>setEmail(e.target.value)
-}
-/>
-
-
-<input
-className="w-full rounded-xl border p-3"
-placeholder="Password"
-type="password"
-onChange={
-e=>setPassword(e.target.value)
-}
-/>
-
-
-<button
-onClick={login}
-className="
-w-full
-rounded-xl
-bg-[#661093]
-py-3
-font-semibold
-text-white
-"
->
-Login
-</button>
-
-
-<p>
-New student?
-
-<Link
-href="/signup"
-className="ml-2 text-[#661093]"
->
-Create account
-</Link>
-
-</p>
-
-
-<p>
-{message}
-</p>
-
-
-</div>
-
-</div>
-
-);
-
+            <Link
+              href="/signup"
+              className="ml-2 font-semibold text-[#661093]"
+            >
+              Create account
+            </Link>
+          </p>
+        </div>
+      </div>
+    </main>
+  );
 }

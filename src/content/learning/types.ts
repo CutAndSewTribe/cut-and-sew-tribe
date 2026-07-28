@@ -1,5 +1,18 @@
+export interface LessonResource {
+  id: string;
+
+  title: string;
+
+  type: string;
+
+  href: string;
+
+  size?: string;
+}
+
 export interface LearningLesson {
   id: string;
+
   slug: string;
 
   title: string;
@@ -10,10 +23,7 @@ export interface LearningLesson {
 
   description: string;
 
-  resources?: {
-    title: string;
-    url: string;
-  }[];
+  resources?: LessonResource[];
 }
 
 export interface LearningModule {
@@ -26,6 +36,10 @@ export interface LearningModule {
 
 export interface LearningCourse {
   slug: string;
+
+  title: string;
+
+  telegramCommunity: string;
 
   modules: LearningModule[];
 }

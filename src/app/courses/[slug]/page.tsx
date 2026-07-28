@@ -3,21 +3,18 @@ import {
   Section,
 } from "@/components/ui";
 
-
 import {
   PageHero,
   ContentCard,
 } from "@/components/shared";
 
-
 import Button from "@/components/ui/Button";
-
 import ShareButtons from "@/components/shared/ShareButtons";
 
+import { getCurrentUser } from "@/lib/auth/get-user";
+import { hasCourseAccess } from "@/lib/access/course-access";
 
-import { courses } from "@/content/courses";
-
-
+import { getCourseBySlug } from "@/lib/lms/courses";
 
 export async function generateMetadata({
   params,
@@ -26,14 +23,9 @@ export async function generateMetadata({
     slug: string;
   }>;
 }) {
-
   const { slug } = await params;
 
-
-  const course = courses.find(
-    (item) => item.slug === slug
-  );
-
+  const course = await getCourseBySlug(slug);
 
   if (!course) {
     return {
@@ -41,28 +33,13 @@ export async function generateMetadata({
     };
   }
 
-
   return {
     title: course.title,
-    description: course.description,
+    description:
+      course.description ??
+      `Learn ${course.title} with Cut and Sew Tribe.`,
   };
-
 }
-
-
-
-
-export function generateStaticParams() {
-
-  return courses.map((course) => ({
-    slug: course.slug,
-  }));
-
-}
-
-
-
-
 
 export default async function CourseDetailPage({
   params,
@@ -71,56 +48,53 @@ export default async function CourseDetailPage({
     slug: string;
   }>;
 }) {
-
-
   const { slug } = await params;
 
-
-  const course = courses.find(
-    (item) => item.slug === slug
-  );
-
-
+  /*
+   * IMPORTANT:
+   *
+   * This now reads the course from Supabase.
+   *
+   * Therefore:
+   *
+   * /courses/bustier
+   *
+   * and
+   *
+   * /learn/bustier
+   *
+   * both use the same Supabase course.
+   */
+  const course = await getCourseBySlug(slug);
 
   if (!course) {
-
     return (
       <div className="py-20 text-center">
         Course not found
       </div>
     );
-
   }
 
+  const user = await getCurrentUser();
 
-
+  const enrolled = user
+    ? await hasCourseAccess(course.slug)
+    : false;
 
   return (
-
     <div>
-
-
       <PageHero
-
         label={course.level}
-
         title={course.title}
-
-        description={course.description}
-
+        description={
+          course.description ??
+          "Learn step by step with Cut and Sew Tribe."
+        }
       />
 
-
-
-
-
       <Section>
-
         <Container>
-
-
           {/* Top purchase area */}
-
           <div
             className="
               mb-12
@@ -133,30 +107,14 @@ export default async function CourseDetailPage({
               lg:grid-cols-3
             "
           >
-
-
-
             <div className="lg:col-span-2">
-
-
               <ContentCard
-
-                title="Course Overview"
-
-                description={course.subtitle}
-
-                thumbnail={course.thumbnail}
-
-                meta={`${course.duration} • ${course.price.toLocaleString()} ${course.currency}`}
-
-              />
-
-
+  title={course.title}
+  description={course.description ?? ""}
+  thumbnail={course.thumbnail ?? undefined}
+  meta={`${course.duration ?? ""} • ${course.price.toLocaleString()} ${course.currency}`}
+/>
             </div>
-
-
-
-
 
             <div
               className="
@@ -169,8 +127,6 @@ export default async function CourseDetailPage({
                 text-white
               "
             >
-
-
               <p
                 className="
                   text-sm
@@ -180,8 +136,6 @@ export default async function CourseDetailPage({
               >
                 Investment
               </p>
-
-
 
               <h2
                 className="
@@ -193,8 +147,6 @@ export default async function CourseDetailPage({
                 ₦{course.price.toLocaleString()}
               </h2>
 
-
-
               <p
                 className="
                   mt-3
@@ -204,43 +156,54 @@ export default async function CourseDetailPage({
                 Lifetime access to course materials.
               </p>
 
-
-
-
-              <Button
-                href={`/checkout/${course.slug}`}
-                className="
-                  mt-8
-                  w-full
-                  bg-white
-                  text-[#661093]
-                  hover:bg-purple-100
-                "
-              >
-                Enroll Now
-              </Button>
-
-
+              {!user ? (
+                <Button
+                  href="/login"
+                  className="
+                    mt-8
+                    w-full
+                    bg-white
+                    text-[#661093]
+                    hover:bg-purple-100
+                  "
+                >
+                  Log in to Enroll
+                </Button>
+              ) : enrolled ? (
+                <Button
+                  href={`/learn/${course.slug}`}
+                  className="
+                    mt-8
+                    w-full
+                    bg-white
+                    text-[#661093]
+                    hover:bg-purple-100
+                  "
+                >
+                  Continue Learning
+                </Button>
+              ) : (
+                <Button
+                  href={`/checkout/${course.slug}`}
+                  className="
+                    mt-8
+                    w-full
+                    bg-white
+                    text-[#661093]
+                    hover:bg-purple-100
+                  "
+                >
+                  Enroll Now
+                </Button>
+              )}
 
               <ShareButtons
                 title={course.title}
               />
-
-
             </div>
-
-
-
           </div>
 
-
-
-
-
-
-          {/* Modules */}
-
-
+          {/* Course information */}
           <div
             className="
               rounded-3xl
@@ -251,8 +214,6 @@ export default async function CourseDetailPage({
               shadow-lg
             "
           >
-
-
             <h2
               className="
                 text-3xl
@@ -260,97 +221,133 @@ export default async function CourseDetailPage({
                 text-neutral-900
               "
             >
-              Course Modules
+              About This Course
             </h2>
 
-
+            {course.description && (
+              <p
+                className="
+                  mt-5
+                  max-w-3xl
+                  leading-8
+                  text-neutral-600
+                "
+              >
+                {course.description}
+              </p>
+            )}
 
             <div
               className="
                 mt-8
                 grid
-                gap-5
-                md:grid-cols-2
+                gap-4
+                sm:grid-cols-2
+                lg:grid-cols-4
               "
             >
+              <InfoCard
+                label="Level"
+                value={course.level}
+              />
 
+              <InfoCard
+                label="Category"
+                value={course.category}
+              />
 
+              <InfoCard
+                label="Duration"
+                value={course.duration ?? "Self-paced"}
+              />
 
-              {course.modules.map((module, index) => (
+              <InfoCard
+                label="Students"
+                value={course.students.toString()}
+              />
+            </div>
+          </div>
 
-                <div
-                  key={module.id}
-                  className="
-                    rounded-2xl
-                    border
-                    border-neutral-200
-                    bg-neutral-50
-                    p-6
-                    transition
-                    hover:border-[#661093]
-                    hover:shadow-md
-                  "
-                >
-
-
-                  <div
+          {/* Telegram information */}
+          {course.telegram_invite_link && (
+            <div
+              className="
+                mt-12
+                rounded-3xl
+                border
+                border-[#229ED9]/20
+                bg-[#229ED9]/5
+                p-8
+              "
+            >
+              <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p
                     className="
-                      mb-3
                       text-sm
-                      font-bold
-                      text-[#661093]
+                      font-semibold
+                      uppercase
+                      tracking-wide
+                      text-[#229ED9]
                     "
                   >
-                    MODULE {index + 1}
-                  </div>
+                    Course Community
+                  </p>
 
-
-
-                  <h3
+                  <h2
                     className="
-                      text-xl
+                      mt-2
+                      text-2xl
                       font-bold
                       text-neutral-900
                     "
                   >
-                    {module.title}
-                  </h3>
-
-
+                    Join the Telegram community
+                  </h2>
 
                   <p
                     className="
-                      mt-3
-                      font-medium
-                      text-neutral-700
+                      mt-2
+                      max-w-2xl
+                      text-neutral-600
                     "
                   >
-                    {module.lessons} lessons
-                    {" • "}
-                    {module.duration}
+                    Access the course community and follow
+                    course-related updates on Telegram.
                   </p>
-
-
                 </div>
 
+                <a
+                  href={course.telegram_invite_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="
+                    inline-flex
+                    shrink-0
+                    items-center
+                    justify-center
+                    gap-3
+                    rounded-xl
+                    bg-[#229ED9]
+                    px-5
+                    py-3
+                    font-semibold
+                    text-white
+                    transition
+                    hover:opacity-90
+                  "
+                >
+                  <span className="text-xl">
+                    ✈️
+                  </span>
 
-              ))}
-
-
+                  Join Telegram
+                </a>
+              </div>
             </div>
+          )}
 
-
-          </div>
-
-
-
-
-
-
-
-          {/* Learning outcomes */}
-
-
+          {/* Course content preview */}
           <div
             className="
               mt-12
@@ -360,58 +357,102 @@ export default async function CourseDetailPage({
               text-white
             "
           >
-
-
             <h2
               className="
                 text-3xl
                 font-bold
               "
             >
-              What You Will Learn
+              Start Learning
             </h2>
 
-
-
-            <ul
+            <p
               className="
-                mt-6
-                grid
-                gap-4
-                md:grid-cols-2
+                mt-4
+                max-w-2xl
+                text-neutral-300
               "
             >
+              Enroll in this course to access the complete
+              learning experience, including published modules,
+              lessons, video classes, and course resources.
+            </p>
 
-              {course.outcomes.map((item)=>(
-                <li
-                  key={item}
-                  className="
-                    rounded-xl
-                    bg-white/10
-                    p-4
-                    font-medium
-                  "
-                >
-                  ✓ {item}
-                </li>
-              ))}
-
-            </ul>
-
-
+            {!user ? (
+              <Button
+                href="/login"
+                className="
+                  mt-8
+                  bg-white
+                  text-[#661093]
+                  hover:bg-purple-100
+                "
+              >
+                Log in to Enroll
+              </Button>
+            ) : enrolled ? (
+              <Button
+                href={`/learn/${course.slug}`}
+                className="
+                  mt-8
+                  bg-white
+                  text-[#661093]
+                  hover:bg-purple-100
+                "
+              >
+                Continue Learning
+              </Button>
+            ) : (
+              <Button
+                href={`/checkout/${course.slug}`}
+                className="
+                  mt-8
+                  bg-white
+                  text-[#661093]
+                  hover:bg-purple-100
+                "
+              >
+                Enroll Now
+              </Button>
+            )}
           </div>
-
-
-
-
         </Container>
-
-
       </Section>
-
-
     </div>
-
   );
+}
 
+function InfoCard({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div
+      className="
+        rounded-2xl
+        border
+        border-neutral-200
+        bg-neutral-50
+        p-5
+      "
+    >
+      <p className="text-sm text-neutral-500">
+        {label}
+      </p>
+
+      <p
+        className="
+          mt-2
+          font-semibold
+          capitalize
+          text-neutral-900
+        "
+      >
+        {value}
+      </p>
+    </div>
+  );
 }

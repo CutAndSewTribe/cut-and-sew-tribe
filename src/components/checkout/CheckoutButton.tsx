@@ -17,28 +17,33 @@ export default function CheckoutButton({
     try {
       setLoading(true);
 
-      const response = await fetch("/api/checkout", {
-        method: "POST",
+      const response = await fetch(
+        "/api/checkout",
+        {
+          method: "POST",
 
-        headers: {
-          "Content-Type": "application/json",
-        },
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
 
-        body: JSON.stringify({
-          courseSlug: slug,
-          currency: "NGN",
-        }),
-      });
+          body: JSON.stringify({
+            courseSlug: slug,
+          }),
+        }
+      );
 
       const data = await response.json();
 
       if (!response.ok) {
         throw new Error(
-          data.error ?? "Unable to initialize payment."
+          data.error ??
+            "Unable to initialize payment."
         );
       }
 
-      window.location.href = data.authorization_url;
+      window.location.href =
+        data.authorization_url;
     } catch (error) {
       alert(
         error instanceof Error
