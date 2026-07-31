@@ -56,8 +56,8 @@ export default function InstructorSidebar() {
 
           <div>
 
-            <h2 className="text-lg font-bold">
-              Cut & Sew Tribe
+            <h2 className="text-lg text-neutral-700">
+              Cut And Sew Tribe
             </h2>
 
             <p className="text-sm text-neutral-500">

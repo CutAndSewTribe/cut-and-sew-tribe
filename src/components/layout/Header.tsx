@@ -75,7 +75,7 @@ export default function Header() {
           href="/"
           className="shrink-0 text-xl font-bold tracking-tight text-[#661093]"
         >
-          Cut & Sew Tribe
+          Cut And Sew Tribe
         </Link>
 
 

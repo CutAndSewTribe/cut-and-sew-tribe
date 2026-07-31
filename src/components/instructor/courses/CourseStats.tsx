@@ -37,13 +37,13 @@ export default function CourseStats({
           key={card.title}
           className="rounded-3xl bg-white p-6 shadow-sm"
         >
-          <p className="text-sm font-medium text-neutral-500">
-            {card.title}
-          </p>
+          <p className="text-sm font-semibold uppercase tracking-wide text-neutral-600">
+  {card.title}
+</p>
 
-          <h2 className="mt-4 text-4xl font-bold">
-            {card.value}
-          </h2>
+<h2 className="mt-3 text-4xl font-bold text-neutral-900">
+  {card.value}
+</h2>
         </div>
       ))}
     </section>

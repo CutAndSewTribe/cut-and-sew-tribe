@@ -49,6 +49,7 @@ export default function SearchBar() {
           border
           px-4
           py-3
+          border-neutral-300 bg-white text-neutral-700 placeholder:text-neutral-300 shadow-sm
         "
       />
 

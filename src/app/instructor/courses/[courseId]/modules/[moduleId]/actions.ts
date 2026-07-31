@@ -29,3 +29,19 @@ export async function toggleModulePublishedAction(
     `/instructor/courses/${courseId}/modules/${moduleId}`
   );
 }
+
+export async function reorderLessonsAction(
+courseId: string,
+moduleId: string,
+lessons: { id: string; position: number }[]
+): Promise<void> {
+const { reorderLessons } = await import(
+"@/lib/lms/lessons"
+);
+
+await reorderLessons(lessons);
+
+revalidatePath(
+`/instructor/courses/${courseId}/modules/${moduleId}`
+);
+}

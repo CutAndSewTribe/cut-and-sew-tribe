@@ -2,12 +2,16 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import InstructorPage from "@/components/instructor/layout/InstructorPage";
+import SortableLessonList from "@/components/instructor/lessons/SortableLessonList";
 
 import { getCourseById } from "@/lib/lms/courses";
 import { getModule } from "@/lib/lms/modules";
 import { getLessons } from "@/lib/lms/lessons";
 
-import { toggleModulePublishedAction } from "./actions";
+import {
+  toggleModulePublishedAction,
+  reorderLessonsAction,
+} from "./actions";
 
 interface ModuleDetailPageProps {
   params: Promise<{
@@ -179,24 +183,38 @@ export default async function ModuleDetailPage({
           </div>
 
           {lessons.length === 0 ? (
-            <EmptyLessonsState
-              courseId={courseId}
-              moduleId={moduleId}
-            />
-          ) : (
-            <div className="divide-y divide-neutral-200">
+  <EmptyLessonsState
+    courseId={courseId}
+    moduleId={moduleId}
+  />
+) : (
+  <div className="p-6">
+    <SortableLessonList
+      lessons={lessons.map((lesson) => ({
+        id: lesson.id,
+        title: lesson.title,
+        lesson_type: lesson.lesson_type,
+        duration_minutes:
+          lesson.duration_minutes ?? 0,
+        preview: lesson.preview ?? false,
+        published:
+          lesson.published ?? false,
+        position: lesson.position,
+      }))}
+      courseId={courseId}
+      moduleId={moduleId}
+      onReorder={async (updatedLessons) => {
+        "use server";
 
-              {lessons.map((lesson) => (
-                <LessonRow
-                  key={lesson.id}
-                  courseId={courseId}
-                  moduleId={moduleId}
-                  lesson={lesson}
-                />
-              ))}
-
-            </div>
-          )}
+        await reorderLessonsAction(
+          courseId,
+          moduleId,
+          updatedLessons
+        );
+      }}
+    />
+  </div>
+)}
 
         </section>
 
@@ -253,88 +271,6 @@ function EmptyLessonsState({
       >
         Create First Lesson
       </Link>
-
-    </div>
-  );
-}
-
-function LessonRow({
-  courseId,
-  moduleId,
-  lesson,
-}: {
-  courseId: string;
-  moduleId: string;
-  lesson: {
-    id: string;
-    title: string;
-    slug: string;
-    lesson_type: string;
-    duration_minutes: number | null;
-    published: boolean | null;
-    preview: boolean | null;
-    position: number;
-  };
-}) {
-  return (
-    <div className="flex flex-col gap-5 px-6 py-5 lg:flex-row lg:items-center lg:justify-between">
-
-      <div className="flex items-start gap-4">
-
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-neutral-100 text-sm font-bold text-neutral-600">
-          {lesson.position}
-        </div>
-
-        <div>
-
-          <h4 className="font-semibold text-neutral-900">
-            {lesson.title}
-          </h4>
-
-          <div className="mt-2 flex flex-wrap items-center gap-2 text-sm text-neutral-500">
-
-            <span className="rounded-full bg-neutral-100 px-3 py-1 capitalize">
-              {lesson.lesson_type}
-            </span>
-
-            <span>
-              {lesson.duration_minutes ?? 0} min
-            </span>
-
-            {lesson.preview && (
-              <span className="rounded-full bg-amber-100 px-3 py-1 text-amber-700">
-                Preview
-              </span>
-            )}
-
-            <span
-              className={`rounded-full px-3 py-1 ${
-                lesson.published
-                  ? "bg-green-100 text-green-700"
-                  : "bg-neutral-100 text-neutral-600"
-              }`}
-            >
-              {lesson.published
-                ? "Published"
-                : "Draft"}
-            </span>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <div className="flex items-center gap-3">
-
-        <Link
-          href={`/instructor/courses/${courseId}/modules/${moduleId}/lessons/${lesson.id}/edit`}
-          className="rounded-lg border border-neutral-300 px-4 py-2 text-sm font-semibold text-neutral-700 transition hover:border-[#661093] hover:text-[#661093]"
-        >
-          Edit
-        </Link>
-
-      </div>
 
     </div>
   );

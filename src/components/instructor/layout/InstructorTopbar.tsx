@@ -47,8 +47,7 @@ export default function InstructorTopbar() {
             w-full
             rounded-2xl
             border
-            border-neutral-200
-            bg-neutral-50
+            border-neutral-300 bg-white text-neutral-900 placeholder:text-neutral-500 shadow-sm
             py-3
             pl-12
             pr-5
