@@ -37,6 +37,10 @@ build/
 .env.development
 .env.production
 
+# Keep the template file in Git
+
+!.env.example
+
 # ==========================================
 
 # Logs
