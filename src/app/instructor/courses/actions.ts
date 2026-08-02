@@ -6,8 +6,8 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
 import {
-  archiveCourse,
   createCourse,
+  deleteCourse,
   setCoursePublished,
   updateCourse,
 } from "@/lib/instructor/courses";
@@ -34,9 +34,7 @@ export async function createCourseAction(
   } = await supabase.auth.getSession();
 
   console.log("Current Session:", session);
-
   console.log("Course Payload:", values);
-
   console.log("========================================");
 
   try {
@@ -66,13 +64,6 @@ export async function updateCourseAction(
   redirect("/instructor/courses");
 }
 
-export async function archiveCourseAction(id: string) {
-  await archiveCourse(id);
-
-  revalidatePath("/instructor/courses");
-  revalidatePath("/");
-}
-
 export async function publishCourseAction(
   id: string,
   published: boolean
@@ -82,4 +73,13 @@ export async function publishCourseAction(
   revalidatePath("/instructor/courses");
   revalidatePath(`/instructor/courses/${id}/edit`);
   revalidatePath("/");
+}
+
+export async function deleteCourseAction(id: string) {
+  await deleteCourse(id);
+
+  revalidatePath("/instructor/courses");
+  revalidatePath("/");
+
+  redirect("/instructor/courses");
 }

@@ -166,7 +166,7 @@ export async function updateCourse(
 /**
  * Delete a course.
  */
-export async function archiveCourse(
+export async function deleteCourse(
   id: string
 ): Promise<void> {
   const supabase = await createClient();
