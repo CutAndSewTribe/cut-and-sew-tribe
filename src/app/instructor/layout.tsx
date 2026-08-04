@@ -1,9 +1,9 @@
-import type { ReactNode } from "react";
+import { ReactNode } from "react";
 
-interface Props {
-children: ReactNode;
-}
-
-export default function InstructorRootLayout({ children }: Props) {
-return children;
+export default function InstructorRootLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  return children;
 }
