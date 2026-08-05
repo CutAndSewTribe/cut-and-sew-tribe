@@ -4,7 +4,7 @@ import InstructorPage from "@/components/instructor/layout/InstructorPage";
 import CourseForm from "@/components/instructor/courses/CourseForm";
 import DeleteCourseButton from "@/components/instructor/courses/DeleteCourseButton";
 
-import { getCourse } from "@/lib/instructor/courses";
+import { getCourseById } from "@/lib/lms/courses";
 import { deleteCourseAction } from "@/app/instructor/courses/actions";
 
 interface EditCoursePageProps {
@@ -18,7 +18,7 @@ export default async function EditCoursePage({
 }: EditCoursePageProps) {
   const { courseId } = await params;
 
-  const course = await getCourse(courseId);
+  const course = await getCourseById(courseId);
 
   if (!course) {
     notFound();

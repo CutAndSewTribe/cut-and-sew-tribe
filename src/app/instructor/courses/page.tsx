@@ -9,10 +9,14 @@ import { getAllCourses } from "@/lib/lms/courses";
 export default async function CoursesPage() {
   const courses = await getAllCourses();
 
+  console.log(
+    courses.map((c) => `${c.position} - ${c.title}`)
+  );
+
   return (
     <InstructorPage
       title="Courses"
-      description="Manage every course in your academy."
+      description="Create, organize, and manage every course in your academy."
     >
       <CourseStats
         totalCourses={courses.length}

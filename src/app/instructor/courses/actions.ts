@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-
+import { updateCoursePositions } from "@/lib/lms/courses";
 import { createClient } from "@/lib/supabase/server";
 
 import {
@@ -82,4 +82,13 @@ export async function deleteCourseAction(id: string) {
   revalidatePath("/");
 
   redirect("/instructor/courses");
+}
+
+export async function reorderCoursesAction(
+  positions: { id: string; position: number }[]
+) {
+  await updateCoursePositions(positions);
+
+  revalidatePath("/instructor/courses");
+  revalidatePath("/courses");
 }

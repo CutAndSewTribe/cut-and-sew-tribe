@@ -1,8 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 
 import type { Lesson } from "@/types/lesson";
 import type { Module } from "@/types/module";
-
 export interface LMSCourse {
   id: string;
 
@@ -34,20 +34,31 @@ export interface LMSCourse {
   students: number;
 
   featured: boolean;
-  published: boolean;
+published: boolean;
 
-  created_at: string;
-  updated_at: string;
+/**
+ * Manual display order for instructor drag-and-drop sorting.
+ * Lower numbers appear first.
+ */
+position: number | null;
+
+created_at: string;
+updated_at: string;
 }
 
 type CourseRow = LMSCourse;
 
 function mapCourse(row: CourseRow): LMSCourse {
   return {
-    ...row,
-    price: Number(row.price),
-    students: Number(row.students ?? 0),
-  };
+  ...row,
+  price: Number(row.price),
+  students: Number(row.students ?? 0),
+  position:
+    row.position === null ||
+    row.position === undefined
+      ? null
+      : Number(row.position),
+};
 }
 
 /**
@@ -192,15 +203,14 @@ export async function getCourseBySlug(
 export async function getCourseById(
   id: string
 ): Promise<LMSCourse | null> {
-  const supabase = await createClient();
-
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("courses")
     .select("*")
     .eq("id", id)
     .single();
 
   if (error || !data) {
+    console.error("getCourseById error:", error);
     return null;
   }
 
@@ -211,18 +221,36 @@ export async function getCourseById(
  * Fetch all published courses.
  * Used by the public Courses page.
  */
-export async function getPublishedCourses(): Promise<
-  LMSCourse[]
-> {
-  const supabase = await createClient();
+export async function getPublishedCourses(): Promise<LMSCourse[]> {
+  const { data, error } = await supabaseAdmin
+    .from("courses")
+    .select("*")
+    .eq("published", true)
+    .order("position", {
+      ascending: true,
+    });
+
+  if (error || !data) {
+    console.error("Public courses error:", error);
+    return [];
+  }
+
+  return data.map(mapCourse);
+}
+/**
+ * Fetch all courses.
+ * Used by instructor/admin pages.
+ */
+export async function getAllCourses(): Promise<LMSCourse[]> {
+  const supabase = supabaseAdmin;
 
   const { data, error } = await supabase
     .from("courses")
     .select("*")
-    .eq("published", true)
-    .order("created_at", {
-      ascending: false,
-    });
+    .order("position", { ascending: true });
+
+  console.log("Supabase data:", data);
+  console.log("Supabase error:", error);
 
   if (error || !data) {
     return [];
@@ -231,25 +259,17 @@ export async function getPublishedCourses(): Promise<
   return data.map(mapCourse);
 }
 
-/**
- * Fetch all courses.
- * Used by instructor/admin pages.
- */
-export async function getAllCourses(): Promise<
-  LMSCourse[]
-> {
-  const supabase = await createClient();
+export async function updateCoursePositions(
+  positions: { id: string; position: number }[]
+): Promise<void> {
+  for (const item of positions) {
+    const { error } = await supabaseAdmin
+      .from("courses")
+      .update({ position: item.position })
+      .eq("id", item.id);
 
-  const { data, error } = await supabase
-    .from("courses")
-    .select("*")
-    .order("created_at", {
-      ascending: false,
-    });
-
-  if (error || !data) {
-    return [];
+    if (error) {
+      throw error;
+    }
   }
-
-  return data.map(mapCourse);
 }
