@@ -42,21 +42,19 @@ const navigation = [
 const socialLinks = [
   {
     label: "Instagram",
-    href: "https://instagram.com/",
+    href: "https://www.instagram.com/cutandsewtribelimited",
     icon: FaInstagram,
     className: "text-pink-600",
   },
-
   {
     label: "TikTok",
-    href: "https://tiktok.com/",
+    href: "https://www.tiktok.com/@cutandsewtribe",
     icon: FaTiktok,
     className: "text-black",
   },
-
   {
     label: "WhatsApp",
-    href: "https://wa.me/",
+    href: "https://wa.me/message/2Y2LBLT47JAFD1",
     icon: FaWhatsapp,
     className: "text-green-600",
   },

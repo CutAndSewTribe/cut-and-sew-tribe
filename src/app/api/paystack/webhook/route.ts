@@ -1,9 +1,6 @@
 import crypto from "crypto";
-
 import { headers } from "next/headers";
-
 import { NextResponse } from "next/server";
-
 import { supabaseAdmin } from "@/lib/supabase/admin";
 
 export async function POST(request: Request) {
@@ -22,12 +19,8 @@ export async function POST(request: Request) {
 
   if (hash !== signature) {
     return NextResponse.json(
-      {
-        error: "Invalid signature",
-      },
-      {
-        status: 401,
-      }
+      { error: "Invalid signature" },
+      { status: 401 }
     );
   }
 
@@ -40,16 +33,10 @@ export async function POST(request: Request) {
   }
 
   const payment = event.data;
-
+  const metadata = payment.metadata ?? {};
   const supabase = supabaseAdmin;
 
   const reference = payment.reference;
-
-  const metadata = payment.metadata;
-
-  /*
-      Prevent duplicate webhook processing
-  */
 
   const { data: existing } = await supabase
     .from("payments")
@@ -63,42 +50,74 @@ export async function POST(request: Request) {
     });
   }
 
-  /*
-      Save payment
-  */
+  let userId = metadata.userId;
 
-  const { error } = await supabase.rpc(
-  "complete_course_purchase",
-  {
-    p_user_id: metadata.userId,
+  if (!userId && metadata.email) {
+    const { data: usersData, error: listError } =
+  await supabase.auth.admin.listUsers();
 
-    p_course_slug: metadata.courseSlug,
-
-    p_provider: "paystack",
-
-    p_currency: payment.currency,
-
-    p_amount: payment.amount / 100,
-
-    p_reference: reference,
-  }
-);
-
-if (error) {
-  console.error(error);
-
+if (listError) {
+  console.error(listError);
   return NextResponse.json(
-    {
-      error: "Purchase failed",
-    },
-    {
-      status: 500,
-    }
+    { error: "Unable to query users" },
+    { status: 500 }
   );
 }
+
+const existingUser = usersData.users.find(
+  (u) => u.email?.toLowerCase() === metadata.email.toLowerCase()
+);
+
+if (existingUser) {
+  userId = existingUser.id;
+} else {
+  const { data: newUser, error: createError } =
+    await supabase.auth.admin.createUser({
+      email: metadata.email,
+      email_confirm: true,
+    });
+
+  if (createError || !newUser.user) {
+    console.error(createError);
+    return NextResponse.json(
+      { error: "Unable to create purchaser account" },
+      { status: 500 }
+    );
+  }
+
+  userId = newUser.user.id;
+}
+  }
+
+  if (!userId) {
+    return NextResponse.json(
+      { error: "Unable to resolve purchaser account" },
+      { status: 500 }
+    );
+  }
+
+  const { error } = await supabase.rpc(
+    "complete_course_purchase",
+    {
+      p_user_id: userId,
+      p_course_slug: metadata.courseSlug,
+      p_provider: "paystack",
+      p_currency: payment.currency,
+      p_amount: payment.amount / 100,
+      p_reference: reference,
+    }
+  );
+
+  if (error) {
+    console.error(error);
+
+    return NextResponse.json(
+      { error: "Purchase failed" },
+      { status: 500 }
+    );
+  }
 
   return NextResponse.json({
     received: true,
   });
 }
-

@@ -52,27 +52,27 @@ const supportLinks = [
 const socialLinks = [
   {
     label: "Facebook",
-    href: "https://facebook.com/",
+    href: "https://www.facebook.com/divinebridal.babiesworld",
     icon: FaFacebookF,
   },
   {
     label: "Instagram",
-    href: "https://instagram.com/",
+    href: "https://www.instagram.com/cutandsewtribelimited",
     icon: FaInstagram,
   },
   {
     label: "TikTok",
-    href: "https://tiktok.com/",
+    href: "https://www.tiktok.com/@cutandsewtribe",
     icon: FaTiktok,
   },
   {
     label: "YouTube",
-    href: "https://youtube.com/",
+    href: "https://youtube.com/@cutandsewtribe",
     icon: FaYoutube,
   },
   {
     label: "WhatsApp",
-    href: "https://wa.me/",
+    href: "https://wa.me/message/2Y2LBLT47JAFD1",
     icon: FaWhatsapp,
   },
 ];
@@ -170,7 +170,11 @@ export default function Footer() {
             skills and turning ideas into garments.
           </p>
 
-
+<p className="mt-3 text-sm text-neutral-600">
+  Email: <a href="mailto:cutandsewtribelimited@gmail.com" className="text-[#661093] hover:underline">
+    cutandsewtribelimited@gmail.com
+  </a>
+</p>
 
           <div className="mt-5 flex flex-wrap gap-3">
 

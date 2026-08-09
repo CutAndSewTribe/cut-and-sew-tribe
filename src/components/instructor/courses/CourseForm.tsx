@@ -17,10 +17,16 @@ interface CourseFormValues {
   price: number;
   currency: string;
   duration: string;
+
+  // NEW
+  hero_image: string | null;
+
   thumbnail: string | null;
   preview_video: string | null;
-telegram_group_name: string | null;
-telegram_invite_link: string | null;
+
+  telegram_group_name: string | null;
+  telegram_invite_link: string | null;
+
   featured: boolean;
   published: boolean;
 }
@@ -40,10 +46,14 @@ const defaults: CourseFormValues = {
   price: 0,
   currency: "NGN",
   duration: "",
+
+  hero_image: null,
   thumbnail: null,
   preview_video: null,
+
   telegram_group_name: null,
   telegram_invite_link: null,
+
   featured: false,
   published: false,
 };
@@ -52,8 +62,7 @@ export default function CourseForm({
   initialValues,
   courseId,
 }: CourseFormProps) {
-
-  const [values, setValues] = useState<CourseFormValues>({
+  const [values, setValues] = useState({
     ...defaults,
     ...initialValues,
   });
@@ -76,79 +85,77 @@ export default function CourseForm({
     return title
       .toLowerCase()
       .trim()
-      .replace(/[^a-z0-9\s-]/g, "")
-      .replace(/\s+/g, "-");
+      .replace(/[^a-z0-9\\s-]/g, "")
+      .replace(/\\s+/g, "-");
   }
 
   async function handleSubmit(
-  event: React.FormEvent<HTMLFormElement>
-) {
-  event.preventDefault();
+    event: React.FormEvent
+  ) {
+    event.preventDefault();
 
-  try {
-    setSaving(true);
+    try {
+      setSaving(true);
 
-    const payload = {
-      title: values.title,
-      slug: values.slug,
-      subtitle: values.subtitle,
-      description: values.description,
+      const payload = {
+        title: values.title,
+        slug: values.slug,
+        subtitle: values.subtitle,
+        description: values.description,
 
-      category: values.category,
-      level: values.level,
+        category: values.category,
+        level: values.level,
 
-      price: values.price,
-      currency: values.currency,
+        price: values.price,
+        currency: values.currency,
 
-      duration: values.duration,
+        duration: values.duration,
 
-      thumbnail: values.thumbnail,
+        // NEW
+        hero_image: values.hero_image,
 
-      preview_video: values.preview_video,
+        thumbnail: values.thumbnail,
+        preview_video: values.preview_video,
 
-telegram_group_name:
-  values.telegram_group_name,
+        telegram_group_name:
+          values.telegram_group_name,
 
-telegram_invite_link:
-  values.telegram_invite_link,
+        telegram_invite_link:
+          values.telegram_invite_link,
 
-      featured: values.featured,
-      published: values.published,
-    };
+        featured: values.featured,
+        published: values.published,
+      };
 
-    if (courseId) {
-      await updateCourseAction(
-        courseId,
-        payload
+      if (courseId) {
+        await updateCourseAction(
+          courseId,
+          payload
+        );
+      } else {
+        await createCourseAction(payload);
+      }
+    } catch (error) {
+      console.error(error);
+
+      alert(
+        error instanceof Error
+          ? error.message
+          : JSON.stringify(error)
       );
-    } else {
-      await createCourseAction(payload);
+    } finally {
+      setSaving(false);
     }
-  } catch (error) {
-  console.error(error);
-
-  alert(
-    error instanceof Error
-      ? error.message
-      : JSON.stringify(error)
-  );
-} finally {
-    setSaving(false);
   }
-}
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="space-y-8"
-    >
-      <section className="mb-6 text-2xl font-bold text-neutral-900">
-        <h2 className="mb-6 text-2xl font-bold">
+    <form onSubmit={handleSubmit}>
+      <section className="mb-6">
+        <h2 className="mb-6 text-2xl font-bold text-neutral-900">
           Basic Information
         </h2>
 
         <div className="grid gap-6 md:grid-cols-2">
-
           <div>
             <label className="mb-2 block font-medium text-neutral-800">
               Course Title
@@ -200,17 +207,15 @@ telegram_invite_link:
               onChange={(e) => update("description", e.target.value)}
             />
           </div>
-
         </div>
       </section>
 
-      <section className="mb-6 text-2xl font-bold text-neutral-900">
-        <h2 className="mb-6 text-2xl font-bold">
+      <section className="mb-6">
+        <h2 className="mb-6 text-2xl font-bold text-neutral-900">
           Course Details
         </h2>
 
         <div className="grid gap-6 md:grid-cols-3">
-
           <div>
             <label className="mb-2 block font-medium text-neutral-800">
               Category
@@ -283,85 +288,127 @@ telegram_invite_link:
               <option>USD</option>
             </select>
           </div>
-
         </div>
       </section>
 
-      <section className="mb-6 text-2xl font-bold text-neutral-900">
-        <h2 className="mb-6 text-2xl font-bold">
+      {/* Media */}
+      <section className="mb-6">
+        <h2 className="mb-6 text-2xl font-bold text-neutral-900">
           Media
         </h2>
 
         <div className="space-y-6">
+          <div>
+            <label className="mb-2 block font-medium text-neutral-800">
+              Hero Image URL
+            </label>
 
-          <input
-  placeholder="Thumbnail URL"
-  className="w-full rounded-xl border border-neutral-300 px-4 py-3"
-  value={values.thumbnail ?? ""}
-  onChange={(e) =>
-    update(
-      "thumbnail",
-      e.target.value === "" ? null : e.target.value
-    )
-  }
-/>
+            <input
+              placeholder="images/courses/bustier-booster-hero.jpg"
+              className="w-full rounded-xl border border-neutral-300 px-4 py-3"
+              value={values.hero_image ?? ""}
+              onChange={(e) =>
+                update(
+                  "hero_image",
+                  e.target.value === "" ? null : e.target.value
+                )
+              }
+            />
 
-          <input
-  placeholder="Preview Video URL"
-  className="w-full rounded-xl border border-neutral-300 px-4 py-3"
-  value={values.preview_video ?? ""}
-  onChange={(e) =>
-    update(
-  "preview_video",
-  e.target.value === "" ? null : e.target.value
-)
-  }
-/>
+            <p className="mt-2 text-sm text-neutral-500">
+              Large image used on the course landing page and as the video poster.
+            </p>
+          </div>
 
+          <div>
+            <label className="mb-2 block font-medium text-neutral-800">
+              Thumbnail URL
+            </label>
+
+            <input
+              placeholder="images/courses/bustier-booster-thumbnail.jpg"
+              className="w-full rounded-xl border border-neutral-300 px-4 py-3"
+              value={values.thumbnail ?? ""}
+              onChange={(e) =>
+                update(
+                  "thumbnail",
+                  e.target.value === "" ? null : e.target.value
+                )
+              }
+            />
+
+            <p className="mt-2 text-sm text-neutral-500">
+              Small image used for course cards and marketplace listings.
+            </p>
+          </div>
+
+          <div>
+            <label className="mb-2 block font-medium text-neutral-800">
+              Preview Video URL
+            </label>
+
+            <input
+              placeholder="videos/bustier-booster-preview.mp4"
+              className="w-full rounded-xl border border-neutral-300 px-4 py-3"
+              value={values.preview_video ?? ""}
+              onChange={(e) =>
+                update(
+                  "preview_video",
+                  e.target.value === "" ? null : e.target.value
+                )
+              }
+            />
+
+            <p className="mt-2 text-sm text-neutral-500">
+              When provided, the hero image becomes the clickable thumbnail that
+              starts the preview video on the landing page.
+            </p>
+          </div>
         </div>
       </section>
 
-      <section className="mb-6 text-2xl font-bold text-neutral-900">
-        <h2 className="mb-6 text-2xl font-bold">
+      <section className="mb-6">
+        <h2 className="mb-6 text-2xl font-bold text-neutral-900">
           Telegram Community
         </h2>
 
         <div className="space-y-6">
+          <input
+            placeholder="Group Name"
+            className="w-full rounded-xl border border-neutral-300 px-4 py-3"
+            value={values.telegram_group_name ?? ""}
+            onChange={(e) =>
+              update(
+                "telegram_group_name",
+                e.target.value === ""
+                  ? null
+                  : e.target.value
+              )
+            }
+          />
 
           <input
-  placeholder="Group Name"
-  className="w-full rounded-xl border border-neutral-300 px-4 py-3"
-  value={values.telegram_group_name ?? ""}
-  onChange={(e) =>
-    update(
-  "telegram_group_name",
-  e.target.value === "" ? null : e.target.value
-)
-  }
-/>
-
-          <input
-  placeholder="Invite Link"
-  className="w-full rounded-xl border border-neutral-300 px-4 py-3"
-  value={values.telegram_invite_link ?? ""}
-  onChange={(e) =>
-    update(
-  "telegram_invite_link",
-  e.target.value === "" ? null : e.target.value
-)
-  }
-/>
-
+            placeholder="Invite Link"
+            className="w-full rounded-xl border border-neutral-300 px-4 py-3"
+            value={values.telegram_invite_link ?? ""}
+            onChange={(e) =>
+              update(
+                "telegram_invite_link",
+                e.target.value === ""
+                  ? null
+                  : e.target.value
+              )
+            }
+          />
         </div>
       </section>
 
-      <section className="mb-6 text-2xl font-bold text-neutral-900">
-        <h2 className="mb-6 text-2xl font-bold">
+      <section className="mb-6">
+        <h2 className="mb-6 text-2xl font-bold text-neutral-900">
           Publishing
         </h2>
 
         <div className="space-y-4">
-
           <label className="flex items-center gap-3 text-neutral-800">
             <input
               type="checkbox"
@@ -383,12 +430,10 @@ telegram_invite_link:
             />
             Publish Immediately
           </label>
-
         </div>
       </section>
 
       <div className="flex justify-end gap-4">
-
         <button
           type="button"
           onClick={() => window.history.back()}
@@ -410,7 +455,6 @@ telegram_invite_link:
             ? "Save Changes"
             : "Create Course"}
         </button>
-
       </div>
     </form>
   );

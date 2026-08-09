@@ -42,6 +42,7 @@ export default async function EditCoursePage({
             price: course.price,
             currency: course.currency,
             duration: course.duration ?? "",
+            hero_image: course.hero_image ?? "",
             thumbnail: course.thumbnail ?? "",
             preview_video: course.preview_video ?? "",
             telegram_group_name:
