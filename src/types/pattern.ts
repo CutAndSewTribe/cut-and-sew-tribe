@@ -1,40 +1,50 @@
 export type PatternAccess =
-  | "free"
-  | "premium";
+| "free"
+| "premium";
 
 export type PatternLevel =
-  | "beginner"
-  | "intermediate"
-  | "advanced";
+| "beginner"
+| "intermediate"
+| "advanced";
 
 export type PatternCategory =
-  | "dressmaking"
-  | "bridal"
-  | "menswear"
-  | "childrenswear";
+| "dressmaking"
+| "bridal"
+| "menswear"
+| "childrenswear"
 
 export interface Pattern {
-  id: string;
+id: string;
 
-  slug: string;
+title: string;
+slug: string;
 
-  title: string;
+excerpt: string | null;
+content: string | null;
 
-  description: string;
+category: PatternCategory;
+level: PatternLevel;
 
-  category: PatternCategory;
+hero_image: string | null;
+thumbnail: string | null;
 
-  level: PatternLevel;
+access: PatternAccess;
 
-  thumbnail: string;
+file_format: string;
+download_url: string | null;
 
-  access: PatternAccess;
+video_url: string | null;
 
-  fileFormat: string;
+featured: boolean;
+published: boolean;
 
-  downloadUrl: string;
+position: number | null;
 
-  featured: boolean;
+related_course_slug: string | null;
 
-  publishedAt: string;
+seo_title: string | null;
+seo_description: string | null;
+
+created_at: string;
+updated_at: string;
 }

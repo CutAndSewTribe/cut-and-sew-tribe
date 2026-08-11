@@ -67,7 +67,7 @@ export default function CourseHeroMedia({
           />
 
           {/* Cinematic dark gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/45 to-black/10" />
+          <div className="absolute inset-0 bg-linear-to-r from-black/85 via-black/45 to-black/10" />
 
           {/* Play button */}
           {videoSrc && (

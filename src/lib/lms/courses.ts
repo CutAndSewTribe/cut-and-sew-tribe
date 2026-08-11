@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+
 import { supabaseAdmin } from "@/lib/supabase/admin";
 
 import type { Lesson } from "@/types/lesson";
