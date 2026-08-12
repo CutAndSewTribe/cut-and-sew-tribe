@@ -2,31 +2,39 @@ import type { Pattern } from "@/types/pattern";
 
 export const basicBodiceBlock: Pattern = {
   id: "pattern-basic-bodice-block",
-
   slug: "basic-bodice-block",
-
   title: "Basic Bodice Block Pattern",
 
-  description:
+  excerpt:
     "A foundational bodice block pattern for dressmaking. Ideal for learning pattern drafting and garment construction.",
 
-  category: "dressmaking",
+  content: null,
 
+  category: "dressmaking",
   level: "beginner",
 
-  thumbnail:
-    "/images/patterns/basic-bodice-block.jpg",
+  hero_image: null,
+  thumbnail: "/images/patterns/basic-bodice-block.jpg",
 
   access: "free",
 
-  fileFormat: "PDF",
+  file_format: "PDF",
+  download_url: "/downloads/patterns/basic-bodice-block.pdf",
 
-  downloadUrl:
-    "/downloads/patterns/basic-bodice-block.pdf",
+  video_url: null,
 
   featured: true,
+  published: true,
 
-  publishedAt: "2026-06-10T00:00:00.000Z",
+  position: null,
+
+  related_course_slug: null,
+
+  seo_title: null,
+  seo_description: null,
+
+  created_at: "2026-06-10T00:00:00.000Z",
+  updated_at: "2026-06-10T00:00:00.000Z",
 };
 
 export default basicBodiceBlock;
