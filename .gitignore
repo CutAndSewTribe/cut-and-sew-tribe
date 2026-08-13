@@ -199,3 +199,6 @@ temp/
 # public/uploads/videos/
 
 # public/uploads/images/
+
+# TypeScript incremental build info
+tsconfig.tsbuildinfo
