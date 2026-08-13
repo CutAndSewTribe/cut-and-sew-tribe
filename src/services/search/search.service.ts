@@ -129,7 +129,7 @@ export function searchContent(
       ) &&
       (
         pattern.title.toLowerCase().includes(search) ||
-        pattern.description.toLowerCase().includes(search)
+        (pattern.excerpt?.toLowerCase().includes(search) ?? false)
       )
     ) {
 
@@ -137,7 +137,7 @@ export function searchContent(
         id: pattern.id,
         slug: pattern.slug,
         title: pattern.title,
-        description: pattern.description,
+        description: pattern.excerpt ?? '',
         type: "pattern",
         url: `/patterns/${pattern.slug}`,
       });

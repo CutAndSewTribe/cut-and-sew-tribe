@@ -1,32 +1,38 @@
-import type { Pattern } from "@/types/pattern";
+import type { Pattern } from '@/types/pattern';
 
 export const bridalBodicePattern: Pattern = {
-  id: "pattern-bridal-bodice",
+id: 'pattern-bridal-bodice',
+slug: 'bridal-bodice-pattern',
+title: 'Bridal Bodice Pattern',
+excerpt:
+'Advanced bridal bodice pattern for wedding gowns, corsetry foundations, and couture bridal garments.',
+content: null,
 
-  slug: "bridal-bodice-pattern",
+category: 'bridal',
+level: 'advanced',
 
-  title: "Bridal Bodice Pattern",
+hero_image: null,
+thumbnail: '/images/patterns/bridal-bodice-pattern.jpg',
 
-  description:
-    "Advanced bridal bodice pattern for wedding gowns, corsetry foundations, and couture bridal garments.",
+access: 'premium',
 
-  category: "bridal",
+file_format: 'PDF',
+download_url: '/downloads/patterns/bridal-bodice-pattern.pdf',
 
-  level: "advanced",
+video_url: null,
 
-  thumbnail:
-    "/images/patterns/bridal-bodice-pattern.jpg",
+featured: true,
+published: true,
 
-  access: "premium",
+position: null,
 
-  fileFormat: "PDF",
+related_course_slug: null,
 
-  downloadUrl:
-    "/downloads/patterns/bridal-bodice-pattern.pdf",
+seo_title: null,
+seo_description: null,
 
-  featured: true,
-
-  publishedAt: "2026-06-10T00:00:00.000Z",
+created_at: '2026-06-10T00:00:00.000Z',
+updated_at: '2026-06-10T00:00:00.000Z',
 };
 
 export default bridalBodicePattern;
