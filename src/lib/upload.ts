@@ -1,6 +1,6 @@
 export async function uploadFile(
   file: File,
-  bucket: 'pattern-images' | 'pattern-files',
+  bucket: 'pattern-images' | 'pattern-files' | 'course-images',
   folder?: string,
   slug?: string,
   kind?: 'hero' | 'thumbnail' | 'inline' | 'pdf'
@@ -42,4 +42,13 @@ export async function uploadPatternPdf(
   slug: string
 ): Promise<string> {
   return uploadFile(file, 'pattern-files', category, slug, 'pdf');
+}
+
+export async function uploadCourseImage(
+  file: File,
+  category: string,
+  slug: string,
+  variant: 'hero' | 'thumbnail'
+): Promise<string> {
+  return uploadFile(file, 'course-images', category, slug, variant);
 }

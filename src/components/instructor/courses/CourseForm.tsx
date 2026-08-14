@@ -6,6 +6,7 @@ import {
   createCourseAction,
   updateCourseAction,
 } from "@/app/instructor/courses/actions";
+import { uploadCourseImage } from "@/lib/upload";
 
 interface CourseFormValues {
   title: string;
@@ -18,9 +19,7 @@ interface CourseFormValues {
   currency: string;
   duration: string;
 
-  // NEW
   hero_image: string | null;
-
   thumbnail: string | null;
   preview_video: string | null;
 
@@ -68,6 +67,8 @@ export default function CourseForm({
   });
 
   const [saving, setSaving] = useState(false);
+  const [uploadingHero, setUploadingHero] = useState(false);
+  const [uploadingThumbnail, setUploadingThumbnail] = useState(false);
 
   const isEditing = Boolean(courseId);
 
@@ -89,9 +90,47 @@ export default function CourseForm({
       .replace(/\\s+/g, "-");
   }
 
-  async function handleSubmit(
-    event: React.FormEvent
-  ) {
+  async function handleHeroUpload(file: File) {
+  try {
+    setUploadingHero(true);
+
+    const url = await uploadCourseImage(
+      file,
+      "courses",
+      values.slug || "course",
+      "hero"
+    );
+
+    update("hero_image", url);
+  } catch (error) {
+    console.error(error);
+    alert("Failed to upload hero image.");
+  } finally {
+    setUploadingHero(false);
+  }
+}
+
+async function handleThumbnailUpload(file: File) {
+  try {
+    setUploadingThumbnail(true);
+
+    const url = await uploadCourseImage(
+      file,
+      "courses",
+      values.slug || "course",
+      "thumbnail"
+    );
+
+    update("thumbnail", url);
+  } catch (error) {
+    console.error(error);
+    alert("Failed to upload thumbnail.");
+  } finally {
+    setUploadingThumbnail(false);
+  }
+}
+
+  async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
 
     try {
@@ -111,27 +150,19 @@ export default function CourseForm({
 
         duration: values.duration,
 
-        // NEW
         hero_image: values.hero_image,
-
         thumbnail: values.thumbnail,
         preview_video: values.preview_video,
 
-        telegram_group_name:
-          values.telegram_group_name,
-
-        telegram_invite_link:
-          values.telegram_invite_link,
+        telegram_group_name: values.telegram_group_name,
+        telegram_invite_link: values.telegram_invite_link,
 
         featured: values.featured,
         published: values.published,
       };
 
       if (courseId) {
-        await updateCourseAction(
-          courseId,
-          payload
-        );
+        await updateCourseAction(courseId, payload);
       } else {
         await createCourseAction(payload);
       }
@@ -165,8 +196,9 @@ export default function CourseForm({
               className="w-full rounded-xl border border-neutral-300 bg-white px-4 py-3 text-neutral-900 placeholder:text-neutral-400 focus:border-[#661093] focus:outline-none focus:ring-2 focus:ring-[#661093]/20"
               value={values.title}
               onChange={(e) => {
-                update("title", e.target.value);
-                update("slug", generateSlug(e.target.value));
+                const title = e.target.value;
+                update("title", title);
+                update("slug", generateSlug(title));
               }}
             />
           </div>
@@ -291,51 +323,84 @@ export default function CourseForm({
         </div>
       </section>
 
-      {/* Media */}
       <section className="mb-6">
         <h2 className="mb-6 text-2xl font-bold text-neutral-900">
           Media
         </h2>
 
-        <div className="space-y-6">
+        <div className="space-y-8">
           <div>
             <label className="mb-2 block font-medium text-neutral-800">
-              Hero Image URL
+              Hero Image
             </label>
 
+            {values.hero_image ? (
+              <img
+                src={values.hero_image}
+                alt="Hero preview"
+                className="mb-3 h-48 w-full rounded-xl border border-neutral-200 object-cover"
+              />
+            ) : (
+              <div className="mb-3 flex h-48 items-center justify-center rounded-xl border border-dashed border-neutral-300 text-sm text-neutral-500">
+                No hero image uploaded
+              </div>
+            )}
+
             <input
-              placeholder="images/courses/bustier-booster-hero.jpg"
-              className="w-full rounded-xl border border-neutral-300 px-4 py-3"
-              value={values.hero_image ?? ""}
-              onChange={(e) =>
-                update(
-                  "hero_image",
-                  e.target.value === "" ? null : e.target.value
-                )
-              }
+              type="file"
+              accept="image/*"
+              disabled={uploadingHero}
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) handleHeroUpload(file);
+              }}
+              className="block w-full text-sm text-neutral-700"
             />
 
+            {uploadingHero && (
+              <p className="mt-2 text-sm text-[#661093]">
+                Uploading hero image...
+              </p>
+            )}
+
             <p className="mt-2 text-sm text-neutral-500">
-              Large image used on the course landing page and as the video poster.
+              Large image used on the course landing page and as the preview poster.
             </p>
           </div>
 
           <div>
             <label className="mb-2 block font-medium text-neutral-800">
-              Thumbnail URL
+              Course Thumbnail
             </label>
 
+            {values.thumbnail ? (
+              <img
+                src={values.thumbnail}
+                alt="Thumbnail preview"
+                className="mb-3 h-32 w-32 rounded-xl border border-neutral-200 object-cover"
+              />
+            ) : (
+              <div className="mb-3 flex h-32 w-32 items-center justify-center rounded-xl border border-dashed border-neutral-300 text-xs text-neutral-500">
+                No thumbnail
+              </div>
+            )}
+
             <input
-              placeholder="images/courses/bustier-booster-thumbnail.jpg"
-              className="w-full rounded-xl border border-neutral-300 px-4 py-3"
-              value={values.thumbnail ?? ""}
-              onChange={(e) =>
-                update(
-                  "thumbnail",
-                  e.target.value === "" ? null : e.target.value
-                )
-              }
+              type="file"
+              accept="image/*"
+              disabled={uploadingThumbnail}
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) handleThumbnailUpload(file);
+              }}
+              className="block w-full text-sm text-neutral-700"
             />
+
+            {uploadingThumbnail && (
+              <p className="mt-2 text-sm text-[#661093]">
+                Uploading thumbnail...
+              </p>
+            )}
 
             <p className="mt-2 text-sm text-neutral-500">
               Small image used for course cards and marketplace listings.
@@ -348,7 +413,7 @@ export default function CourseForm({
             </label>
 
             <input
-              placeholder="videos/bustier-booster-preview.mp4"
+              placeholder="https://... or /videos/preview.mp4"
               className="w-full rounded-xl border border-neutral-300 px-4 py-3"
               value={values.preview_video ?? ""}
               onChange={(e) =>
@@ -445,7 +510,7 @@ export default function CourseForm({
         <button
           type="submit"
           disabled={saving}
-          className="rounded-xl bg-[#661093] px-8 py-3 font-semibold text-white"
+          className="rounded-xl bg-[#661093] px-8 py-3 font-semibold text-white disabled:opacity-60"
         >
           {saving
             ? isEditing

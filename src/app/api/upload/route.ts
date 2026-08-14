@@ -8,6 +8,8 @@ export async function POST(request: Request) {
   const file = formData.get('file');
   const bucket = String(formData.get('bucket') ?? 'pattern-images');
   const folder = String(formData.get('folder') ?? '').trim();
+  const slug = String(formData.get('slug') ?? '').trim();
+  const kind = String(formData.get('kind') ?? '').trim();
 
   if (!(file instanceof File)) {
     return NextResponse.json(
@@ -16,16 +18,20 @@ export async function POST(request: Request) {
     );
   }
 
-  // Keep the original extension
   const extension = file.name.split('.').pop() ?? '';
 
-  // Safe filename
-  const filename = extension
-    ? `${randomUUID()}.${extension}`
-    : randomUUID();
+  let filename: string;
 
-  // Optional folder organization
-  const path = folder ? `${folder}/${filename}` : filename;
+  if (kind) {
+    filename = extension ? `${kind}.${extension}` : kind;
+  } else {
+    filename = extension
+      ? `${randomUUID()}.${extension}`
+      : randomUUID();
+  }
+
+  const parts = [folder, slug, filename].filter(Boolean);
+  const path = parts.join('/');
 
   const arrayBuffer = await file.arrayBuffer();
 
@@ -33,7 +39,7 @@ export async function POST(request: Request) {
     .from(bucket)
     .upload(path, arrayBuffer, {
       contentType: file.type,
-      upsert: true, // Replace existing file automatically
+      upsert: true,
     });
 
   if (error) {

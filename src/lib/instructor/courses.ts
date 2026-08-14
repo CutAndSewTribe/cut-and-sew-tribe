@@ -23,10 +23,10 @@ export interface CreateCourseInput {
 
   duration?: string;
 
-  // NEW: large landing-page hero image
+  // Large landing-page hero image
   hero_image?: string | null;
 
-  // Existing marketplace/card thumbnail
+  // Marketplace/card thumbnail
   thumbnail?: string | null;
 
   // Optional preview video shown on the landing page
@@ -63,6 +63,55 @@ export async function getCourses(): Promise<InstructorCourse[]> {
   }
 
   return (data ?? []).map((course) => mapCourse(course as CourseRow));
+}
+
+/**
+ * Fetch featured courses for the public homepage.
+ * Only returns courses that are both featured and published.
+ */
+export async function getFeaturedCourses(): Promise<InstructorCourse[]> {
+  const supabase = supabaseAdmin;
+
+  const { data, error } = await supabase
+    .from(TABLE_NAME)
+    .select("*")
+    .eq("featured", true)
+    .eq("published", true)
+    .order("position", { ascending: true });
+
+  if (error) {
+    console.error("getFeaturedCourses:", error);
+    return [];
+  }
+
+  return (data ?? []).map((course) => mapCourse(course as CourseRow));
+}
+
+/**
+ * Homepage statistics shown in the trust / stats sections.
+ * Returns live counts from Supabase.
+ */
+export async function getHomepageStats() {
+  const supabase = supabaseAdmin;
+
+  const [{ count: publishedCourses }, { count: featuredCourses }] =
+    await Promise.all([
+      supabase
+        .from(TABLE_NAME)
+        .select("*", { count: "exact", head: true })
+        .eq("published", true),
+
+      supabase
+        .from(TABLE_NAME)
+        .select("*", { count: "exact", head: true })
+        .eq("published", true)
+        .eq("featured", true),
+    ]);
+
+  return {
+    publishedCourses: publishedCourses ?? 0,
+    featuredCourses: featuredCourses ?? 0,
+  };
 }
 
 /**
@@ -110,9 +159,7 @@ export async function createCourse(
 
     duration: course.duration || null,
 
-    // NEW
     hero_image: course.hero_image || null,
-
     thumbnail: course.thumbnail || null,
     preview_video: course.preview_video || null,
 
@@ -139,9 +186,6 @@ export async function createCourse(
 
 /**
  * Update a course.
- *
- * Because Supabase receives the updates object directly,
- * hero_image will be saved automatically whenever it is present.
  */
 export async function updateCourse(
   id: string,

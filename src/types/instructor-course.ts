@@ -1,6 +1,5 @@
 export interface InstructorCourse {
   id: string;
-
   title: string;
   slug: string;
 
@@ -10,22 +9,25 @@ export interface InstructorCourse {
   category: string;
   level: string;
 
+  hero_image: string | null;
+  thumbnail: string | null;
+  preview_video: string | null;
+
   price: number;
   currency: string;
 
   duration: string | null;
-
-  thumbnail: string | null;
-  preview_video: string | null;
-
   students: number;
+
+  published: boolean;
+  featured: boolean;
 
   telegram_group_name: string | null;
   telegram_invite_link: string | null;
 
-  featured: boolean;
-  published: boolean;
-
   created_at: string;
   updated_at: string;
+
+  // Change this line
+  position: number | null;
 }
