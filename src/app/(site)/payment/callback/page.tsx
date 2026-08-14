@@ -19,79 +19,81 @@ export default function PaymentCallbackPage() {
   );
 
   useEffect(() => {
-  if (!reference) {
-    return;
-  }
-
-  const paymentReference = reference;
-
-  let cancelled = false;
-
-  async function verifyPayment() {
-    try {
-      const response = await fetch(
-        `/api/payments/verify?reference=${encodeURIComponent(
-          paymentReference
-        )}`,
-        {
-          method: "GET",
-          cache: "no-store",
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok || !data.success) {
-        throw new Error(
-          data.error ??
-            "Payment verification failed."
-        );
-      }
-
-      if (cancelled) {
-        return;
-      }
-
-      const courseSlug =
-        data.courseSlug ??
-        data.course_slug ??
-        data.enrollment?.course_slug;
-
-      if (!courseSlug) {
-        throw new Error(
-          "Payment was successful, but the course could not be identified."
-        );
-      }
-
-      setStatus("success");
-
-      setMessage(
-        "Payment successful. Opening your learning workspace..."
-      );
-
-      window.location.href =
-        `/learn/${courseSlug}`;
-    } catch (error) {
-      if (cancelled) {
-        return;
-      }
-
-      setStatus("error");
-
-      setMessage(
-        error instanceof Error
-          ? error.message
-          : "Unable to verify your payment."
-      );
+    if (!reference) {
+      return;
     }
-  }
 
-  verifyPayment();
+    const paymentReference = reference;
 
-  return () => {
-    cancelled = true;
-  };
-}, [reference]);
+    let cancelled = false;
+
+    async function verifyPayment() {
+      try {
+        const response = await fetch(
+          `/api/payments/verify?reference=${encodeURIComponent(
+            paymentReference
+          )}`,
+          {
+            method: "GET",
+            cache: "no-store",
+          }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          throw new Error(
+            data.error ??
+              "Payment verification failed."
+          );
+        }
+
+        if (cancelled) {
+          return;
+        }
+
+        const telegramInviteLink =
+          data.telegramInviteLink ??
+          data.telegram_invite_link ??
+          data.course?.telegram_invite_link;
+
+        if (
+          typeof telegramInviteLink !== "string" ||
+          telegramInviteLink.trim() === ""
+        ) {
+          throw new Error(
+            "Payment was successful, but the Telegram group could not be identified."
+          );
+        }
+
+        setStatus("success");
+
+        setMessage(
+          "Payment successful. Opening your course Telegram group..."
+        );
+
+        window.location.href = telegramInviteLink;
+      } catch (error) {
+        if (cancelled) {
+          return;
+        }
+
+        setStatus("error");
+
+        setMessage(
+          error instanceof Error
+            ? error.message
+            : "Unable to verify your payment."
+        );
+      }
+    }
+
+    verifyPayment();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [reference]);
 
   if (!reference) {
     return (
@@ -167,11 +169,3 @@ export default function PaymentCallbackPage() {
     </main>
   );
 }
-
-
-
-
-
-
-
-
