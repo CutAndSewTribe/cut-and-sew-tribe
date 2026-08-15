@@ -2,93 +2,109 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+
 import { updateCoursePositions } from "@/lib/lms/courses";
 import { createClient } from "@/lib/supabase/server";
 
 import {
-  createCourse,
-  deleteCourse,
-  setCoursePublished,
-  updateCourse,
+createCourse,
+deleteCourse,
+setCoursePublished,
+updateCourse,
 } from "@/lib/instructor/courses";
 
 import type { CreateCourseInput } from "@/lib/instructor/courses";
 
-export async function createCourseAction(
-  values: CreateCourseInput
-) {
-  const supabase = await createClient();
+export async function createCourseAction(values: CreateCourseInput) {
+const supabase = await createClient();
 
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser();
+const {
+data: { user },
+error: authError,
+} = await supabase.auth.getUser();
 
-  console.log("========================================");
-  console.log("CREATE COURSE ACTION");
-  console.log("Current User:", user);
-  console.log("Auth Error:", authError);
+console.log("========================================");
+console.log("CREATE COURSE ACTION");
+console.log("Current User:", user);
+console.log("Auth Error:", authError);
 
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+const {
+data: { session },
+} = await supabase.auth.getSession();
 
-  console.log("Current Session:", session);
-  console.log("Course Payload:", values);
-  console.log("========================================");
+console.log("Current Session:", session);
+console.log("Course Payload:", values);
+console.log("========================================");
 
-  try {
-    await createCourse(values);
-  } catch (error) {
-    console.error("CREATE COURSE FAILED");
-    console.error(error);
-    throw error;
-  }
+try {
+const created = await createCourse(values);
 
-  revalidatePath("/instructor/courses");
-  revalidatePath("/");
 
-  redirect("/instructor/courses");
+revalidatePath("/");
+revalidatePath("/courses");
+revalidatePath(`/courses/${created.slug}`);
+revalidatePath("/instructor/courses");
+
+redirect("/instructor/courses");
+
+
+} catch (error) {
+console.error("CREATE COURSE FAILED");
+console.error(error);
+throw error;
+}
 }
 
 export async function updateCourseAction(
-  id: string,
-  values: Partial<CreateCourseInput>
+id: string,
+values: Partial<CreateCourseInput>
 ) {
-  await updateCourse(id, values);
+const updated = await updateCourse(id, values);
 
-  revalidatePath("/instructor/courses");
-  revalidatePath(`/instructor/courses/${id}/edit`);
-  revalidatePath("/");
+// Public pages
+revalidatePath("/");
+revalidatePath("/courses");
+revalidatePath(`/courses/${updated.slug}`);
 
-  redirect("/instructor/courses");
+// Instructor pages
+revalidatePath("/instructor/courses");
+revalidatePath(`/instructor/courses/${id}`);
+revalidatePath(`/instructor/courses/${id}/edit`);
+
+redirect("/instructor/courses");
 }
 
 export async function publishCourseAction(
-  id: string,
-  published: boolean
+id: string,
+published: boolean
 ) {
-  await setCoursePublished(id, published);
+const updated = await setCoursePublished(id, published);
 
-  revalidatePath("/instructor/courses");
-  revalidatePath(`/instructor/courses/${id}/edit`);
-  revalidatePath("/");
+revalidatePath("/");
+revalidatePath("/courses");
+revalidatePath(`/courses/${updated.slug}`);
+
+revalidatePath("/instructor/courses");
+revalidatePath(`/instructor/courses/${id}`);
+revalidatePath(`/instructor/courses/${id}/edit`);
 }
 
 export async function deleteCourseAction(id: string) {
-  await deleteCourse(id);
+await deleteCourse(id);
 
-  revalidatePath("/instructor/courses");
-  revalidatePath("/");
+revalidatePath("/");
+revalidatePath("/courses");
+revalidatePath("/instructor/courses");
 
-  redirect("/instructor/courses");
+redirect("/instructor/courses");
 }
 
 export async function reorderCoursesAction(
-  positions: { id: string; position: number }[]
+positions: { id: string; position: number }[]
 ) {
-  await updateCoursePositions(positions);
+await updateCoursePositions(positions);
 
-  revalidatePath("/instructor/courses");
-  revalidatePath("/courses");
+revalidatePath("/instructor/courses");
+revalidatePath("/courses");
+revalidatePath("/");
 }

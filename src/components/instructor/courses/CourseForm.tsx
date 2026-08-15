@@ -83,12 +83,15 @@ export default function CourseForm({
   }
 
   function generateSlug(title: string) {
-    return title
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9\\s-]/g, "")
-      .replace(/\\s+/g, "-");
-  }
+return title
+.toLowerCase()
+.trim()
+.replace(/[^a-z0-9\s-]/g, "")
+.replace(/\s+/g, "-")
+.replace(/-+/g, "-")
+.replace(/^-|-$/g, "");
+}
+
 
   async function handleHeroUpload(file: File) {
   try {
