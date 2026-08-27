@@ -52,6 +52,10 @@ export async function POST(request: Request) {
 
   const paymentReference = crypto.randomUUID();
 
+  const appUrl =
+    process.env.NEXT_PUBLIC_APP_URL ||
+    "https://www.cutandsewtribe.com";
+
   const response = await fetch(
     "https://api.paystack.co/transaction/initialize",
     {
@@ -73,9 +77,12 @@ export async function POST(request: Request) {
           courseTitle: course.title,
           currency: course.currency,
           provider: "paystack",
-          environment: "test",
+          environment:
+            process.env.NODE_ENV === "production"
+              ? "live"
+              : "test",
         },
-        callback_url: `${process.env.NEXT_PUBLIC_APP_URL}/payment/callback`,
+        callback_url: `${appUrl}/payment/callback`,
       }),
     }
   );

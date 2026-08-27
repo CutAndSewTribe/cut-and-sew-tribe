@@ -96,17 +96,29 @@ if (existingUser) {
     );
   }
 
-  const { error } = await supabase.rpc(
-    "complete_course_purchase",
-    {
-      p_user_id: userId,
-      p_course_slug: metadata.courseSlug,
-      p_provider: "paystack",
-      p_currency: payment.currency,
-      p_amount: payment.amount / 100,
-      p_reference: reference,
-    }
-  );
+  console.log("PAYSTACK WEBHOOK RPC INPUT", {
+  reference,
+  userId,
+  userIdType: typeof userId,
+  courseSlug: metadata.courseSlug,
+  courseSlugType: typeof metadata.courseSlug,
+  currency: payment.currency,
+  amount: payment.amount,
+  amountType: typeof payment.amount,
+  email: metadata.email,
+});
+
+const { error } = await supabase.rpc(
+  "complete_course_purchase",
+  {
+    p_user_id: userId,
+    p_course_slug: metadata.courseSlug,
+    p_provider: "paystack",
+    p_currency: payment.currency,
+    p_amount: payment.amount / 100,
+    p_reference: reference,
+  }
+);
 
   if (error) {
     console.error(error);
