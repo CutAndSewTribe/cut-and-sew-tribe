@@ -52,41 +52,42 @@ export async function POST(request: Request) {
 
   let userId = metadata.userId;
 
-  if (!userId && metadata.email) {
+    if (!userId && metadata.email) {
     const { data: usersData, error: listError } =
-  await supabase.auth.admin.listUsers();
+      await supabase.auth.admin.listUsers();
 
-if (listError) {
-  console.error(listError);
-  return NextResponse.json(
-    { error: "Unable to query users" },
-    { status: 500 }
-  );
-}
+    if (listError) {
+      console.error(listError);
+      return NextResponse.json(
+        { error: "Unable to query users" },
+        { status: 500 }
+      );
+    }
 
-const existingUser = usersData.users.find(
-  (u) => u.email?.toLowerCase() === metadata.email.toLowerCase()
-);
-
-if (existingUser) {
-  userId = existingUser.id;
-} else {
-  const { data: newUser, error: createError } =
-    await supabase.auth.admin.createUser({
-      email: metadata.email,
-      email_confirm: true,
-    });
-
-  if (createError || !newUser.user) {
-    console.error(createError);
-    return NextResponse.json(
-      { error: "Unable to create purchaser account" },
-      { status: 500 }
+    const existingUser = usersData.users.find(
+      (u) =>
+        u.email?.toLowerCase() === metadata.email.toLowerCase()
     );
-  }
 
-  userId = newUser.user.id;
-}
+    if (existingUser) {
+      userId = existingUser.id;
+    } else {
+      const { data: newUser, error: createError } =
+        await supabase.auth.admin.createUser({
+          email: metadata.email,
+          email_confirm: true,
+        });
+
+      if (createError || !newUser.user) {
+        console.error(createError);
+        return NextResponse.json(
+          { error: "Unable to create purchaser account" },
+          { status: 500 }
+        );
+      }
+
+      userId = newUser.user.id;
+    }
   }
 
   if (!userId) {
@@ -96,29 +97,17 @@ if (existingUser) {
     );
   }
 
-  console.log("PAYSTACK WEBHOOK RPC INPUT", {
-  reference,
-  userId,
-  userIdType: typeof userId,
-  courseSlug: metadata.courseSlug,
-  courseSlugType: typeof metadata.courseSlug,
-  currency: payment.currency,
-  amount: payment.amount,
-  amountType: typeof payment.amount,
-  email: metadata.email,
-});
-
-const { error } = await supabase.rpc(
-  "complete_course_purchase",
-  {
-    p_user_id: userId,
-    p_course_slug: metadata.courseSlug,
-    p_provider: "paystack",
-    p_currency: payment.currency,
-    p_amount: payment.amount / 100,
-    p_reference: reference,
-  }
-);
+  const { error } = await supabase.rpc(
+    "complete_course_purchase",
+    {
+      p_user_id: userId,
+      p_course_slug: metadata.courseSlug,
+      p_provider: "paystack",
+      p_currency: payment.currency,
+      p_amount: payment.amount,
+      p_reference: reference,
+    }
+  );
 
   if (error) {
     console.error(error);
