@@ -45,6 +45,7 @@ export default async function EditCoursePage({
             hero_image: course.hero_image ?? "",
             thumbnail: course.thumbnail ?? "",
             preview_video: course.preview_video ?? "",
+            preview_video_id: course.preview_video_id ?? null,
             telegram_group_name:
               course.telegram_group_name ?? "",
             telegram_invite_link:

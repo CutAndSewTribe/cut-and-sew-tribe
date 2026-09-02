@@ -52,7 +52,7 @@ export async function POST(request: Request) {
 
   let userId = metadata.userId;
 
-    if (!userId && metadata.email) {
+  if (!userId && metadata.email) {
     const { data: usersData, error: listError } =
       await supabase.auth.admin.listUsers();
 

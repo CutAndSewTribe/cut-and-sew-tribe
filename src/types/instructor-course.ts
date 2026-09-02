@@ -11,7 +11,22 @@ export interface InstructorCourse {
 
   hero_image: string | null;
   thumbnail: string | null;
+
+  /**
+   * Legacy preview-video URL.
+   *
+   * Kept temporarily for backwards compatibility while
+   * preview_video_id becomes the source of truth.
+   */
   preview_video: string | null;
+
+  /**
+   * References the video in the public videos table.
+   *
+   * This is the canonical relationship between a course
+   * and its preview video.
+   */
+  preview_video_id: string | null;
 
   price: number;
   currency: string;
@@ -28,6 +43,5 @@ export interface InstructorCourse {
   created_at: string;
   updated_at: string;
 
-  // Change this line
   position: number | null;
 }

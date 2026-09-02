@@ -4,10 +4,12 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { Play } from 'lucide-react';
 
+import type { PublicCoursePreviewVideo } from '@/lib/lms/courses';
+
 interface CourseHeroMediaProps {
   title: string;
   heroImage?: string | null;
-  previewVideo?: string | null;
+  previewVideo?: PublicCoursePreviewVideo | null;
   children?: React.ReactNode;
 }
 
@@ -27,11 +29,17 @@ export default function CourseHeroMedia({
       : '/images/courses/default-hero.jpg';
 
   const videoSrc =
-    previewVideo && previewVideo.trim() !== ''
-      ? previewVideo.startsWith('/')
-        ? previewVideo
-        : `/${previewVideo}`
+    previewVideo?.video_url && previewVideo.video_url.trim() !== ''
+      ? previewVideo.video_url
       : null;
+
+  const videoType = videoSrc
+    ? videoSrc.toLowerCase().includes('.webm')
+      ? 'video/webm'
+      : videoSrc.toLowerCase().includes('.mov')
+        ? 'video/quicktime'
+        : 'video/mp4'
+    : undefined;
 
   return (
     <div className="relative min-h-[80vh] w-full overflow-hidden bg-black">
@@ -43,18 +51,22 @@ export default function CourseHeroMedia({
           playsInline
           poster={imageSrc}
         >
-          <source src={videoSrc} type="video/mp4" />
+          <source src={videoSrc} type={videoType} />
           Your browser does not support the video tag.
         </video>
       ) : (
         <button
           type="button"
           onClick={() => {
-            if (videoSrc) setPlayVideo(true);
+            if (videoSrc) {
+              setPlayVideo(true);
+            }
           }}
           className="absolute inset-0 h-full w-full cursor-pointer"
           aria-label={
-            videoSrc ? `Play preview for ${title}` : `${title} hero image`
+            videoSrc
+              ? `Play preview for ${title}`
+              : `${title} hero image`
           }
         >
           <Image

@@ -29,8 +29,20 @@ export interface CreateCourseInput {
   // Marketplace/card thumbnail
   thumbnail?: string | null;
 
-  // Optional preview video shown on the landing page
+  /**
+   * Legacy preview video URL.
+   *
+   * Kept temporarily for backwards compatibility.
+   */
   preview_video?: string | null;
+
+  /**
+   * Canonical relationship to the videos table.
+   *
+   * When a course has a selected preview video, this should
+   * contain the video's id.
+   */
+  preview_video_id?: string | null;
 
   telegram_group_name?: string | null;
   telegram_invite_link?: string | null;
@@ -62,14 +74,18 @@ export async function getCourses(): Promise<InstructorCourse[]> {
     return [];
   }
 
-  return (data ?? []).map((course) => mapCourse(course as CourseRow));
+  return (data ?? []).map((course) =>
+    mapCourse(course as CourseRow)
+  );
 }
 
 /**
  * Fetch featured courses for the public homepage.
  * Only returns courses that are both featured and published.
  */
-export async function getFeaturedCourses(): Promise<InstructorCourse[]> {
+export async function getFeaturedCourses(): Promise<
+  InstructorCourse[]
+> {
   const supabase = supabaseAdmin;
 
   const { data, error } = await supabase
@@ -84,7 +100,9 @@ export async function getFeaturedCourses(): Promise<InstructorCourse[]> {
     return [];
   }
 
-  return (data ?? []).map((course) => mapCourse(course as CourseRow));
+  return (data ?? []).map((course) =>
+    mapCourse(course as CourseRow)
+  );
 }
 
 /**
@@ -138,6 +156,10 @@ export async function getCourse(
 
 /**
  * Create a new course.
+ *
+ * preview_video_id is the canonical relationship to the
+ * selected video. preview_video remains available temporarily
+ * for backwards compatibility with existing course records.
  */
 export async function createCourse(
   course: CreateCourseInput
@@ -161,7 +183,12 @@ export async function createCourse(
 
     hero_image: course.hero_image || null,
     thumbnail: course.thumbnail || null,
+
+    // Legacy field — retained temporarily.
     preview_video: course.preview_video || null,
+
+    // Canonical course → video relationship.
+    preview_video_id: course.preview_video_id || null,
 
     telegram_group_name: course.telegram_group_name || null,
     telegram_invite_link: course.telegram_invite_link || null,
@@ -186,6 +213,9 @@ export async function createCourse(
 
 /**
  * Update a course.
+ *
+ * preview_video_id can be changed independently of the legacy
+ * preview_video URL.
  */
 export async function updateCourse(
   id: string,

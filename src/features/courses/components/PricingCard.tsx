@@ -1,4 +1,3 @@
-import Link from "next/link";
 import {
   CheckCircle2,
   ShieldCheck,
@@ -9,12 +8,15 @@ import {
   Sparkles,
   ArrowRight,
 } from "lucide-react";
+
 import CheckoutButton from "@/components/checkout/CheckoutButton";
+
 interface Props {
   price: number;
   currency: string;
   courseSlug: string;
   enrolled?: boolean;
+  telegramInviteLink?: string | null;
 }
 
 function formatPrice(price: number, currency: string) {
@@ -30,7 +32,13 @@ export default function PricingCard({
   currency,
   courseSlug,
   enrolled = false,
+  telegramInviteLink = null,
 }: Props) {
+  const hasTelegramAccess =
+    enrolled &&
+    typeof telegramInviteLink === "string" &&
+    telegramInviteLink.trim() !== "";
+
   return (
     <aside className="sticky top-24 overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-xl">
       <div className="bg-linear-to-r from-[#661093] to-[#8B3CB8] p-6 text-white">
@@ -55,9 +63,10 @@ export default function PricingCard({
           <div className="text-sm font-semibold text-[#7A5A00]">
             Everything included
           </div>
+
           <p className="mt-1 text-sm text-[#6B5A1A]">
-            Patterns, resources, community access, and future updates are included
-            with your enrollment.
+            Patterns, resources, community access, and future updates are
+            included with your enrollment.
           </p>
         </div>
 
@@ -96,6 +105,7 @@ export default function PricingCard({
                 <div className="font-semibold text-neutral-900">
                   {item.title}
                 </div>
+
                 <p className="mt-1 text-sm text-neutral-600">
                   {item.text}
                 </p>
@@ -129,17 +139,19 @@ export default function PricingCard({
         </div>
 
         <div className="mt-8">
-          {enrolled ? (
-  <Link
-    href={`/learn/${courseSlug}`}
-    className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#661093] px-6 py-4 text-lg font-semibold text-white transition hover:bg-[#4E0C70]"
-  >
-    Continue Learning
-    <ArrowRight className="h-5 w-5" />
-  </Link>
-) : (
-  <CheckoutButton slug={courseSlug} />
-)}
+          {hasTelegramAccess ? (
+            <a
+              href={telegramInviteLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#661093] px-6 py-4 text-lg font-semibold text-white transition hover:bg-[#4E0C70]"
+            >
+              Continue Learning
+              <ArrowRight className="h-5 w-5" />
+            </a>
+          ) : (
+            <CheckoutButton slug={courseSlug} />
+          )}
 
           <p className="mt-3 text-center text-sm text-neutral-500">
             Secure checkout powered by Paystack
@@ -153,8 +165,9 @@ export default function PricingCard({
           </div>
 
           <p className="mt-2 text-sm text-green-700">
-            Join thousands of fashion students who have transformed their sewing
-            skills through structured, practical training from Cut and Sew Tribe.
+            Join thousands of fashion students who have transformed their
+            sewing skills through structured, practical training from Cut and
+            Sew Tribe.
           </p>
         </div>
       </div>

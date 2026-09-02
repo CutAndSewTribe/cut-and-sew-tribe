@@ -6,6 +6,7 @@ import {
   createCourseAction,
   updateCourseAction,
 } from "@/app/instructor/courses/actions";
+import CoursePreviewVideoField from "@/components/instructor/courses/CoursePreviewVideoField";
 import { uploadCourseImage } from "@/lib/upload";
 
 interface CourseFormValues {
@@ -21,7 +22,17 @@ interface CourseFormValues {
 
   hero_image: string | null;
   thumbnail: string | null;
+
+  /**
+   * Legacy preview-video URL.
+   * Kept temporarily for backwards compatibility.
+   */
   preview_video: string | null;
+
+  /**
+   * Canonical relationship to the public Video Library.
+   */
+  preview_video_id: string | null;
 
   telegram_group_name: string | null;
   telegram_invite_link: string | null;
@@ -48,7 +59,9 @@ const defaults: CourseFormValues = {
 
   hero_image: null,
   thumbnail: null,
+
   preview_video: null,
+  preview_video_id: null,
 
   telegram_group_name: null,
   telegram_invite_link: null,
@@ -61,7 +74,7 @@ export default function CourseForm({
   initialValues,
   courseId,
 }: CourseFormProps) {
-  const [values, setValues] = useState({
+  const [values, setValues] = useState<CourseFormValues>({
     ...defaults,
     ...initialValues,
   });
@@ -83,55 +96,54 @@ export default function CourseForm({
   }
 
   function generateSlug(title: string) {
-return title
-.toLowerCase()
-.trim()
-.replace(/[^a-z0-9\s-]/g, "")
-.replace(/\s+/g, "-")
-.replace(/-+/g, "-")
-.replace(/^-|-$/g, "");
-}
-
+    return title
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "");
+  }
 
   async function handleHeroUpload(file: File) {
-  try {
-    setUploadingHero(true);
+    try {
+      setUploadingHero(true);
 
-    const url = await uploadCourseImage(
-      file,
-      "courses",
-      values.slug || "course",
-      "hero"
-    );
+      const url = await uploadCourseImage(
+        file,
+        "courses",
+        values.slug || "course",
+        "hero"
+      );
 
-    update("hero_image", url);
-  } catch (error) {
-    console.error(error);
-    alert("Failed to upload hero image.");
-  } finally {
-    setUploadingHero(false);
+      update("hero_image", url);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to upload hero image.");
+    } finally {
+      setUploadingHero(false);
+    }
   }
-}
 
-async function handleThumbnailUpload(file: File) {
-  try {
-    setUploadingThumbnail(true);
+  async function handleThumbnailUpload(file: File) {
+    try {
+      setUploadingThumbnail(true);
 
-    const url = await uploadCourseImage(
-      file,
-      "courses",
-      values.slug || "course",
-      "thumbnail"
-    );
+      const url = await uploadCourseImage(
+        file,
+        "courses",
+        values.slug || "course",
+        "thumbnail"
+      );
 
-    update("thumbnail", url);
-  } catch (error) {
-    console.error(error);
-    alert("Failed to upload thumbnail.");
-  } finally {
-    setUploadingThumbnail(false);
+      update("thumbnail", url);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to upload thumbnail.");
+    } finally {
+      setUploadingThumbnail(false);
+    }
   }
-}
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -155,7 +167,14 @@ async function handleThumbnailUpload(file: File) {
 
         hero_image: values.hero_image,
         thumbnail: values.thumbnail,
+
+        /*
+         * preview_video remains in the payload temporarily so
+         * older data continues to work while preview_video_id
+         * becomes the source of truth.
+         */
         preview_video: values.preview_video,
+        preview_video_id: values.preview_video_id,
 
         telegram_group_name: values.telegram_group_name,
         telegram_invite_link: values.telegram_invite_link,
@@ -200,6 +219,7 @@ async function handleThumbnailUpload(file: File) {
               value={values.title}
               onChange={(e) => {
                 const title = e.target.value;
+
                 update("title", title);
                 update("slug", generateSlug(title));
               }}
@@ -214,7 +234,9 @@ async function handleThumbnailUpload(file: File) {
             <input
               className="w-full rounded-xl border border-neutral-300 bg-white px-4 py-3 text-neutral-900 placeholder:text-neutral-400 focus:border-[#661093] focus:outline-none focus:ring-2 focus:ring-[#661093]/20"
               value={values.slug}
-              onChange={(e) => update("slug", e.target.value)}
+              onChange={(e) =>
+                update("slug", e.target.value)
+              }
             />
           </div>
 
@@ -226,7 +248,9 @@ async function handleThumbnailUpload(file: File) {
             <input
               className="w-full rounded-xl border border-neutral-300 bg-white px-4 py-3 text-neutral-900 placeholder:text-neutral-400 focus:border-[#661093] focus:outline-none focus:ring-2 focus:ring-[#661093]/20"
               value={values.subtitle}
-              onChange={(e) => update("subtitle", e.target.value)}
+              onChange={(e) =>
+                update("subtitle", e.target.value)
+              }
             />
           </div>
 
@@ -239,7 +263,9 @@ async function handleThumbnailUpload(file: File) {
               rows={6}
               className="w-full rounded-xl border border-neutral-300 bg-white px-4 py-3 text-neutral-900 placeholder:text-neutral-400 focus:border-[#661093] focus:outline-none focus:ring-2 focus:ring-[#661093]/20"
               value={values.description}
-              onChange={(e) => update("description", e.target.value)}
+              onChange={(e) =>
+                update("description", e.target.value)
+              }
             />
           </div>
         </div>
@@ -259,7 +285,9 @@ async function handleThumbnailUpload(file: File) {
             <select
               className="w-full rounded-xl border border-neutral-300 bg-white px-4 py-3 text-neutral-900 focus:border-[#661093] focus:outline-none focus:ring-2 focus:ring-[#661093]/20"
               value={values.category}
-              onChange={(e) => update("category", e.target.value)}
+              onChange={(e) =>
+                update("category", e.target.value)
+              }
             >
               <option>Dressmaking</option>
               <option>Bridal</option>
@@ -276,7 +304,9 @@ async function handleThumbnailUpload(file: File) {
             <select
               className="w-full rounded-xl border border-neutral-300 bg-white px-4 py-3 text-neutral-900 focus:border-[#661093] focus:outline-none focus:ring-2 focus:ring-[#661093]/20"
               value={values.level}
-              onChange={(e) => update("level", e.target.value)}
+              onChange={(e) =>
+                update("level", e.target.value)
+              }
             >
               <option>Beginner</option>
               <option>Intermediate</option>
@@ -292,7 +322,9 @@ async function handleThumbnailUpload(file: File) {
             <input
               className="w-full rounded-xl border border-neutral-300 bg-white px-4 py-3 text-neutral-900 placeholder:text-neutral-400 focus:border-[#661093] focus:outline-none focus:ring-2 focus:ring-[#661093]/20"
               value={values.duration}
-              onChange={(e) => update("duration", e.target.value)}
+              onChange={(e) =>
+                update("duration", e.target.value)
+              }
             />
           </div>
 
@@ -305,7 +337,9 @@ async function handleThumbnailUpload(file: File) {
               type="number"
               className="w-full rounded-xl border border-neutral-300 bg-white px-4 py-3 text-neutral-900 placeholder:text-neutral-400 focus:border-[#661093] focus:outline-none focus:ring-2 focus:ring-[#661093]/20"
               value={values.price}
-              onChange={(e) => update("price", Number(e.target.value))}
+              onChange={(e) =>
+                update("price", Number(e.target.value))
+              }
             />
           </div>
 
@@ -317,7 +351,9 @@ async function handleThumbnailUpload(file: File) {
             <select
               className="w-full rounded-xl border border-neutral-300 bg-white px-4 py-3 text-neutral-900 focus:border-[#661093] focus:outline-none focus:ring-2 focus:ring-[#661093]/20"
               value={values.currency}
-              onChange={(e) => update("currency", e.target.value)}
+              onChange={(e) =>
+                update("currency", e.target.value)
+              }
             >
               <option>NGN</option>
               <option>USD</option>
@@ -355,7 +391,10 @@ async function handleThumbnailUpload(file: File) {
               disabled={uploadingHero}
               onChange={(e) => {
                 const file = e.target.files?.[0];
-                if (file) handleHeroUpload(file);
+
+                if (file) {
+                  void handleHeroUpload(file);
+                }
               }}
               className="block w-full text-sm text-neutral-700"
             />
@@ -367,7 +406,8 @@ async function handleThumbnailUpload(file: File) {
             )}
 
             <p className="mt-2 text-sm text-neutral-500">
-              Large image used on the course landing page and as the preview poster.
+              Large image used on the course landing page and
+              as the preview poster.
             </p>
           </div>
 
@@ -394,7 +434,10 @@ async function handleThumbnailUpload(file: File) {
               disabled={uploadingThumbnail}
               onChange={(e) => {
                 const file = e.target.files?.[0];
-                if (file) handleThumbnailUpload(file);
+
+                if (file) {
+                  void handleThumbnailUpload(file);
+                }
               }}
               className="block w-full text-sm text-neutral-700"
             />
@@ -406,32 +449,21 @@ async function handleThumbnailUpload(file: File) {
             )}
 
             <p className="mt-2 text-sm text-neutral-500">
-              Small image used for course cards and marketplace listings.
+              Small image used for course cards and marketplace
+              listings.
             </p>
           </div>
 
-          <div>
-            <label className="mb-2 block font-medium text-neutral-800">
-              Preview Video URL
-            </label>
-
-            <input
-              placeholder="https://... or /videos/preview.mp4"
-              className="w-full rounded-xl border border-neutral-300 px-4 py-3"
-              value={values.preview_video ?? ""}
-              onChange={(e) =>
-                update(
-                  "preview_video",
-                  e.target.value === "" ? null : e.target.value
-                )
-              }
-            />
-
-            <p className="mt-2 text-sm text-neutral-500">
-              When provided, the hero image becomes the clickable thumbnail that
-              starts the preview video on the landing page.
-            </p>
-          </div>
+          <CoursePreviewVideoField
+            value={values.preview_video_id}
+            onChange={(videoId) =>
+              update("preview_video_id", videoId)
+            }
+            courseTitle={values.title}
+            courseCategory={values.category}
+            courseLevel={values.level}
+            coursePublished={values.published}
+          />
         </div>
       </section>
 
@@ -520,8 +552,8 @@ async function handleThumbnailUpload(file: File) {
               ? "Saving..."
               : "Creating..."
             : isEditing
-            ? "Save Changes"
-            : "Create Course"}
+              ? "Save Changes"
+              : "Create Course"}
         </button>
       </div>
     </form>

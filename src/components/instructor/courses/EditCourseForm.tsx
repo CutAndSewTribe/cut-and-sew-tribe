@@ -1,10 +1,20 @@
+"use client";
+
+import { useState } from "react";
+
 import type { LMSCourse } from "@/lib/lms/courses";
+
+import CoursePreviewVideoField from "./CoursePreviewVideoField";
 
 interface Props {
   course: LMSCourse;
 }
 
 export default function EditCourseForm({ course }: Props) {
+  const [previewVideoId, setPreviewVideoId] = useState<string | null>(
+    course.preview_video_id ?? null,
+  );
+
   return (
     <form className="space-y-6">
       {/* Basic information */}
@@ -105,8 +115,14 @@ export default function EditCourseForm({ course }: Props) {
       </div>
 
       {/* Media */}
-      <div className="space-y-4 rounded-3xl border border-neutral-200 bg-neutral-50 p-6">
-        <h3 className="text-lg font-semibold text-neutral-900">Media</h3>
+      <div className="space-y-6 rounded-3xl border border-neutral-200 bg-neutral-50 p-6">
+        <div>
+          <h3 className="text-lg font-semibold text-neutral-900">Media</h3>
+          <p className="mt-1 text-sm text-neutral-500">
+            Manage the visual assets used throughout the course marketplace
+            and course landing page.
+          </p>
+        </div>
 
         <div>
           <label className="mb-1 block text-sm font-medium text-neutral-700">
@@ -138,20 +154,21 @@ export default function EditCourseForm({ course }: Props) {
           </p>
         </div>
 
-        <div>
-          <label className="mb-1 block text-sm font-medium text-neutral-700">
-            Preview Video URL
-          </label>
-          <input
-            name="preview_video"
-            placeholder="videos/bustier-booster-preview.mp4"
-            defaultValue={course.preview_video ?? ""}
-            className="w-full rounded-xl border border-neutral-300 px-4 py-3"
+        <div className="border-t border-neutral-200 pt-6">
+          <CoursePreviewVideoField
+            value={previewVideoId}
+            onChange={setPreviewVideoId}
+            courseTitle={course.title}
+            courseCategory={course.category}
+            courseLevel={course.level}
+            coursePublished={course.published}
           />
-          <p className="mt-1 text-xs text-neutral-500">
-            When provided, the hero image becomes the clickable thumbnail for
-            the video preview.
-          </p>
+
+          <input
+            type="hidden"
+            name="preview_video_id"
+            value={previewVideoId ?? ""}
+          />
         </div>
       </div>
 

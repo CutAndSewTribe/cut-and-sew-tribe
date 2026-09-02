@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
+type PaymentStatus = "verifying" | "success" | "error";
+
 export default function PaymentCallbackPage() {
   const searchParams = useSearchParams();
 
@@ -10,20 +12,22 @@ export default function PaymentCallbackPage() {
     searchParams.get("reference") ??
     searchParams.get("trxref");
 
-  const [status, setStatus] = useState<
-    "verifying" | "success" | "error"
-  >("verifying");
+  const [status, setStatus] =
+    useState<PaymentStatus>("verifying");
 
   const [message, setMessage] = useState(
     "Verifying your payment..."
   );
 
   useEffect(() => {
-    if (!reference) {
+    if (
+      typeof reference !== "string" ||
+      reference.trim() === ""
+    ) {
       return;
     }
 
-    const paymentReference = reference;
+    const paymentReference: string = reference;
 
     let cancelled = false;
 
@@ -88,14 +92,17 @@ export default function PaymentCallbackPage() {
       }
     }
 
-    verifyPayment();
+    void verifyPayment();
 
     return () => {
       cancelled = true;
     };
   }, [reference]);
 
-  if (!reference) {
+  if (
+    typeof reference !== "string" ||
+    reference.trim() === ""
+  ) {
     return (
       <main className="flex min-h-[70vh] items-center justify-center px-6 py-20">
         <div className="w-full max-w-lg rounded-3xl border border-neutral-200 bg-white p-10 text-center shadow-sm">
