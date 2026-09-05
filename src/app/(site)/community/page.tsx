@@ -27,7 +27,7 @@ const communityLinks = [
     name: "WhatsApp",
     description:
       "The easiest place to start conversations, ask questions, share progress, and stay close to the Tribe.",
-    href: "https://wa.me/",
+    href: "https://wa.me/message/2Y2LBLT47JAFD1",
     icon: FaWhatsapp,
     accent: "from-emerald-500/20 to-emerald-500/5",
     iconClass: "text-emerald-500",
@@ -38,7 +38,7 @@ const communityLinks = [
     name: "Instagram",
     description:
       "See what the community is creating, discover inspiration, and celebrate new student work.",
-    href: "https://instagram.com/",
+    href: "https://www.instagram.com/cutandsewtribelimited",
     icon: FaInstagram,
     accent: "from-pink-500/20 to-purple-500/5",
     iconClass: "text-pink-500",
@@ -49,7 +49,7 @@ const communityLinks = [
     name: "Facebook",
     description:
       "Keep up with announcements, student wins, fashion conversations, and community updates.",
-    href: "https://facebook.com/",
+    href: "https://www.facebook.com/divinebridal.babiesworld",
     icon: FaFacebook,
     accent: "from-blue-500/20 to-blue-500/5",
     iconClass: "text-blue-500",
@@ -60,7 +60,7 @@ const communityLinks = [
     name: "YouTube",
     description:
       "Learn through practical tutorials, demonstrations, fashion lessons, and free educational content.",
-    href: "https://youtube.com/",
+    href: "https://youtube.com/@cutandsewtribe",
     icon: FaYoutube,
     accent: "from-red-500/20 to-red-500/5",
     iconClass: "text-red-500",
@@ -71,7 +71,7 @@ const communityLinks = [
     name: "TikTok",
     description:
       "Quick sewing ideas, fashion tips, behind-the-scenes moments, and short-form creative inspiration.",
-    href: "https://tiktok.com/",
+    href: "https://www.tiktok.com/@cutandsewtribe",
     icon: FaTiktok,
     accent: "from-neutral-500/15 to-neutral-500/5",
     iconClass: "text-neutral-900",
