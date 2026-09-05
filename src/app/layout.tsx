@@ -81,9 +81,9 @@ export const metadata: Metadata = {
   category: "education",
 
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/brand/favicon-apple.png",
+    icon: "/brand/cast-logo.png",
+    shortcut: "/brand/cast-logo.png",
+    apple: "/brand/cast-logo.png",
   },
 };
 

@@ -210,5 +210,4 @@ export function searchContent(
 
 
   return results;
-
 }

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import MobileMenu from "./MobileMenu";
@@ -9,7 +10,6 @@ import {
   FaTiktok,
   FaWhatsapp,
 } from "react-icons/fa";
-
 
 const navigation = [
   {
@@ -38,7 +38,6 @@ const navigation = [
   },
 ];
 
-
 const socialLinks = [
   {
     label: "Instagram",
@@ -60,28 +59,27 @@ const socialLinks = [
   },
 ];
 
-
 export default function Header() {
-
   return (
     <header className="w-full border-b border-neutral-200 bg-white">
-
-      <div className="relative mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-
-
+      <div className="relative mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
         <Link
           href="/"
-          className="shrink-0 text-xl font-bold tracking-tight text-[#661093]"
+          className="shrink-0"
+          aria-label="Cut And Sew Tribe home"
         >
-          Cut And Sew Tribe
+          <Image
+            src="/brand/cast-logo.png"
+            alt="CAST — Cut And Sew Tribe"
+            width={120}
+            height={120}
+            priority
+            className="h-20 w-auto object-contain"
+          />
         </Link>
 
-
-
         <nav className="hidden gap-6 md:flex">
-
           {navigation.map((item) => (
-
             <Link
               key={item.href}
               href={item.href}
@@ -89,33 +87,19 @@ export default function Header() {
             >
               {item.label}
             </Link>
-
           ))}
-
         </nav>
 
-
-
         <div className="hidden w-72 lg:block">
-
           <SearchBar />
-
         </div>
 
-
-
         <div className="hidden items-center gap-4 lg:flex">
-
-
           <div className="flex items-center gap-3">
-
             {socialLinks.map((item) => {
-
               const Icon = item.icon;
 
-
               return (
-
                 <a
                   key={item.label}
                   href={item.href}
@@ -124,18 +108,11 @@ export default function Header() {
                   aria-label={item.label}
                   className={`${item.className} transition hover:scale-110`}
                 >
-
                   <Icon size={20} />
-
                 </a>
-
               );
-
             })}
-
           </div>
-
-
 
           <Link
             href="/courses"
@@ -153,17 +130,10 @@ export default function Header() {
           >
             Start Learning
           </Link>
-
-
         </div>
 
-
-
         <MobileMenu />
-
-
       </div>
-
     </header>
   );
 }
