@@ -12,7 +12,7 @@ import {
 
 import { Container, Section } from "@/components/ui";
 import ShareButtons from "@/components/shared/ShareButtons";
-
+import PublicVideoPlayer from "@/components/media/PublicVideoPlayer";
 import {
   getPublishedVideos,
   getVideoBySlug,
@@ -259,26 +259,12 @@ export default async function VideoDetailPage({
         <Container>
           <div className="relative -mt-1 overflow-hidden rounded-[1.75rem] border border-white/10 bg-black shadow-[0_30px_100px_rgba(0,0,0,0.45)] sm:rounded-[2rem]">
             {video.video_url ? (
-              <video
-                className="aspect-video w-full bg-black"
-                controls
-                playsInline
-                preload="metadata"
-                poster={thumbnail}
-              >
-                <source
-                  src={video.video_url}
-                  type={
-                    video.r2_key.endsWith(".webm")
-                      ? "video/webm"
-                      : video.r2_key.endsWith(".mov")
-                        ? "video/quicktime"
-                        : "video/mp4"
-                  }
-                />
-
-                Your browser does not support the video player.
-              </video>
+              <PublicVideoPlayer
+  videoId={video.id}
+  videoUrl={video.video_url}
+  thumbnail={thumbnail}
+  r2Key={video.r2_key}
+/>
             ) : (
               <div className="flex aspect-video items-center justify-center bg-[#17111a] px-6 text-center">
                 <div>
