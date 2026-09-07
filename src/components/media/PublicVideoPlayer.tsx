@@ -49,10 +49,13 @@ export default function PublicVideoPlayer({
     <video
       className="aspect-video w-full bg-black"
       controls
+      controlsList="nodownload"
+      disablePictureInPicture
       playsInline
       preload="metadata"
       poster={thumbnail}
       onPlay={handlePlay}
+      onContextMenu={(event) => event.preventDefault()}
     >
       <source src={videoUrl} type={type} />
 
