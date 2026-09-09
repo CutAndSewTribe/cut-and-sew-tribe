@@ -101,7 +101,7 @@ export default async function CoursesPage() {
       {/* =========================================================
           INTRODUCTION
       ========================================================== */}
-      <Section className="bg-white">
+    {/*  <Section className="bg-white">
         <Container className="py-16 sm:py-20 lg:py-24">
           <div className="grid gap-10 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
             <div>
@@ -151,7 +151,7 @@ export default async function CoursesPage() {
       {/* =========================================================
           TRUST / CATALOGUE SNAPSHOT
       ========================================================== */}
-      <section className="border-y border-neutral-200 bg-[#F8F6FA]">
+     {/* <section className="border-y border-neutral-200 bg-[#F8F6FA]">
         <Container className="py-8">
           <div className="grid divide-y divide-neutral-200 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
             <div className="flex items-center gap-4 px-0 py-4 sm:px-8 sm:py-2 first:sm:pl-0">
@@ -255,7 +255,7 @@ export default async function CoursesPage() {
       {/* =========================================================
           WHY BUY / WHY LEARN HERE
       ========================================================== */}
-      <Section className="bg-[#120B16] text-white">
+    {/*  <Section className="bg-[#120B16] text-white">
         <Container className="py-16 sm:py-20 lg:py-24">
           <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
             <div>
@@ -384,7 +384,7 @@ export default async function CoursesPage() {
       {/* =========================================================
           BUYER CONFIDENCE
       ========================================================== */}
-      <Section className="bg-[#F8F6FA]">
+    {/*  <Section className="bg-[#F8F6FA]">
         <Container className="py-16 sm:py-20 lg:py-24">
           <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
             <div>

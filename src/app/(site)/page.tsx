@@ -320,7 +320,7 @@ export default async function Home() {
       {/* =====================================================
           TRUST BAND
       ====================================================== */}
-      <section className="border-b border-neutral-200 bg-white">
+     {/* <section className="border-b border-neutral-200 bg-white">
         <Container className="py-7">
           <div className="grid gap-6 md:grid-cols-4">
             <div className="flex items-center gap-3">
@@ -377,7 +377,7 @@ export default async function Home() {
       {/* =====================================================
           LEARNING PATHS
       ====================================================== */}
-      <Section className="bg-white">
+     {/* <Section className="bg-white">
         <Container>
           <div className="max-w-2xl">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#661093]">
@@ -451,12 +451,12 @@ export default async function Home() {
             ))}
           </div>
         </Container>
-      </Section>
+      </Section> */}
 
       {/* =====================================================
           LIVE PLATFORM STATS
       ====================================================== */}
-      <section className="bg-[#f7f5f8]">
+    {/*  <section className="bg-[#f7f5f8]">
         <Container className="py-12">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
@@ -672,7 +672,7 @@ export default async function Home() {
       {/* =====================================================
           PATTERNS + RESOURCES
       ====================================================== */}
-      {(featuredPatterns.length > 0 ||
+     {/* {(featuredPatterns.length > 0 ||
         featuredResources.length > 0) && (
         <Section className="bg-[#f7f5f8]">
           <Container>
@@ -834,7 +834,7 @@ export default async function Home() {
       {/* =====================================================
           STUDENT STORIES
       ====================================================== */}
-      {featuredStories.length > 0 && (
+    {/*  {featuredStories.length > 0 && (
         <Section className="bg-[#f7f5f8]">
           <Container>
             <div className="flex items-end justify-between gap-6">

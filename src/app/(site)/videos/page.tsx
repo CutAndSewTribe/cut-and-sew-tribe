@@ -168,7 +168,7 @@ export default async function VideosPage() {
       {/* ─────────────────────────────────────────────
           LIBRARY INTRO
       ───────────────────────────────────────────── */}
-      <Section>
+     {/* <Section>
         <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-[#16121a] via-[#100d13] to-[#0b0a0d] p-7 sm:p-9 lg:p-12">
           <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-[#661093]/20 blur-3xl" />
 
