@@ -10,7 +10,7 @@ interface FAQItem {
 
 const faqs: FAQItem[] = [
   {
-    question: "Is this course suitable for complete beginners?",
+    question: "Is this course suitable for beginners?",
     answer:
       "Yes. Most Cut and Sew Tribe courses are structured step by step, so you can start with little or no prior sewing experience. If a course requires previous knowledge, it will be clearly stated on the course page.",
   },
@@ -19,11 +19,7 @@ const faqs: FAQItem[] = [
     answer:
       "You get lifetime access to the course. You can watch the lessons, download resources, and revisit the material whenever you need it.",
   },
-  {
-    question: "Will I receive patterns and downloadable resources?",
-    answer:
-      "Yes. Courses include downloadable resources such as patterns, measurement guides, templates, sewing checklists, and other materials that support the lessons.",
-  },
+ 
   {
     question: "Do I get support if I have questions while learning?",
     answer:
@@ -37,18 +33,14 @@ const faqs: FAQItem[] = [
   {
     question: "What happens immediately after payment?",
     answer:
-      "Once your payment is confirmed, your enrollment is activated and you will receive immediate access to the course and any included community or downloadable resources.",
+      "Once your payment is confirmed, your enrollment is activated and you will receive immediate access to the course on Telegram.",
   },
   {
     question: "Is there a certificate of completion?",
     answer:
       "Yes. Students who complete the course curriculum can receive a Cut and Sew Tribe certificate of completion, which is useful for showcasing your skills and portfolio progress.",
   },
-  {
-    question: "Will this help me start a fashion business?",
-    answer:
-      "Many of our courses are designed not only to teach garment construction but also pricing, client work, production workflows, and fashion business fundamentals, making them valuable for aspiring entrepreneurs.",
-  },
+  
 ];
 
 export default function CourseFAQ() {

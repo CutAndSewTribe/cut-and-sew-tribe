@@ -110,10 +110,10 @@ export default async function CourseDetailPage({
 
                 <div className="mt-8 flex flex-wrap gap-3">
                   {[
-                    {
+                    {/*{
                       icon: Users,
                       label: `${course.students}+ students`,
-                    },
+                    }*/},
                     {
                       icon: Clock3,
                       label:
@@ -128,8 +128,8 @@ export default async function CourseDetailPage({
                       key={item.label}
                       className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur"
                     >
-                      <item.icon className="h-4 w-4 text-[#D4AF37]" />
-                      {item.label}
+                    {/*  <item.icon className="h-4 w-4 text-[#D4AF37]" />
+                      {item.label}*/}
                     </div>
                   ))}
                 </div>
@@ -166,7 +166,7 @@ export default async function CourseDetailPage({
           <div className="grid gap-10 lg:grid-cols-[1fr_360px]">
             <div className="space-y-10">
               {/* Curriculum */}
-              <CourseCurriculum modules={course.modules} />
+            {/*  <CourseCurriculum modules={course.modules} />
 
               {/* Outcomes */}
               <section className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
@@ -184,10 +184,6 @@ export default async function CourseDetailPage({
                     "Take accurate body measurements",
                     "Cut and prepare fabric professionally",
                     "Construct garments with clean finishing techniques",
-                    "Work faster with efficient sewing workflows",
-                    "Price and present garments for paying clients",
-                    "Build a professional fashion portfolio",
-                    "Launch or grow a fashion business with confidence",
                   ].map((item) => (
                     <div
                       key={item}

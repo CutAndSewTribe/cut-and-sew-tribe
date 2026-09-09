@@ -78,11 +78,6 @@ export default function PricingCard({
               text: "Rewatch every lesson anytime with no expiration date.",
             },
             {
-              icon: Download,
-              title: "Downloadable resources",
-              text: "Patterns, measurement guides, templates, and checklists.",
-            },
-            {
               icon: Users,
               title: "Telegram community access",
               text: "Join our private student community for support and feedback.",
@@ -124,7 +119,6 @@ export default function PricingCard({
               "Full video curriculum",
               "Step-by-step garment construction",
               "Pattern drafting resources",
-              "Business and pricing guidance",
               "Mobile and desktop access",
             ].map((feature) => (
               <li
