@@ -24,14 +24,22 @@ const navigation = [
     label: "Patterns",
     href: "/patterns",
   },
-  {
-    label: "Resources",
-    href: "/resources",
-  },
-  {
-    label: "Success Stories",
-    href: "/success-stories",
-  },
+   /*
+   * TEMPORARILY HIDDEN
+   *
+   * Resources and Success Stories are being kept in the project
+   * but are not currently displayed in the public navigation.
+   *
+   * Restore later by removing the comment markers.
+   */
+  // {
+  //   label: "Resources",
+  //   href: "/resources",
+  // },
+  // {
+  //   label: "Success Stories",
+  //   href: "/success-stories",
+  // },
   {
     label: "Community",
     href: "/community",
