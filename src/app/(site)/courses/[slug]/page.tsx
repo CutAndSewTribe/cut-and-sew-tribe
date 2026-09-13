@@ -103,10 +103,12 @@ export default async function CourseDetailPage({
                   </p>
                 )}
 
-                <p className="mt-6 max-w-2xl text-lg leading-8 text-white/85 lg:text-xl">
-                  {course.description ??
-                    "Build professional garment construction skills through a structured, practical fashion curriculum designed by Cut and Sew Tribe tutors."}
-                </p>
+                <div className="mt-6 max-w-3xl text-base leading-8 text-white/85 lg:text-lg">
+  <p className="whitespace-pre-wrap">
+    {course.description ??
+      "Build professional garment construction skills through a structured, practical fashion curriculum designed by Cut and Sew Tribe tutors."}
+  </p>
+</div>
 
                 <div className="mt-8 flex flex-wrap gap-3">
                   {[
