@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation";
 import {
+  ArrowRight,
   Award,
-  Clock3,
-  Users,
   CheckCircle2,
+  Clock3,
+  PlayCircle,
 } from "lucide-react";
 
 import { Container, Section } from "@/components/ui";
@@ -69,189 +70,233 @@ export default async function CourseDetailPage({
    *
    * Only retrieve the Telegram invite link for an authenticated
    * student who has an active enrollment.
-   *
-   * Unenrolled visitors receive null and therefore continue to
-   * see the normal Enroll Now / Checkout flow.
    */
   const telegramInviteLink = enrolled
     ? await getCourseTelegramLink(course.slug)
     : null;
 
+  const courseImage =
+    course.thumbnail ??
+    course.hero_image ??
+    "/images/courses/hero-fashion-academy.jpg";
+
   return (
     <>
-      {/* Cinematic Hero */}
-      <Section className="relative overflow-hidden bg-black p-0">
-        <CourseHeroMedia
-          title={course.title}
-          heroImage={course.hero_image}
-          previewVideo={course.previewVideo}
-        >
-          <Container className="relative z-10">
-            <div className="flex min-h-[80vh] items-center">
-              <div className="max-w-3xl text-white">
-                <div className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium backdrop-blur">
-                  {course.level} • {course.category}
-                </div>
+      {/* =========================================================
+          COURSE HERO
+         ========================================================= */}
+      <Section className="bg-[#f7f6f3] py-8 md:py-12 lg:py-16">
+        <Container>
+          <div className="mx-auto max-w-6xl">
+            {/* Main course image */}
+            <div className="overflow-hidden rounded-[2rem] bg-white shadow-[0_20px_70px_rgba(0,0,0,0.10)]">
+              <div className="relative aspect-[16/8] overflow-hidden">
+                <img
+                  src={courseImage}
+                  alt={course.title}
+                  className="h-full w-full object-cover"
+                />
 
-                <h1 className="mt-6 text-5xl font-bold leading-tight tracking-tight lg:text-7xl">
-                  {course.title}
-                </h1>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/5 to-transparent" />
 
-                {course.subtitle && (
-                  <p className="mt-4 text-2xl font-semibold text-[#D4AF37] lg:text-3xl">
-                    {course.subtitle}
-                  </p>
-                )}
-
-                <div className="mt-6 max-w-3xl text-base leading-8 text-white/85 lg:text-lg">
-  <p className="whitespace-pre-wrap">
-    {course.description ??
-      "Build professional garment construction skills through a structured, practical fashion curriculum designed by Cut and Sew Tribe tutors."}
-  </p>
-</div>
-
-                <div className="mt-8 flex flex-wrap gap-3">
-                  {[
-                    {/*{
-                      icon: Users,
-                      label: `${course.students}+ students`,
-                    }*/},
-                    {
-                      icon: Clock3,
-                      label:
-                        course.duration ?? "Self-paced learning",
-                    },
-                    {
-                      icon: Award,
-                      label: "Certificate included",
-                    },
-                  ].map((item) => (
-                    <div
-                      key={item.label}
-                      className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur"
-                    >
-                    {/*  <item.icon className="h-4 w-4 text-[#D4AF37]" />
-                      {item.label}*/}
+                {course.previewVideo && (
+                  <div className="absolute bottom-5 left-5">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/45 px-4 py-2 text-sm font-medium text-white backdrop-blur-md">
+                      <PlayCircle className="h-4 w-4" />
+                      Course preview available
                     </div>
-                  ))}
-                </div>
+                  </div>
+                )}
+              </div>
 
-                <div className="mt-10 flex flex-wrap gap-4">
+              {/* Hero information */}
+              <div className="p-6 md:p-8 lg:p-10">
+                {/* CTA comes first */}
+                <div className="flex flex-wrap items-center gap-3">
                   {enrolled && telegramInviteLink ? (
                     <a
                       href={telegramInviteLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center rounded-2xl bg-[#661093] px-8 py-4 text-base font-semibold text-white transition hover:bg-[#55107d]"
+                      className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#661093] px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[#661093]/20 transition hover:bg-[#55107d]"
                     >
-                      Join Course on Telegram
+                      Continue learning
+                      <ArrowRight className="h-4 w-4" />
                     </a>
                   ) : (
                     <CheckoutButton slug={course.slug} />
                   )}
+                </div>
 
-                  {course.previewVideo && (
-                    <span className="inline-flex items-center rounded-2xl border border-white/20 bg-white/10 px-6 py-4 text-sm font-medium text-white backdrop-blur">
-                      ▶ Preview available
-                    </span>
+                {/* Category / level */}
+                <div className="mt-7 flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-[#661093]">
+                  <span>{course.category}</span>
+                  <span className="text-neutral-300">•</span>
+                  <span>{course.level}</span>
+                </div>
+
+                {/* Title */}
+                <h1 className="mt-4 max-w-4xl text-4xl font-bold leading-[1.08] tracking-tight text-neutral-950 md:text-5xl lg:text-6xl">
+                  {course.title}
+                </h1>
+
+                {course.subtitle && (
+                  <p className="mt-4 max-w-3xl text-lg font-medium leading-7 text-neutral-600 md:text-xl">
+                    {course.subtitle}
+                  </p>
+                )}
+
+                {/* Small course facts */}
+                <div className="mt-7 flex flex-wrap gap-x-6 gap-y-3 text-sm text-neutral-600">
+                  {course.duration && (
+                    <div className="flex items-center gap-2">
+                      <Clock3 className="h-4 w-4 text-[#661093]" />
+                      <span>{course.duration}</span>
+                    </div>
                   )}
+
+                  <div className="flex items-center gap-2">
+                    <Award className="h-4 w-4 text-[#661093]" />
+                    <span>Certificate included</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </Container>
-        </CourseHeroMedia>
+
+            {/* =====================================================
+                DESCRIPTION
+               ===================================================== */}
+            <div className="mt-8 rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-sm md:p-8 lg:p-10">
+              <div className="max-w-4xl">
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#661093]">
+                  About this course
+                </p>
+
+                <div className="mt-5 whitespace-pre-wrap text-base leading-8 text-neutral-800 md:text-lg">
+                  {course.description ??
+                    "Build professional garment construction skills through a structured, practical fashion curriculum designed by Cut and Sew Tribe tutors."}
+                </div>
+              </div>
+            </div>
+          </div>
+        </Container>
       </Section>
 
-      {/* Main content */}
-      <Section className="bg-neutral-50">
+      {/* =========================================================
+          COURSE CONTENT
+         ========================================================= */}
+      <Section className="bg-white py-12 md:py-16 lg:py-20">
         <Container>
-          <div className="grid gap-10 lg:grid-cols-[1fr_360px]">
-            <div className="space-y-10">
-              {/* Curriculum */}
-            {/*  <CourseCurriculum modules={course.modules} />
+          <div className="mx-auto max-w-6xl">
+            <div className="grid gap-10 lg:grid-cols-[1fr_360px]">
+              {/* Main column */}
+              <div className="space-y-10">
+                {/* What you'll achieve */}
+                <section>
+                  <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#661093]">
+                    What you&apos;ll achieve
+                  </p>
 
-              {/* Outcomes */}
-              <section className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
-                <div className="inline-flex items-center gap-2 rounded-full bg-[#661093]/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[#661093]">
-                  What you&apos;ll achieve
-                </div>
+                  <h2 className="mt-3 text-3xl font-bold tracking-tight text-neutral-950 md:text-4xl">
+                    Practical skills you can use
+                  </h2>
 
-                <h2 className="mt-4 text-3xl font-bold text-neutral-900">
-                  Skills you can use immediately
-                </h2>
+                  <div className="mt-7 grid gap-3 md:grid-cols-2">
+                    {[
+                      "Draft and interpret garment patterns confidently",
+                      "Take accurate body measurements",
+                      "Cut and prepare fabric professionally",
+                      "Construct garments with clean finishing techniques",
+                    ].map((item) => (
+                      <div
+                        key={item}
+                        className="flex items-start gap-3 rounded-2xl border border-neutral-200 bg-[#fafafa] p-4"
+                      >
+                        <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#661093]" />
 
-                <div className="mt-6 grid gap-4 md:grid-cols-2">
-                  {[
-                    "Draft and interpret garment patterns confidently",
-                    "Take accurate body measurements",
-                    "Cut and prepare fabric professionally",
-                    "Construct garments with clean finishing techniques",
-                  ].map((item) => (
-                    <div
-                      key={item}
-                      className="flex items-start gap-3 rounded-2xl border border-neutral-200 p-4"
-                    >
-                      <CheckCircle2 className="mt-0.5 h-5 w-5 text-[#661093]" />
-                      <span className="text-neutral-700">
-                        {item}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </section>
-
-              {/* Telegram community */}
-              {enrolled && telegramInviteLink && (
-                <section className="rounded-3xl border border-[#229ED9]/20 bg-[#229ED9]/5 p-8">
-                  <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-                    <div>
-                      <div className="text-sm font-semibold uppercase tracking-[0.18em] text-[#229ED9]">
-                        Student community
+                        <span className="text-sm leading-6 text-neutral-700">
+                          {item}
+                        </span>
                       </div>
-
-                      <h2 className="mt-2 text-2xl font-bold text-neutral-900">
-                        Learn alongside other fashion students
-                      </h2>
-
-                      <p className="mt-3 max-w-2xl text-neutral-700">
-                        Get feedback on your garments, ask questions,
-                        share your progress, and receive course updates
-                        through our private Telegram community.
-                      </p>
-                    </div>
-
-                    <a
-                      href={telegramInviteLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#229ED9] px-6 py-3 font-semibold text-white transition hover:opacity-90"
-                    >
-                      Join Telegram
-                    </a>
+                    ))}
                   </div>
                 </section>
-              )}
 
-              {/* FAQ */}
-              <CourseFAQ />
+                {/* Curriculum */}
+                {course.modules.length > 0 && (
+                  <section>
+                    <div className="mb-6">
+                      <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#661093]">
+                        Course curriculum
+                      </p>
 
-              {/* Final CTA */}
-              <EnrollmentCTA
-                courseSlug={course.slug}
-                enrolled={enrolled}
-                telegramInviteLink={telegramInviteLink}
-              />
-            </div>
+                      <h2 className="mt-3 text-3xl font-bold tracking-tight text-neutral-950 md:text-4xl">
+                        What&apos;s inside
+                      </h2>
+                    </div>
 
-            {/* Sticky pricing */}
-            <div id="pricing">
-              <PricingCard
-                price={course.price}
-                currency={course.currency}
-                courseSlug={course.slug}
-                enrolled={enrolled}
-                telegramInviteLink={telegramInviteLink}
-              />
+                    <CourseCurriculum modules={course.modules} />
+                  </section>
+                )}
+
+                {/* Telegram community */}
+                {enrolled && telegramInviteLink && (
+                  <section className="rounded-[2rem] border border-[#229ED9]/15 bg-[#229ED9]/5 p-6 md:p-8">
+                    <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+                      <div>
+                        <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#229ED9]">
+                          Student community
+                        </p>
+
+                        <h2 className="mt-2 text-2xl font-bold text-neutral-950">
+                          Learn with other students
+                        </h2>
+
+                        <p className="mt-3 max-w-2xl text-sm leading-6 text-neutral-700">
+                          Ask questions, share your progress, receive
+                          feedback, and stay connected through the private
+                          course community.
+                        </p>
+                      </div>
+
+                      <a
+                        href={telegramInviteLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex shrink-0 items-center justify-center gap-2 rounded-2xl bg-[#229ED9] px-6 py-3 font-semibold text-white transition hover:opacity-90"
+                      >
+                        Join Telegram
+                        <ArrowRight className="h-4 w-4" />
+                      </a>
+                    </div>
+                  </section>
+                )}
+
+                {/* FAQ */}
+                <section>
+                  <CourseFAQ />
+                </section>
+
+                {/* Final CTA */}
+                <EnrollmentCTA
+                  courseSlug={course.slug}
+                  enrolled={enrolled}
+                  telegramInviteLink={telegramInviteLink}
+                />
+              </div>
+
+              {/* Pricing */}
+              <aside>
+                <div className="lg:sticky lg:top-24" id="pricing">
+                  <PricingCard
+                    price={course.price}
+                    currency={course.currency}
+                    courseSlug={course.slug}
+                    enrolled={enrolled}
+                    telegramInviteLink={telegramInviteLink}
+                  />
+                </div>
+              </aside>
             </div>
           </div>
         </Container>
